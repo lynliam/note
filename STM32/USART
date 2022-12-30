@@ -1,0 +1,48 @@
+##USART的使用
+***
+* 重定向函数
+```C++
+HAL_UART_Transmit( &UartHandle,(uint8_t *)(str + k) ,1,1000);
+
+
+int fputc(int ch,FILE *f)
+{
+	HAL_UART_Transmit(&huart1,(uint8_t *)&ch,1,1000);
+	return (ch);
+}
+
+//scanf
+int fgetc(FILE *f)
+{
+int ch;
+/* 等待串口输入数据 */
+while (__HAL_UART_GET_FLAG(&UartHandle, UART_FLAG_RXNE) == RESET);
+HAL_UART_Receive(&UartHandle, (uint8_t *)&ch, 1, 0xFFFF);
+return (ch);
+}
+```
+
+***
+* 要点
+	1.  使能 RX 和 TX 引脚 GPIO 时钟和 USART 时钟；
+	2. 初始化 GPIO，并将 GPIO 复用到 USART 上；
+	3. 配置 USART 参数；
+	4. 配置中断控制器并使能 USART 接收中断；
+	5. 使能 USART；
+	6. 在 USART 接收中断服务函数实现数据接收和发送。
+
+* 中断类型
+
+  * 串口接收中断(使能串口接受中断RXEN后，串口接受一个数据包 ，一帧 （通常 8位数据位，一位结束位）则进入中断。)
+
+    ```c
+    __HAL_UART_ENABLE_IT(&huart2,UART_IT_RXNE);
+    ```
+
+    
+
+  * 空闲中断（在使能IDLE ,在串口接受完一帧数据后，在一个字节的时间内串口保持空闲则触发串口空闲中断 
+
+    再次进入 ***\*USART2_IRQHandler(void)\****  
+
+    *  __HAL_UART_ENABLE_IT(&huart2,UART_IT_IDLE);

@@ -1,0 +1,30 @@
+## catkin Package
+***
+
+* 第一步进入source space目录
+```
+cd ~/catkin_ws/src
+```
+```
+This creating a beginner_tutorials folder containing a packag.xml and CMakeLists.txt
+catkin_create_pkg <package_name> [depend1] ...
+
+Then
+
+catkin_make
+
+To add the workspace to ROS environment
+
+. ~/catkin_ws/devel/setup.bash
+```
+```
+
+rospack
+rospack depend1 rospy //查看rospy的依赖包
+roscd
+
+* indirect dependencies
+
+rospack depend1 rospy
+
+* Customizing Your Package

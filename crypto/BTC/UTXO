@@ -1,0 +1,12 @@
+##UTXO
+***
+* BTC的交易模型为UTXO（unspend transaction output）
+    * 只记录未花费的比特币输出
+    * ![image](E:\markdown\crypto\BTC\image\1.png)
+* Benefit
+    * UTXO的数据库体积小很多
+    * 每一个比特币用户几乎可以拥有无限多的的地址
+    * 给高并发带来可能
+
+* Input：![image](E:\markdown\crypto\BTC\image\2.png)
+* Output：![image](E:\markdown\crypto\BTC\image\3.png)

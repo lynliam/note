@@ -1,0 +1,15 @@
+# Locking Script && unlocking Script
+
+***
+
+* Feature of script:
+    * Turing incompleteness //easy to improve security
+    * Stateless verification
+    * Stack based language
+
+* Example of unlocking **P2PKH**（Pay-to-Public-Key-Hash）
+    * Unlocking Script:  <Sig><Pubkey>
+    * Locking Script:  OP_DUP OP_HASH160 <PubkeyHash> OP_EQUALVERIFY OP_CHECKSIG
+        * constitude with a pile of Stack Command and Hash
+    * ![image](E:\markdown\crypto\BTC\image\4.png)
+    * ![image](E:\markdown\crypto\BTC\image\5.png)

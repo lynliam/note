@@ -1,0 +1,455 @@
+#V2Ray翻墙完全教程(WS+TLS+Web)
+***
+####总览
+* 购买域名&配置域名解析：V2Ray需要域名伪装成真正的网站，因此你需要购买一个域名，并把域名绑定到服务器的IP地址上。
+* 一键填写配置文件：本文已经写好了配置文件，只要把域名，UUID等信息填进去就行了。
+* 一键安装v2ray+nginx
+* 上传配置文件&一键运行
+* 配置客户端
+
+成功翻墙以后，还可以做以下事情进一步强化：
+可选
+1. 加固服务器可选
+2. 配置CDN隐藏IP可选
+3. 使用BBR加速可选
+4. 自行编译Nginx
+
+***
+####购买域名&配置域名解析
+
+这里从域名注册商GoDaddy购买域名，用Cloudflare提供域名解析。GoDaddy本身也提供域名解析服务，这里用Cloudflare是为了配置CDN方便。如果遇到墙加高，或者IP被墙等极端情况，只要简单的配置就可以切换成v2ray+ws+tls+web+cdn。CDN翻墙速度较慢，但是稳定性极高。
+
+可能不少新手没听说过GoDaddy和Cloudflare，这里介绍一下，GoDaddy是世界上最大的域名提供商，占据市场30%的份额。Cloudflare是世界上最大的CDN提供商，全球半数的网站都在使用Cloudflare。注册不用担心隐私泄露或钓鱼风险。
+
+注册GoDaddy和CloudFlare需要邮箱。特别注意，购买域名之后，域名服务商会公开邮箱地址。建议至少使用gmail注册，如果对隐私有较高要求，可以用Protonmail等匿名邮箱注册。
+
+1.3 注册CloudFlare。
+
+打开Cloudflare官网，用邮箱注册，如图。注册页面入口https://dash.cloudflare.com/sign-up
+
+![图片](E:/images/1.1.png)
+
+接下来输入刚才购买的域名，注意这里输入的是【二级域名】。所谓二级域名，可以理解为网址去掉www。
+比如我的网站的网址是www.hrw1rdzqa7c5a8u3ibkn.website，那么这里应该输入hrw1rdzqa7c5a8u3ibkn.website.
+
+
+***
+####一、Centos7安装V2Ray服务器
+*  购买VPS后需进入KiwiVM，重装操作系统为Centos-8-X86_64,然后使用Xshell工具连接到VPS
+
+请参考：搬瓦工官网后台VPS主机管理教程\Xshell连接管理
+######以下的所有操作都用root账号进行。
+* 确认VPS时间为北京时间，请输入如下命令查看，如果不正确需要设置正确的时间
+```	date```
+
+* 更新系统和安装web读取命令
+```yum update -y && yum install curl -y```
+
+* 若出现报错（Error: Failed to download metadata for repo ‘appstream’: Cannot prepare internal mirrorlist: No URLs in mirrorlist）请运行如下命令
+若未出现报错请跳过此步
+
+```cd /etc/yum.repos.d/```
+
+```sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*```
+
+```sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*```
+* 安装官方版本v2ray服务端
+```bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)```
+
+* V2ray服务端的配置文件代码如下，请删除配置文件中默认的代码"{}"，然后直接使用下面代码覆盖，安全起见，id和端口必须修改（UUID可以从这个网站生成：https://www.uuidgenerator.net/）
+#####```vi /usr/local/etc/v2ray/config.json```
+
+```HTML
+{
+  "inbounds": [
+    {
+      "port": 19834,
+//此处的端口任意修改（10000~30000），但是要和下面nginx.conf配置文件中的proxy_pass后的端口号相同
+      "listen":"127.0.0.1",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "c962e44c-bc12-414d-aca1-ce3d5ae2c0f7",
+//此处的id修改为自己生成的id
+            "alterId": 0
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+        "path": "/ray"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ]
+}
+```
+
+* 设置为开机自动启动
+```
+systemctl enable v2ray
+systemctl start v2ray
+```
+***
+####二、安装Nginx服务
+* 更新软件包索引
+```yum install -y epel-release```
+* 安装Nginx软件包
+```yum install -y nginx```
+* Nginx服务在安装完成后开启服务。我们可以通过以下 curl 命令进行验证，看到输出HTTP/1.1 200 OK......,说明nginx安装成功
+```systemctl start nginx```
+```curl -I 127.0.0.1```
+* 设置nginx为开机自动启动并创建ray目录
+```systemctl enable nginx```
+```mkdir /etc/nginx/conf.d/ray```
+***
+####三、域名购买配置及SSL证书
+
+* 法一
+* ```./certbot-auto certonly --webroot --agree-tos -v -t --email 邮箱地址 -w 网站根目录 -d 网站域名```
+* ```./certbot-auto certonly --webroot --agree-tos -v -t --email xxxxx@qq.com -w /path/to/your/web/root -d xxxx.com```
+
+* 更新
+* ```./certbot renew```
+
+
+* 为了用真正的https流量翻墙，我们的网站必须有合法的SSL证书。可以用自动化工具Certbot申请证书，只要把以下命令复制到命令窗口，依次执行即可。
+
+这里说的“证书”，实际指的是“数字证书”。当然申请完全是免费的，申请时需要邮箱地址。如有必要，可以使用匿名邮箱。
+
+1. 安装Certbot：
+yum install -y python36 && pip3 install certbot
+
+
+运行这条命令后，如果显示：
+```Successfully installed xxxx, xxxx, xxxx (各种软件包名字)```
+就表示成功。
+
+2. 停止防火墙
+```systemctl stop firewalld && systemctl disable firewalld```
+
+注意，在CentOS7版本以上，默认开启防火墙，不关闭防火墙将无法申请证书。某些系统上没有安装firewalld防火墙，执行这一步命令会报错，但是不影响后面的操作。
+
+运行这条命令后，如果显示：
+
+```Removed /etc/systemd/system/multi-user.target.wants/firewalld.service.```
+
+```Removed /etc/systemd/system/dbus-org.fedoraproject.FirewallD1.service.```
+
+就表示成功
+
+3. 申请SSL证书
+这一步做个填空题，把这条命令里的域名和邮箱，换成你自己的信息。
+```certbot certonly --standalone --agree-tos -n -d www.●●●●●● -d ●●●●●● -m ▲▲▲@▲▲▲.▲▲▲```
+
+第一个-d加一个带www的域名，第二个-d加一个不带www的域名，-m后面加你的电子邮箱。
+注意前后要带空格。
+
+例子：（域名：www.hrw1rdzqa7c5a8u3ibkn.website，邮箱：xijinping@protonmail.com）
+```certbot certonly --standalone --agree-tos -n -d www.hrw1rdzqa7c5a8u3ibkn.website -d hrw1rdzqa7c5a8u3ibkn.website -m xijinping@protonmail.com```
+
+运行这条命令后，如果显示：
+IMPORTANT NOTES:
+- Congratulations! Your certificate and chain have been saved at:
+  /etc/letsencrypt/live/www.hrw1rdzqa7c5a8u3ibkn.website/fullchain.pem
+  Your key file has been saved at:
+  /etc/letsencrypt/live/www.hrw1rdzqa7c5a8u3ibkn.website/privkey.pem
+  Your cert will expire on 2020-06-04. To obtain a new or tweaked
+  version of this certificate in the future, simply run certbot
+  again. To non-interactively renew *all* of your certificates, run
+  "certbot renew"
+- Your account credentials have been saved in your Certbot
+  configuration directory at /etc/letsencrypt. You should make a
+  secure backup of this folder now. This configuration directory will
+  also contain certificates and private keys obtained by Certbot so
+  making regular backups of this folder is ideal.
+- If you like Certbot, please consider supporting our work by:
+
+  Donating to ISRG / Let's Encrypt:  https://letsencrypt.org/donate
+  Donating to EFF:                    https://eff.org
+
+就表示成功。
+
+注意：这一步比较容易出错，常见的问题有：
+其它代理占用了80，443端口。解决方法：停止其它代理软件，或重装VPS。
+没有正确配置域名解析。解决方法：ping一下域名，看看能不能正确解析到IP。注意不要打开CDN（云朵点灰）。
+没有关闭防火墙。解决方法：回到（2），关闭防火墙。
+
+4. 配置证书自动更新
+```echo "0 0 1 */2 * service nginx stop; certbot renew; service nginx start;" | crontab```
+
+运行这条命令后，如果没有任何信息输出，就表示成功。
+
+我们申请的证书只有三个月期限，上面的命令表示每隔两个月，证书就自动续命一次，从而保证可以一直用下去。
+
+
+
+
+* 配置nginx.conf文件，可删除配置文件中的全部代码，使用下面代码覆盖，然后根据下面代码中的注释说明修改代码中的相关参数。
+```vi /etc/nginx/nginx.conf```
+```
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  abc.efg.com;
+//abc.efg.com修改为自己解析的域名
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+
+    server {
+        listen       443 ssl http2 default_server;
+        listen       [::]:443 ssl http2 default_server;
+        server_name  abc.efg.com;
+//abc.efg.com修改为自己解析的域名
+        root         /usr/share/nginx/html;
+
+        ssl_certificate "/etc/nginx/ssl/abc.efg.com_bundle.crt";
+//abc.efg.com_bundle.crt修改为实际上传的.crt文件名
+        ssl_certificate_key "/etc/nginx/ssl/abc.efg.com.key";
+//abc.efg.com.key修改为实际上传的.key文件名
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout  10m;
+        ssl_ciphers PROFILE=SYSTEM;
+        ssl_prefer_server_ciphers on;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location /ray {
+//此处路径修改为/ray，需将config.json里的"path"路径修改的跟这里相同，建议不要更换路径
+	if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+        return 404;
+    	}
+	proxy_redirect off;
+    	proxy_pass http://127.0.0.1:19834;
+//127.0.0.1后的19834需要与config.json中的port端口相同
+    	proxy_http_version 1.1;
+    	proxy_set_header Upgrade $http_upgrade;
+    	proxy_set_header Connection "upgrade";
+    	proxy_set_header Host $host;
+    	# Show real IP in v2ray access.log
+    	proxy_set_header X-Real-IP $remote_addr;
+    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+
+}
+```
+***
+#### 我的配置
+#### v2ray
+```
+{
+  "inbounds": [
+    {
+      "port": 19534,
+      "listen":"127.0.0.1",
+      "protocol": "vmess",
+      "settings": {
+        "clients": [
+          {
+            "id": "ee67793c-eade-11ec-8fea-0242ac120002",
+            "alterId": 0
+          }
+        ]
+      },
+      "streamSettings": {
+        "network": "ws",
+        "wsSettings": {
+        "path": "/TUK83U7"
+        }
+      }
+    }
+  ],
+  "outbounds": [
+    {
+      "protocol": "freedom",
+      "settings": {}
+    }
+  ]
+}
+```
+####  nginx
+
+```
+# For more information on configuration, see:
+#   * Official English Documentation: http://nginx.org/en/docs/
+#   * Official Russian Documentation: http://nginx.org/ru/docs/
+
+user nginx;
+worker_processes auto;
+error_log /var/log/nginx/error.log;
+pid /run/nginx.pid;
+
+# Load dynamic modules. See /usr/share/doc/nginx/README.dynamic.
+include /usr/share/nginx/modules/*.conf;
+
+events {
+    worker_connections 1024;
+}
+
+http {
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+
+    sendfile            on;
+    tcp_nopush          on;
+    tcp_nodelay         on;
+    keepalive_timeout   65;
+    types_hash_max_size 2048;
+
+    include             /etc/nginx/mime.types;
+    default_type        application/octet-stream;
+
+    # Load modular configuration files from the /etc/nginx/conf.d directory.
+    # See http://nginx.org/en/docs/ngx_core_module.html#include
+    # for more information.
+    include /etc/nginx/conf.d/*.conf;
+
+    server {
+        listen       80 default_server;
+        listen       [::]:80 default_server;
+        server_name  lynchliam2022.xyz;
+        root         /usr/share/nginx/html;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location / {
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+
+    server {
+        listen       443 ssl http2 default_server;
+        listen       [::]:443 ssl http2 default_server;
+        server_name  lynchliam2022.xyz;
+        root         /usr/share/nginx/html;
+
+        ssl_certificate "/etc/nginx/ssl/fullchain.pem";
+        ssl_certificate_key "/etc/nginx/ssl/privkey.pem";
+        ssl_session_cache shared:SSL:1m;
+        ssl_session_timeout  10m;
+        ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+	    ssl_protocols TLSv1.1 TLSv1.2;
+        #ssl_ciphers PROFILE=SYSTEM;
+        #ssl_prefer_server_ciphers on;
+
+        # Load configuration files for the default server block.
+        include /etc/nginx/default.d/*.conf;
+
+        location /TUK83U7 {
+	if ($http_upgrade != "websocket") { # WebSocket协商失败时返回404
+        return 404;
+    	}
+	proxy_redirect off;
+    	proxy_pass http://127.0.0.1:19534;
+    	proxy_http_version 1.1;
+    	proxy_set_header Upgrade $http_upgrade;
+    	proxy_set_header Connection "upgrade";
+    	proxy_set_header Host $host;
+    	# Show real IP in v2ray access.log
+    	proxy_set_header X-Real-IP $remote_addr;
+    	proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        }
+
+        error_page 404 /404.html;
+            location = /40x.html {
+        }
+
+        error_page 500 502 503 504 /50x.html;
+            location = /50x.html {
+        }
+    }
+
+}
+
+```
+* 重启V2ray服务和nginx服务
+```
+systemctl restart v2ray
+systemctl restart nginx
+```
+* v2ray服务端就配置完成了，没有报错的话，VPN服务端的搭建基本就成功了。
+
+你可以尝试访问https://abc.efg.com（https://你的域名）看看连接是否是安全的.
+![图片](E:/images/1.0.jpg)
+
+***

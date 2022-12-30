@@ -1,0 +1,164 @@
+##哈希表的概念和c++实现
+
+***
+* 一、基本概念
+
+根据设定的哈希函数H ( k e y ) H(key)H(key) 和处理冲突的方法将一组关键字映射到一个有限的连续的地址集（区间）上，
+并以关键字在地址集中的“像”作为记录在表中的存储位置，这种表便称为 **哈希表**，
+这一映像过程称为**哈希造表**或**散列**，所得存储位置称**哈希地址**或**散列地址**。
+
+
+* 二、哈希函数的构造方式
+
+**均匀的哈希函数**：若对于关键字集合中的任何一个关键字，经哈希函数映射到地址集合中任何一个地址的概率是相等的
+
+常用的构造函数的方法：
+1. 直接定址法
+
+取关键字或关键字的某个线性函数值为哈希地址。即：
+
+H ( k e y ) = k e y   或   H ( k e y ) = a ∗ k e y + b H(key)=key \ 或 \ H(key)=a*key+b
+H(key)=key 或 H(key)=a∗key+b
+
+其中a aa 和b bb为常数（这种哈希函数叫做自身函数）。
+
+2. 数字分析法
+假设关键字是以 r rr 为基的数（如：以10位基的十进制），并且哈希表中可能出现的关键字都是事先知道的，则可取关键字的若干数位组成哈希地址。
+
+例：假设有80记录，其关键字为8位十进制数。假设哈希表的表长为100，则可取两位十进制数组成哈希地址。取哪两位？原则是使得到的哈希地址尽量避免产生冲突。
+
+3. 平方取中法
+取关键字平方后的中间几位为哈希地址。这是一种较常用的构造哈希函数的方法。通常在选定哈希函数时不一定能知道关键字的全部情况，取其中哪几位也不一定合适，而一个数平方后的中间几位数和数的每一位都相关，由此使随机分布的关键字得到的哈希地址也是随机的。取的位数由表长决定。
+
+4. 折叠法
+将关键字分割成位数相同的几部分（最后一部分的位数可能不同），然后取这几部分的叠加和（舍去进位）作为哈希地址，这方法称为折叠法。关键字位数很多，而且关键字中每一位上数字分布大致均匀时，可以采用折叠法得到哈希地址。
+
+（1）移位叠加：移位叠加是将分割后的每一部分的最低位对齐，然后相加。
+
+（2）间界叠加：间界叠加是从一端向另一端沿分割界来回折叠，然后对齐相加。
+
+5. 除留余数法
+取关键字被某个不大于哈希表表长m mm的数 p pp除后所得余数为哈希地址。即
+H(key)=keyMODp, p≤m
+
+这是一种最简单，也最常用的构造哈希函数的方法。它不仅可以对关键字直接取模（MOD），也可在折叠、平方取中法等运算后取模。
+
+6、随机法
+选择一个随机函数，取关键字的随机函数值为它的哈希地址，即H ( k e y ) = r a n d o m ( k e y ) H(key)=random(key)H(key)=random(key),其中 r a n d o m randomrandom 为随机函数。通常，当关键字长度不等时采用此法构造哈希函数较恰当。
+
+实际工作中需视不用的情况采用不同的哈希函数。通常，考虑的因素有：
+
+（1）计算哈希函数所需时间（包括硬件指令的因素）；
+
+（2）关键字的长度；
+
+（3）哈希表的大小
+
+（4）关键字的分布情况；
+
+（5）记录的查找频率
+
+三、处理冲突的方法
+
+1. 开放寻址法
+2. 再哈希法
+3. 链地址法
+4. 公共溢出区法
+
+四、在哈希表中查找元素
+
+在哈希表上进行查找的过程和哈希造表的过程基本一致。给定K KK 值，根据造表时设定的哈希函数求得哈希地址。
+* 若表中此位置上没有记录，则查找不成功；
+* 否则比较关键字，若和给定值相等，则查找成功；
+* 否则根据造表时设定的处理冲突的方法找“下一地址”，直至哈希表中某个位置为“空”或者表中所填记录的关键字等于给定值时为止。
+
+***
+##C++中的unordered_map的用法的详述
+
+* 一、前言
+如果要在c++ 中使用这map 和unordered_map 两个函数，需要分别引入下面的两个头文件
+
+```#include<map>```
+
+```#include<unordered_map>```
+
+unordered_map 容器，直译过来就是"无序 map 容器"的意思。所谓“无序”，指的是 unordered_map 容器不会像 map 容器那样对存储的数据进行排序。换句话说，unordered_map 容器和 map 容器仅有一点不同，即 map 容器中存储的数据是有序的，而 unordered_map 容器中是无序的。
+
+* 二、谈谈unordered_map和map的区别
+1. 内部实现机理不同：
+
+map :map内部实现了一个红黑树（红黑树是非严格平衡二叉搜索树，而AVL是严格平衡二叉搜索树），红黑树具有自动排序的功能，因此map内部的所有元素都是有序的，红黑树的每一个节点都代表着map的一个元素。因此，对于map进行的查找、删除，添加等一系列的操作都相当于是对红黑树进行的操作。map中的元素是按照二叉搜索树 （又名儿茶查找树、二叉排序树–特点就是左子树上所有节点的键值都小于根节点的键值，右子树所有节点的键值都大于根结点的键值）存储的，使用中序遍历可将键值按照从小到大遍历出来。
+
+unordered_map :unordered_map内部实现了一个哈希表 （也叫散列表，通过把关键码值映射到Hash表中一个位置来访问记录，查找的时间复杂度可达到O(1)，其在海量数据处理中有着广泛应用）。因此，其元素的排列顺序都是无序的。哈表的概念见：详谈哈希表。
+
+2. 谈谈各自的优缺点：
+
+**map**
+1、优点：
+
+    (1)有序性，这是map结构最大的有点，其元素的有序性在很多应用中都会简化很多的操作。
+
+    (2)红黑树，内部实现一个红黑树使得map的很多操作在lgn的时间复杂度下就可以实现，因此效率非常的高。
+
+2、缺点：空间占用率高，因为map内部实现了红黑树，虽然提高了运行效率，但是因为每一个节点都需要额外保存父节点、孩子节点和红/黑性质，使得每一个节点都占用大量的空间。
+
+3、适用处：对于那些有顺序要求的问题，用map会更高效一些。
+
+**unordered_map**
+1、优点：因为内部实现了哈希表，因此其查找速度非常的快。
+
+2、缺点：哈希表的建立比较耗费时间
+
+3、适用处：对于查找问题，unordered_map 会更加高效一些，因此遇到查找问题，常会考虑一下用unordered_map
+
+3、总结：
+
+1、内存占有率的问题就转化成红黑树 VS Hash表，还是unorder_map占用的内存要高。
+
+2、但是unorder_map执行效率要比map高很多
+
+3、对于unordered_map 或unordered_set 容器，其遍历顺序与创建该容器时输入的顺序不一定相同，因为遍历是按照哈希表从前往后依次遍历的。
+
+* 创建C++ unordered_map容器的方法
+1. std::unordered_map<std::string, std::string> umap{{"ddd","dddd"},{"qqq","qqqq"}};
+2. 复制：std::unordered_map<std::string, std::string> umap2(++umap.begin(),umap.end());
+
+* 四.C++ unordered_map容器成员方法
+下表列出了 unordered_map 类模板提供的所有常用的成员方法、各自的功能和常规的用法。
+|Na
+
+| 成员方法 |	功能	| 用法
+|------------|---------||
+| begin()	|返回指向容器中第一个键值对的正向迭代器。|	a u t o   i t = m y m a p . b e g i n ( ) auto \ it = mymap.begin()auto it=mymap.begin() |
+
+end()	返回指向容器中最后一个键值对之后位置的正向迭代器。	i t ! = m y m a p . e n d ( ) it!=mymap.end()it!=mymap.end()
+cbegin()	和 begin() 功能相同，只不过在其基础上增加了 const 属性，即该方法返回的迭代器不能用于修改容器内存储的键值对。	a u t o   i t = m y m a p . c b e g i n ( ) auto \ it = mymap.cbegin()auto it=mymap.cbegin()
+cend()	和 end() 功能相同，只不过在其基础上，增加了 const 属性，即该方法返回的迭代器不能用于修改容器内存储的键值对。	i t ! = m y m a p . c e n d ( ) it!=mymap.cend()it!=mymap.cend()
+empty()	若容器为空，则返回 true；否则 false。	m y m a p . e m p t y ( ) mymap.empty()mymap.empty()
+size()	返回当前容器中存有键值对的个数。	m y m a p . s i z e ( ) mymap.size()mymap.size()
+max_size()	返回容器所能容纳键值对的最大个数，不同的操作系统，其返回值亦不相同。	m y m a p . m a x _ s i z e ( ) mymap.max\_size()mymap.max_size()
+operator[key]	该模板类中重载了 [] 运算符，其功能是可以向访问数组中元素那样，只要给定某个键值对的键 key，就可以获取该键对应的值。注意，如果当前容器中没有以 key 为键的键值对，则其会使用该键向当前容器中插入一个新键值对。	s t r i n g   n a m e = m y m a p [ k e y ] ; m y m a p [ k e y 2 ] = n a m e ; string \ name=mymap[key]; \\ mymap[key2] = name;string name=mymap[key];
+mymap[key2]=name;
+at(key)	返回容器中存储的键 key 对应的值，如果 key 不存在，则会抛出 out_of_range 异常。	m y m a p . a t ( k e y ) = v a l u e ; mymap .at(key) = value;mymap.at(key)=value;
+find(key)	查找以 key 为键的键值对，如果找到，则返回一个指向该键值对的正向迭代器；反之，则返回一个指向容器中最后一个键值对之后位置的迭代器（如 end() 方法返回的迭代器）。	m y m a p . f i n d ( k e y ) ; mymap.find(key);mymap.find(key);
+count(key)	在容器中查找以 key 键的键值对的个数。	m y m a p . c o u n t ( k e y ) mymap.count(key)mymap.count(key)
+equal_range(key)	返回一个 pair 对象，其包含 2 个迭代器，用于表明当前容器中键为 key 的键值对所在的范围。	m y m a p . e q u a l _ r a n g e ( k e y ) ; mymap.equal\_range(key);mymap.equal_range(key);
+emplace()	向容器中添加新键值对，效率比 insert() 方法高。	m y m a p . e m p l a c e ( k e y , v a l u e ) ; mymap.emplace(key, value);mymap.emplace(key,value);
+emplace_hint()	向容器中添加新键值对，效率比 insert() 方法高。
+insert()	向容器中添加新键值对。	m y m a p . i n s e r t ( p a i r < s t r i n g , d o u b l e > ( k e y , v a l u e ) ) ; m y m a p . i n s e r t ( { { k e y , v a l u e } , { k e y , v a l u e } } ) ; mymap.insert(pair<string,double>(key,value));\\ mymap.insert(\{\{key,value\},\{key,value\}\});mymap.insert(pair<string,double>(key,value));
+mymap.insert({{key,value},{key,value}});
+erase()	删除指定键值对。	m y m a p . e r a s e ( k e y ) ; mymap.erase(key);mymap.erase(key);
+clear()	清空容器，即删除容器中存储的所有键值对。	m y m a p . c l e a r ( ) ; mymap.clear();mymap.clear();
+swap()	交换 2 个 unordered_map 容器存储的键值对，前提是必须保证这 2 个容器的类型完全相等。	m y m a p 1. s w a p ( m y m a p 2 ) ; mymap1.swap(mymap2);mymap1.swap(mymap2);
+bucket_count()	返回当前容器底层存储键值对时，使用桶（一个线性链表代表一个桶）的数量。	u n s i g n e d   n = m y m a p . b u c k e t _ c o u n t ( ) ; unsigned \ n = mymap.bucket\_count();unsigned n=mymap.bucket_count();
+max_bucket_count()	返回当前系统中，unordered_map 容器底层最多可以使用多少桶。	m y m a p . m a x _ b u c k e t _ c o u n t ( ) mymap.max\_bucket\_count()mymap.max_bucket_count()
+bucket_size(n)	返回第 n 个桶中存储键值对的数量。	u n s i g n e d   n b u c k e t s = m y m a p . b u c k e t _ c o u n t ( ) ; unsigned \ nbuckets = mymap.bucket\_count();unsigned nbuckets=mymap.bucket_count();
+bucket(key)	返回以 key 为键的键值对所在桶的编号。	m y m a p . b u c k e t ( k e y ) mymap.bucket (key)mymap.bucket(key)
+load_factor()	返回 unordered_map 容器中当前的负载因子。负载因子，指的是的当前容器中存储键值对的数量（size()）和使用桶数（bucket_count()）的比值，即 load_factor() = size() \ bucket_count()。	m y m a p . l o a d _ f a c t o r ( ) mymap.load\_factor()mymap.load_factor()
+max_load_factor()	返回或者设置当前 unordered_map 容器的负载因子。	m y m a p . m a x _ l o a d _ f a c t o r ( ) mymap.max\_load\_factor()mymap.max_load_factor()
+rehash(n)	将当前容器底层使用桶的数量设置为 n。	m y m a p . r e h a s h ( 20 ) ; mymap.rehash(20);mymap.rehash(20);
+reserve()	将存储桶的数量（也就是 bucket_count() 方法的返回值）设置为至少容纳count个元（不超过最大负载因子）所需的数量，并重新整理容器。	m y m a p . r e s e r v e ( 6 ) ; mymap.reserve(6);mymap.reserve(6);
+hash_function()	返回当前容器使用的哈希函数对象。	s t r i n g   m a p : : h a s h e r f n = m y m a p . h a s h _ f u n c t i o n ( ) ; string \ map::hasher fn = mymap.hash\_function();string map::hasherfn=mymap.hash_function();
+
+
+***

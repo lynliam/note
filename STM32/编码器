@@ -1,0 +1,37 @@
+##编码器
+***
+###增量式编码器
+1. 倍频技术
+  * 两个通道，多种组合方式。可以倍频2倍和4倍。
+2. 测速方法
+  * M法（频率测量法）
+      * 固定定时时间，统计这段时间的编码器脉冲数。编码器单圈总脉冲数：C，时间T，统计到的脉冲数M，转速n
+
+      * ![frm](E:\markdown\STM32\image\4.png)
+      * 优点：对高频测量友好
+  * T法（周期测量法）
+    * 用已知高频脉冲来计数
+      * 编码器相邻两个脉冲的间隔时间T，计数值M，编码器单圈脉冲C，高频脉冲频率F
+      ![frm](E:\markdown\STM32\image\5.png)
+  * M/T法（频率周期测量法）
+    * 综合
+    * ![frm](E:\markdown\STM32\image\6.png)
+
+3.编码器初始化结构体
+```c
+TIM_Encoder_InitTypeDef   \\结构体
+```
+```
+typedef struct
+{
+uint32_t EncoderMode; //编码器模式        可选通道A\B和双通道计数
+uint32_t IC1Polarity; //输入信号极性      设置输入信号是否反相
+uint32_t IC1Selection; //输入通道          TIM_ICSELECTION_DIRECTTI
+uint32_t IC1Prescaler; //输入捕获预分频器
+uint32_t IC1Filter; //输入捕获滤波器
+uint32_t IC2Polarity; //输入信号极性
+uint32_t IC2Selection; //输入通道
+uint32_t IC2Prescaler; //输入捕获预分频器
+uint32_t IC2Filter; //输入捕获滤波器
+}TIM_Encoder_InitTypeDef;
+```

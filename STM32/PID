@@ -1,0 +1,85 @@
+##PID算法
+***
+***可以通过编码器的速度反馈，可以实时控制调整***
+
+![frm](E:\markdown\STM32\image\1.png)
+
+* Kp：比例增益
+    1. 比例值和一个正值的常数Kp相乘（Kp）越大调节越激进，反应时间也越小，极易引起震荡
+    2. e.g. 偏差与调节装置的“调节作用”
+    3. 如果只有比例调节，那么无法调到目标值
+* Tt：积分增益
+    1. 控制考虑过去的误差，将误差值过去一段时间和（误差和）乘以一个正值Ki
+    2. 可以消除静态误差来提高系统的无差度。
+    3. 需设定积分限制，防止在刚开始加速时把积分量积的太大，防止超调。
+    4. 积分时间常数Ti越大，积分作用越弱，利于减少超调，但是会增加消除静差的时间。
+* Kd：微分增益
+    1. 考虑将来误差并让被控制的物理量的变化速度趋于0
+    2. Kd越大，向速度相反方向的刹车力度越大
+* e：误差=设定值（SP）-回授值（PV）
+* t:目前时间
+
+####PID公式离散化
+* 增量式
+* 全量式
+
+```c
+1 /*pid*/
+2 typedef struct
+3 {
+4 float target_val; //目标值
+5 float actual_val; //实际值
+6 float err; //定义偏差值
+7 float err_last; //定义上一个偏差值
+8 float Kp,Ki,Kd; //定义比例、积分、微分系数
+9 float integral; //定义积分值
+10 }_pid
+```
+```c
+/**
+2 * @brief PID 参数初始化
+3 * @note 无
+4 * @retval 无
+*/
+void PID_param_init()
+{
+/* 初始化参数 */
+printf("PID_init begin \n");
+pid.target_val=0.0;
+pid.actual_val=0.0;
+pid.err=0.0;
+pid.err_last=0.0;
+pid.integral=0.0;
+pid.Kp = 0.31;
+pid.Ki = 0.070;
+```
+```c
+/**
+2 * @brief PID 算法实现
+3 * @param val 实际值
+4 * @note 无
+5 * @retval 通过 PID 计算后的输出
+6 */
+7 float PID_realize(float temp_val)
+8 {
+9 /* 目标值只在这里参与计算，计算目标值与实际值的误差 */
+10 pid.err=pid.target_val-temp_val;
+11 /* 误差累积 */
+12 pid.integral+=pid.err;
+13 /*PID 算法实现 */
+14 pid.actual_val=pid.Kp*pid.err+pid.Ki*pid.integral+pid.Kd*(pid.err-pid.
+,→err_last);
+15 /* 误差传递 */
+16 pid.err_last=pid.err;
+17 /* 返回的值是经过 pid 运算以后的值 */
+18 return pid.actual_val;
+19 }
+```
+####追求
+1. 稳定性
+2. 最佳性能
+3. 调试方法：
+    * 人工调试
+    * 齐格勒-尼科尔斯方法
+    * 软件工具
+    * Cohen-Coon

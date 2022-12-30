@@ -1,0 +1,47 @@
+1. 编译工具链
+
+芯片上电后会触发中断异常
+
+## NVIC 简介
+在配置中断的时候我们一般只用 ISER、ICER 和 IP 这三个寄存器，ISER 用来使能中断，ICER 用
+来失能中断，IP 用来设置中断优先级。
+```c
+typedef struct {
+__IOM uint32_t ISER[8U]; // 中断使能寄存器
+uint32_t RESERVED0[24U];
+__IOM uint32_t ICER[8U]; // 中断清除寄存器
+uint32_t RSERVED1[24U];
+__IOM uint32_t ISPR[8U]; // 中断使能悬起寄存器
+uint32_t RESERVED2[24U];
+__IOM uint32_t ICPR[8U]; // 中断清除悬起寄存器
+uint32_t RESERVED3[24U];
+__IOM uint32_t IABR[8U]; // 中断有效位寄存器/
+uint32_t RESERVED4[56U];
+__IOM uint8_t IP[240U]; // 中断优先级寄存器 (8Bit wide)
+uint32_t RESERVED5[644U];
+__OM uint32_t STIR; // 软件触发中断寄存器
+} NVIC_Type;
+
+```
+NVIC 库函数 描述
+* void NVIC_EnableIRQ(IRQn_Type IRQn) 使能中断
+* void NVIC_DisableIRQ(IRQn_Type IRQn) 失能中断
+* void NVIC_SetPendingIRQ(IRQn_Type IRQn) 设置中断悬起位
+* void NVIC_ClearPendingIRQ(IRQn_Type IRQn) 清除中断悬起位
+* uint32_t NVIC_GetPendingIRQ(IRQn_Type IRQn) 获取悬起中断编号
+* uint32_t NVIC_GetPriority(IRQn_Type IRQn) 获取中断优先级
+* void NVIC_SetPriority(IRQn_Type IRQn, uint32_t priority) 设置中断优先级
+* void NVIC_SystemReset(void) 系统复位
+
+
+```c
+/* 配置 EXTI 中断源、配置中断优先级 */
+HAL_NVIC_SetPriority(IRQn,PreemptPriority, SubPriority)
+```
+3. 编写中断服务函数
+在启动文件 startup_stm32f103xe.s 中我们预先为每个中断都写了一个中断服务函数，只是这些中
+断函数都是为空，为的只是初始化中断向量表。实际的中断服务函数都需要我们重新编写，为了
+方便管理我们把中断服务函数统一写在 stm32f1xx_it.c 这个库文件中。
+关于中断服务函数的函数名必须跟启动文件里面预先设置的一样，如果写错，系统就在中断向量
+表中找不到中断服务函数的入口，直接跳转到启动文件里面预先写好的空函数，并且在里面无限
+循环，实现不了中断。

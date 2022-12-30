@@ -1,0 +1,130 @@
+##STM32中断
+***
+**中断系统**
+
+    * 中断：stm32在运行过程，出现了特定的中断触发条件，当前主程序暂停，转向终端应用程序
+    * 中断优先级：单片机会分局当前优先级进行排序。
+    * 中断嵌套：终端可以嵌套。
+    * 中断源位于STM32f429xx.h文件中，与中断服务函数对应，启动文件中的终端服务函数是弱定义
+
+**中断服务函数**
+
+    * 可以直接在终端服务函数中编写功能。
+```c++
+void EXIT_5_IQRHandler(void)
+{
+  if(__HAL_GPIO_EXTI_GET_IT( GPIO_PIN_5)!=RESET)
+  {
+  __HAL_GPIO_EXTI_CLEAR_IT( GPIO_PIN_5);
+
+  /*按下按键1的函数*/
+  LED_RED;
+  PRESS_Key1=SET;
+ }
+}
+
+    //间接调用HAL库的中断回调函数
+
+
+    /***********************************************************************************************/
+    /*外部中断线中断公用函数*/
+void HAL_GPIO_EXTI_IRQHandler(uint16_t GPIO_Pin)
+{
+  /* EXTI line interrupt detected */
+  if(__HAL_GPIO_EXTI_GET_IT(GPIO_Pin) != RESET)
+  {
+    __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin);//清除中断标志位
+    HAL_GPIO_EXTI_Callback(GPIO_Pin);   //中断回调函数
+  }
+}
+/*中断回调函数  __weak 表示弱定义 */
+__weak void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  /* Prevent unused argument(s) compilation warning */
+  __IO uint32_t tmpreg = 0x00;
+  UNUSED(tmpreg);
+  /* NOTE: This function Should not be modified, when the callback is needed,
+           the HAL_GPIO_EXTI_Callback could be implemented in the user file
+   */
+}
+/*****************************************************************************************************************/
+
+
+
+
+//在中断函数中函数中可以看到
+void EXIT4_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_IRQHandler(GPIO_PIN_5);
+}
+
+
+
+/*****************************************************/
+
+//重定向中断服务函数
+void EXTI9_5_IRQHandler(void)
+{
+  HAL_GPIO_EXTI_Callback(GPIO_Pin_5|GPIO_Pin_6|GPIO_Pin_8)；
+}
+//重新实现的中断回调函数
+void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
+{
+  if(__HAL_GPIO_EXTI_GET_IT( GPIO_PIN_5)!=RESET)
+{
+  __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin_5);
+/*按下按键1的函数*/
+ LED_RED;
+ PRESS_Key1=SET;
+}
+  else if(__HAL_GPIO_EXTI_GET_IT(GPIO_PIN_6)!=RESET)
+{
+       __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin_6);
+
+       /*按下按键2的函数*/
+       LED_BLUE;
+       PRESS_Key2=SET;
+}
+  else
+    {
+           __HAL_GPIO_EXTI_CLEAR_IT(GPIO_Pin_8);
+           /*按下按键3的函数*/
+           LED_GREEN;
+           PRESS_Key3=SET;
+   }
+
+}
+
+```
+* **在哪里重新定义callback函数**
+    * 一般在每个外设的单独的文件里
+
+**终端分类**
+  * NVIC中断嵌套向量表进行管理，优先级。
+    * EXIT外部中断
+      * EXTI可以检测GPIO口的电平变化，GPIO口的电频变化时即可申请中断。
+      * EXTI的支持触发方式：上升沿，下降沿，双边沿，软件触发
+      * 支持所有的GPIO口但相同的Pin不能同时触发中断
+      * 通道数：16个GPIO_Pin，PVD输出，RTC闹钟，USB唤醒，以太网唤醒
+      * 触发响应方式：中断响应/事件响应2
+    * TIM定时中断
+      * **首先第一句话**打开中断 **！！**
+        * ```HAL_TIM_Base_Start_IT(&htim3);```
+    * ADC数模中断
+    * USART串口中断
+      * 三种模式
+        * 阻塞式
+        * 中断
+        * DMA
+      * HAL_UART_RxCpltCallback(huart);，我们要重新实现这个虚函数。
+      * HAL_UART_TxCpltCallback(huart);我们要重新实现这个虚函数
+      * 开启接收或者发送中断
+```c
+        HAL_UART_Transmit_IT(&huart1,(uint8_t *)&aRxBuffer, 1);	//开启发送中断
+        HAL_UART_Receive_IT(&huart1, (uint8_t *)&aRxBuffer, 1);   //开启接收中断
+```
+      * 以及在中断回调函数最后添加相同的代码: 因为进入中断处理函数，函数会关掉所有相关的中断来处理数据
+    * SPI通讯中断
+    * IIC通讯中断
+    * RTC实时时钟
+    * 等

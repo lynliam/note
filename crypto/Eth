@@ -1,0 +1,32 @@
+##Ethereum
+***
+* A blockchain
+* A single, canonical computer(EVM)
+
+
+
+
+##Ether
+***
+* A cryptocurrency (a medium of exchange )
+#### What is Ether
+* the basic using example
+    1. the only acceptable form of payment for transaction fees
+    2. to validate and propose blocks on Mainnet.
+    3. a primary form of collateral in the DeFi lending markets.
+    4. a unit of account in NFT
+* create decentralized applications (dapps)
+    * depend on gas fees to stay safe  (limit the infinite use of EVM)
+
+* Minting Ether
+    * About 1/8 of the total issuance goes to the block proposer; the remainder is distributed across the other validators.
+* Burning Ether
+    * When users pay for their transactions, a base gas fee will be burned.
+    * When network demand is high, blocks can burn more ether than they mint
+        * effectively offsetting ether issuance.
+* Denominations of ether
+    * wei
+    * gwei describe gas fee.
+* Transferring Ether
+    *  value filed ,specifies the amount of ether to be transferred
+    * and it can pay for gas (smart contact)

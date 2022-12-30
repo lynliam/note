@@ -1,0 +1,55 @@
+#**WEB3**
+***
+主要基于区块链的去中心化，加密货币以及非同质化代币有关。
+
+
+###web1.0
+* features:
+    1. static websites provided by companise
+    2. almost zero interaction
+    3. read_only
+
+###web2.0
+* features:
+    1. read-write
+    2. sharing information between users
+    3. users create contens but can get profit
+
+###web3.0
+* the features of WEB2：Centraliazation
+
+* dilemma:
+    1. centralized entities have astronghold on WEB2.
+    2. the web required too much trust and private information.
+
+* target:
+    1. decentralization
+    2. operated and owned by its users.
+
+* definition:
+    * **core** :
+        1. blockchains,cryptocurrencies,and NFTs
+
+    * **features**:
+        1. decentralization
+            * get rid of the third party between information transmission.
+        2. permissionless
+            * openness
+        3. native payments
+            * using cryptocurrencies
+        4. trustless
+            * using incentives and economic mechanisms without the third_party.
+
+
+
+    * **Ownership**:
+        * allowe for direct ownership through NFTs. (trade freely)
+    * **censorship resistence(抗审查制度)**
+        * your data lives on the blockchain. And you can take your reputation with ourself and p;ugging it into another interface.
+
+    * **Decentralized autonomous organizations (DAOs)**
+        * technically as agreed-upon smart contracts,making decision_making automatically going on.
+    * **Identity**
+        1. control your digital identity with an Ethereum address and ENS profile
+    * **Native payments**
+        * Web3 uses tokens like ETH to send money directly

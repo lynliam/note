@@ -1,0 +1,8 @@
+## 命令
+***
+
+1. netstat -tlunp
+查看端口占用情况
+2. ```find /home -name Hello.java```
+```find /etc -user root | more```
+查找文件

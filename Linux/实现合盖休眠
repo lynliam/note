@@ -1,0 +1,42 @@
+# 合盖休眠
+***
+* 情况一
+>创建了swap分区
+#####1. 直接执行
+* ```sudo blkid | grep swap```
+获得swap分区的UUID
+#####2. 给GRUB指定resume参数并更新grub.cfg
+* 给GRUB添加resume参数，以告知唤醒时从哪个分区加载内核
+* ```sudo vi /etc/default/grub  # 仅修改下面这行```
+* ```GRUB_CMDLINE_LINUX_DEFAULT="resume=UUID=22b7d10b-4e46-46e1-a040-e7d405d752b8"```
+* 如果是swapfile，还要额外指定resume_offset参数
+* ```GRUB_CMDLINE_LINUX_DEFAULT="resume=/dev/sda2 resume_offset=548832"```
+#####3. 更新grub.cfg
+* ```sudo update-grub```
+#####4. 给update-initramfs指定resume参数并更新initrd.img
+* ```sudo vi /etc/initramfs-tools/conf.d/resume  # 仅写入下面这一行```
+* ```RESUME=UUID=22b7d10b-4e46-46e1-a040-e7d405d752b8```
+
+#####5. 重新生成支持唤醒的initrd.img
+* ```sudo update-initramfs -c -k all```
+
+#####6. 安装pm-utils和hibernate软件包
+* ```sudo apt install pm-utils hibernate```
+
+#####7. 安装软件包后执行下面命令测试休眠效果
+* ```sudo systemctl hibernate```
+
+#####8. 执行该命令后笔记本应该会休眠并关闭电源，如果没有，且提示以下错误：
+* ```Failed to hibernate system via logind: Not enough swap space for hibernation```
+
+#####9. 然后实现关盖休眠
+* 修改/etc/systemd/logind.conf文件，在[Login]部分添加如下行：
+```HandleLidSwitch=hibernate```
+   ```HandleLidSwitchExternalPower=hibernate```
+   ```HandleLidSwitchDocked=hibernate```
+
+* 参数的含义如下：
+1. ```HandleLidSwitch - 盖子关闭时触发，下面的两种情况除外。```
+2. ```HandleLidSwitchExternalPower - 如果系统连接到外部电源，则在盖子关闭时触发。```
+3. ```HandleLidSwitchDocked - 如果系统插入扩展坞，或者连接了多个显示器，则在盖子关闭时触发。```
+* 保存退出后还不能关盖休眠，需要重启后才可以。

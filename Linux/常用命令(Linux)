@@ -1,0 +1,267 @@
+常用CMD
+***
+
+* **文件类型**
+  
+  * -:正规文件
+    * data
+    * binary
+    * ascll
+  * l ：link文件
+  * d ：directory
+  * s ；数据接口文件
+  
+* 文件操作
+  * chgrp ：改变文件群组
+      ```
+      //example
+      //chgrp [-R] dirname/filename
+      // -R：改变连同次目录下所有文件
+    chgrp users initial_setup.bash
+    ```
+  * chmod ：改变文件权限
+    ```c
+    chmod [-R] xyz （file or directory）
+    //选项与参数：
+    //xyz : 就是刚刚提到的数字类型的权限属性，为 rwx 属性数值的相加。
+    // r:4 > w:2 > x:1
+    //-R : 进行递回（recursive）的持续变更，亦即连同次目录下的所有文件都会变更
+    
+    //另一种方式
+    //| chmod | u g o a | +（加入） -（除去） =（设置） | r w x | 文件或目录 |
+     chmod u=rwx,go=rx .bashrc
+    ```
+  * chown ：改变所有者
+    ```c
+    //example
+    //chown [-R] 帐号名称:群组名称 文件或目录
+    // -R：改变连同次目录下所有文件
+    chown root initial_setup.bash
+    ```
+  * ![image](E:\markdown\Linux\images\Linux_1.png)
+    * x 权限对于目录来说是是否能切换到此目录
+  * umask(文件默认权限)
+    * umask  -S rwx方式显示
+    * umask     显示被拿掉的权限数字
+
+  * 复制文件
+    ```c
+    cp original file  target file
+    ```
+
+
+* ####Linux目录
+  * /：根目录（所有的目录都是由根目录延伸出来的）
+    * /bin ；/bin放置的是在单人维护模式下还能够被操作的指令  e.g. cat, chmod, chown, date, mv, mkdir, cp, bash
+    * /boot ：这个目录主要在放置开机会使用到的文件
+    * /dev ：任何设备与周边设备都是以文件的型态存在于这个目录当中的
+    * /etc ：系统主要的配置文件几乎都放置在这个目录内
+
+      * /etc/opt这个目录在放置第三方协力软件 /opt 的相关配置文件
+
+      * /etc/X11/（建议）：与 X Window 有关的各种配置文件都在这里，尤其是 xorg.conf 这个 X Server 的配置文件。
+      * /etc/sgml/ （建议）：与 SGML 格式有关的各项配置文件
+      * /etc/xml/（建议）：与 XML格式有关的各项配置文件
+    * /lib ：/lib放置的则是在开机时会用到的函数库
+    * /media：下面放置的就是可移除的设备
+    * /mnt：暂时挂载某些额外的设备
+    * /opt：第三方协力软件放置的目录。
+    * /run：系统开机后所产生的各项信息
+    * /srv：一些网络服务启动之后，这些服务所需要取用的数据目录
+    * /tmp：一般使用者或者是正在执行的程序暂时放置文件的地方
+    * /home：系统默认的使用者主文件夹（home directory）
+    * /root：
+    * /lost+found：
+    * /proc：虚拟文件系统
+    * /sys：一个虚拟的文件系统，主要也是记录核心与系统硬件信息较相关的信息
+  * /usr（Unix Software Resource）：
+    * /usr/bin/
+    * /usr/lib/
+    * /usr/sbin/
+    * /usr/share/
+    * **以下为推荐目录***
+    * /usr/include/
+    * /usr/games/
+    * /usr/src/
+    * /usr/libexec/
+
+  * /var：
+    * /var &emsp; ***目录主要针对常态性变动的文件，包括高速缓存（cache）、登录文件（log file）以及某些软件运行所产生的文件***
+    * /var/cache/ &emsp;  ***程序运行过程中产生的一些暂存盘***
+    * /var/lib/ &emsp; ***程序本身执行的过程中，需要使用到的数据文件放置的目录。在此目录下各自的软件应该要有各自的目录***
+    * /var/lock/ &emsp; ***某些设备或者是文件资源一次只能被一个应用程序所使用***
+    * /var/log/ &emsp; ***登录文件放置的目录***
+    * /var/run/ &emsp; ***某些程序或者是服务启动后，会将他们的PID放置在这个目录下***
+    * /var/spool/ &emsp; ***这个目录通常放置一些伫列数据，所谓的“伫列”就是排队等待其他程序使用的数据啦***
+
+
+
+* ####文件目录和路径
+  * 绝对路径 &emsp; ***所以绝对正确，不易出错***
+  * 相对路径
+    ```c
+    .           //代表此层目录
+    ..          //代表上一层目录
+    -           //代表前一个工作目录
+    ~           //代表“目前使用者身份”所在的主文件夹
+    ~account    //代表 account 这个使用者的主文件夹（account是个帐号名称）
+    ```
+
+
+  * **处理CMD**
+    * grep (查找命令)
+    * cd &emsp; change directory
+      ```
+      cd [相对路径或绝对路径]
+      ```
+    * pwd &emsp; 显示当前目录
+      ```c
+      pwd [-P]
+      //选项与参数：-P ：显示出确实的路径，而非使用链接 （link） 路径。
+      ```
+    * mkdir &emsp; 创建目录
+      ```c
+      mkdir [-mp] directory
+      //选项与参数：
+      //-m ：设置文件的权限喔！直接设置，不需要看默认权限 （umask） 的脸色～
+      //-p ：帮助你直接将所需要的目录（包含上层目录）递回创建起来！
+      //example :
+      mkdir -m 711 test2
+      ```
+    * rmdir  &emsp; 删除空的目录
+      ```
+      rmdir [-p] 目录名称
+      //选项与参数：
+      //-p ：连同“上层”“空的”目录也一起删除
+      ```
+
+    * $PATH（环境变量）
+      * echo $PATH ：  &emsp;显示环境变量
+      * PATH="${PATH}:/root"  &emsp; 添加环境变量
+        ```c
+        //除了 $PATH 之外，如果想要更明确的定义出变量的名称，可以使用大括号 ${PATH} 来处理变量的调用
+        ```
+    * 隐藏属性
+      *  lsattr
+      *  chattr  （设置隐藏属性）
+
+
+* Vi和Vim
+  * 一般指令模式
+  * 编辑模式
+  * 命令行界面
+
+
+
+* **文件与文件系统的压缩，打包和备份**
+    * Linux常见压缩指令
+      * *.zip   &emsp;  &emsp; &emsp; zip 程序压缩的文件；
+      * *.gz     &emsp;  &emsp; &emsp;    gzip 程序压缩的文件；
+      * *.bz2     &emsp;  &emsp; &emsp;   bzip2 程序压缩的文件；
+      * *.xz     &emsp;  &emsp; &emsp;    xz 程序压缩的文件；
+      * *.tar     &emsp;  &emsp; &emsp;   tar 程序打包的数据，并没有压缩过；
+      * *.tar.gz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 gzip 的压缩
+      * *.tar.bz2  &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 bzip2 的压缩
+      * *.tar.xz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 xz 的压缩
+
+    *
+      ```
+      gzip [-cdtv#] 文件名
+      zcat 文件名.gz
+      选项与参数：
+      -c ：将压缩的数据输出到屏幕上，可通过数据流重导向来处理；
+      -d ：解压缩的参数；
+      -t ：可以用来检验一个压缩文件的一致性～看看文件有无错误；
+      -v ：可以显示出原文件/压缩文件的压缩比等信息；
+      -# ：# 为数字的意思，代表压缩等级，-1 最快，但是压缩比最差、-9 最慢，但是压缩比最好！默认是 -6
+      ```
+      * zcat/zmore/zless 则可以对应于cat/more/less 的方式来读取纯文本文件被压缩后的压缩文件
+    * bzip2
+      * 指令和gzip一模一样
+        ```
+        -c ：将压缩的过程产生的数据输出到屏幕上！
+        -d ：解压缩的参数
+        -k ：保留原始文件，而不会删除原始的文件喔！
+        -z ：压缩的参数 （默认值，可以不加）
+        -v ：可以显示出原文件/压缩文件的压缩比等信息；
+        -# ：与 gzip 同样的，都是在计算压缩比的参数， -9 最佳， -1 最快！
+        ```
+        *
+      ```
+      xz [-dtlkc#] 文件名
+      [dmtsai@study ~]$ xcat 文件名.xz
+      选项与参数：
+      -d ：就是解压缩啊！
+      -t ：测试压缩文件的完整性，看有没有错误
+      -l ：列出压缩文件的相关信息
+      -k ：保留原本的文件不删除～
+      -c ：同样的，就是将数据由屏幕上输出的意思！
+      -# ：同样的，也有较佳的压缩比的意思！
+      ```
+
+
+    * tar
+    ```
+    [dmtsai@study ~]$ tar [-z&#124;-j&#124;-J] [cv] [-f 待创建的新文件名] filename... &lt;==打包与压缩
+    [dmtsai@study ~]$ tar [-z&#124;-j&#124;-J] [tv] [-f 既有的 tar文件名] &lt;==察看文件名
+    [dmtsai@study ~]$ tar [-z&#124;-j&#124;-J] [xv] [-f 既有的 tar文件名] [-C 目录] &lt;==解压缩
+    选项与参数：
+    -c ：创建打包文件，可搭配 -v 来察看过程中被打包的文件名（filename）
+    -t ：察看打包文件的内容含有哪些文件名，重点在察看“文件名”就是了；
+    -x ：解打包或解压缩的功能，可以搭配 -C （大写） 在特定目录解开
+    特别留意的是， -c, -t, -x 不可同时出现在一串命令行中。
+    -z ：通过 gzip 的支持进行压缩/解压缩：此时文件名最好为 *.tar.gz
+    -j ：通过 bzip2 的支持进行压缩/解压缩：此时文件名最好为 *.tar.bz2
+    -J ：通过 xz 的支持进行压缩/解压缩：此时文件名最好为 *.tar.xz
+    特别留意， -z, -j, -J 不可以同时出现在一串命令行中
+    -v ：在压缩/解压缩的过程中，将正在处理的文件名显示出来！
+    -f filename：-f 后面要立刻接要被处理的文件名！建议 -f 单独写一个选项啰！（比较不会忘记）
+    -C 目录 ：这个选项用在解压缩，若要在特定目录解压缩，可以使用这个选项。
+    其他后续练习会使用到的选项介绍：
+    -p（小写） ：保留备份数据的原本权限与属性，常用于备份（-c）重要的配置文件
+    -P（大写） ：保留绝对路径，亦即允许备份数据中含有根目录存在之意；
+    --exclude=FILE：在压缩的过程中，不要将 FILE 打包！
+    ```
+    ```
+    tar -jxv -f /root/etc.tar.bz2 etc/shadow
+    //单独解开压缩文件的某个文件
+    ```
+    ```
+     tar -jcv -f /root/system.tar.bz2 --exclude=/root/etc* \
+     //单独不压缩目录中的某些文件
+    ```
+
+
+
+
+
+* 设置环境变量
+
+  * 临时设置
+
+    ```
+    export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
+    ```
+
+  * 设置当前用户的全局变量
+
+    ```
+    //要先打开vim ~/.bashrc
+    //然后再添加
+    ```
+
+  * 使生效
+
+    ```
+    source .bashrc
+    ```
+
+  * 所有用户的全局变量
+
+    ```
+    vim /etc/profile
+     export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
+     source profile
+    ```
+
+    

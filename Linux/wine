@@ -1,0 +1,46 @@
+# wine
+***
+
+#####1. 安装
+* 如果您使用的是 64 位系统，请开启 32 bit 架构支持（如果您之前没有开启的话）：        \
+```sudo dpkg --add-architecture i386```
+
+* 下载添加仓库密钥：
+```wget -nc https://dl.winehq.org/wine-builds/winehq.key```
+```sudo apt-key add winehq.key```
+
+* 并添加仓库：
+```sudo add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ focal main'```
+
+* 更新安装包：
+```sudo apt-get update```
+
+* 安装稳定分支：
+```sudo apt-get install --install-recommends winehq-stable```
+
+* 验证安装情况：
+```wine --version```
+
+#####2. 配置
+* 配置wine环境
+```WINEARCH=win32 WINEPREFIX=/.../"wine-workspace" winecfg```
+
+* 添加DLL包
+
+```WINEARCH=win32 WINEPREFIX=/.../"wine-workspace" winetricks```
+
+
+
+
+#####3. 调整DPI解决窗口大小问题
+* 终端输入
+
+```env WINEPREFIX="$HOME/.deepinwine/Deepin-WeChat" winecfg```
+
+```//同理微信也是改个名字去查，其他方法不变```
+
+* 可以在路径里面加上
+
+```--force-device-scale-factor=1.6```
+
+#####4.
