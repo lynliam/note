@@ -49,4 +49,41 @@
 
 * ### 配置
 
+
+
+
+
+
+
+
+------
+
+* ### 使用
+
+  ```shell
+  git init #初始化
+  git remote add origin https://github.com/lynliam/xxx.git
+  git add .   #添加本地所有代码
+  git commit -m "提交备注"
+  git push origin 【分支名称】  #提交到远程仓库
+  ```
+
   
+
+------
+
+* ### 问题
+
+#### 关于Support for password authentication was removed on August 13, 2021报错的解决方案
+
+要去GitHub上把密码换成token
+
+```shell
+git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
+
+#  mytoken：
+#  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
+```
+
+
+
