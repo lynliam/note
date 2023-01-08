@@ -44,6 +44,8 @@
 * ```ros2 servoce call```
   *  ```shell
      ros2 service call <service_name> <service_type> <arguments>
+     
+     arguments 中的参数和参数名后的:之间要有空格·······！！！！！
      ```
   
     

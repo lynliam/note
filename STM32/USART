@@ -1,6 +1,20 @@
-##USART的使用
+# USART的使用
+
 ***
+* 波特率
+
+> 
+> $$
+> Tx/Rx波特率 =\frac{f_{CK}}{(16*USARTDIV)}
+> $$
+> 
+
+* 奇偶校验
+
+多一位奇偶校验位
+
 * 重定向函数
+
 ```C++
 HAL_UART_Transmit( &UartHandle,(uint8_t *)(str + k) ,1,1000);
 
@@ -31,7 +45,9 @@ return (ch);
 	5. 使能 USART；
 	6. 在 USART 接收中断服务函数实现数据接收和发送。
 
-* 中断类型
+* 中断类型 
+
+* ![](E:\markdown\STM32\image\14.png)
 
   * 串口接收中断(使能串口接受中断RXEN后，串口接受一个数据包 ，一帧 （通常 8位数据位，一位结束位）则进入中断。)
 

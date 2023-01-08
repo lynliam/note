@@ -1,9 +1,7 @@
-#Linux折腾史
-***
+# Linux折腾史
 
-##Linux安装
+### 安装
 
-###安装
 1. 关闭security boot
 2. 调整usb启动顺序
 3. windows11下按着shift+重启键可以进疑难解答—＞uefi管理（进BIOS）
@@ -13,7 +11,8 @@
 
 
 ***
-###分区
+### 分区
+
 1. /根目录
 2.  swap  交换分区，和运行内存相关
 3.  /var  系统运行时要改变的数据
@@ -26,7 +25,7 @@
 
 ***
 
-###换源
+### 换源
 
 更换源
 1. 备份原来的源
@@ -35,17 +34,19 @@
 ```sudo chmod 777 /etc/apt/sources.list```
 3. 编辑     ```sudo gedit /etc/apt/sources.list```
 
-####阿里源
-    deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-    deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-    deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-    deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-    deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-    deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+#### 阿里源
+
+​    deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+​    deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+​    deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+​    deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+​    deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+​    deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+​    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+​    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+​    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+​    deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+
 #### 清华源
     deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
     deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic main restricted universe multiverse
@@ -57,22 +58,23 @@
     deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
     deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
     deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
-####中科大源
-    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
-    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
-    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
-    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
-    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
-    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
-    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
-    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
-    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
-    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+#### 中科大源
+
+​    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+​    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic main restricted universe multiverse
+​    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+​    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-updates main restricted universe multiverse
+​    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+​    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-backports main restricted universe multiverse
+​    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+​    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-security main restricted universe multiverse
+​    deb https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
+​    deb-src https://mirrors.ustc.edu.cn/ubuntu/ bionic-proposed main restricted universe multiverse
 
 4. 更新源sudo apt-get update
 ***
 
-###时间问题：
+### 时间问题：
 
 Windows 与 Linux 缺省看待系统硬件时间的方式是不一样的：
 
@@ -83,7 +85,7 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
     sudo ntpdate time.windows.com
     sudo hwclock --localtime --systohc			//将本地时间更新到硬件上
 ***
-###禁用nouveau驱动
+### 禁用nouveau驱动
 
 * 创建配置文件：
 ```sudo gedit /etc/modprobe.d/blacklist_nouveau.conf```
@@ -102,10 +104,13 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
 
 * 不要遗漏sudo chmod 777 . 后面的“.”，表示当前路径，然后就可以保存创建的blacklist_nouveau.conf文件了。
 ***
-###卸载Ubuntu
-#####1. 把开机启动项设为默认Windows启动
-#####2. 删除Ubuntu系统分区
-#####3. 进入windows系统，win+R--输入Diskpart
+### 卸载Ubuntu
+
+1. 把开机启动项设为默认Windows启动
+
+2. 删除Ubuntu系统分区
+
+3. 进入windows系统，win+R--输入Diskpart
 
 * ```list disk```
 
@@ -119,8 +124,9 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
 
 同样的方法，删掉/ /swap /home分区等。
 
-#####4. 用EasyUEFI----管理EFI启动项---删除ubuntu启动项
-#####5. 清除windows系统EFI中的ubuntu启动项
+#### 4. 用EasyUEFI----管理EFI启动项---删除ubuntu启动项
+
+#### 5. 清除windows系统EFI中的ubuntu启动项
 
 * 输入【Win】+【R】，输入【diskpart】打开diskpart；
 
@@ -134,7 +140,26 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
 
 ***
 
+### 装好NVIDIA显卡驱动后，切换核显
 
+```shell
+#切换intel
+sudo prime-select intel
+#切换nvidia
+sudo prime-select nvidia
+#显示当前显卡
+prime-select query
+```
+
+------
+
+### 安装cpufrequtils
+
+```shell
+sudo apt-get install cpufrequtils 
+cpufreq-set 
+cpufreq-info
+```
 
 
 
