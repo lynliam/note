@@ -85,5 +85,9 @@ git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
 #  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
 ```
 
+对远程仓库和本地仓库进行合并
 
+```shell
+git pull origin master --allow-unrelated-histories
+```
 
