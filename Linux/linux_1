@@ -157,7 +157,8 @@ prime-select query
 
 ```shell
 sudo apt-get install cpufrequtils 
-cpufreq-set 
+cpufreq-set -g powersave
+cpufreq-set -g performance
 cpufreq-info
 ```
 
