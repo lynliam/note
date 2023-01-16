@@ -56,7 +56,7 @@ git config --local --list
 
 
 
-![在这里插入图片描述](https://img-blog.csdnimg.cn/20200315141634525.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMzYzNDk1,size_16,color_FFFFFF,t_70)
+
 
 ### 4.1、init && clone
 
@@ -191,7 +191,122 @@ git reset HEAD [file-name]
 
   
 
-  
+  ### Revert
+
+  ```shell
+  git revert -n [commit-id]
+  git revert -n HEAD^^
+  ```
+
+  #### 撤回版本比较
+
+  - reset 切换版本是会删除丢弃最新的版本的，HEAD会直接跳到指定版本，但是还是可以通过reflog找回。
+
+  ![在这里插入图片描述](git_learn.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMzYzNDk1,size_16,color_FFFFFF,t_70.png)
+
+  - revert 会将指定的bug版本视为bug版，会将当前版本中的bug版的代码删除，生成新的commit覆盖掉当前commit，但是commit-id是不会变的。
+
+
+![在这里插入图片描述](git_learn.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMzYzNDk1,size_16,color_FFFFFF,t_70-1673787851573-3.png)
+
+### branch
+
+```git branch [branch-name]``` 创建分支
+
+```git branch``` 查看当前分支
+
+```git branch -a ```查看本地和远程的所有分支
+
+```git branch -r``` 查看远程所有分支
+
+```git branch -d [branch-name]``` 删除一个分支
+
+```git branch -D [branch-name]``` 强制删除一个没有合并的分支
+
+```git branch --set-upstream-to=origin/[branch-name] [branch-name]``` 把本地分支和远程分支进行连接
+
+### merge
+
+```git merge``` 合并本地```origin/[branch-name]```和```HEAD->[branch-name]```的代码，并同步到工作空间
+
+```git merge [branch-name]``` 用于合并指定分支到当前分支
+
+```git merge --quit``` 退出当前分支合并，当合并后冲突很多，要撤回合并分支就可以用这个命令
+
+```git merge --no-ff -m [massage] [branch-name] ```不使用Fast forward合并分支，这样会创建新的commit，所以需要massage。这样被合并的分支HEAD指向是会变的。
+
+如果使用了Fast forward方式合并分支，那么删除次要分支的时候历史分支记录也会被删除，这样就无法追寻分支合拼信息了。
+
+### switch
+
+```git switch -c [branch-name] ```创建新分支并切换到该分支
+
+```git switch [branch-name]``` 切换到已有分支
+
+### stash
+
+```git stash``` 隐藏当前工作的修改
+
+如果不隐藏自己修改的半成品代码，就会发生切换到别的分支后，将然后自己的半成品代码带入其他分支，这样就发生很多不必要的麻烦。
+git stash save message 执行存储时，添加备注，方便查找，只有git stash 也要可以的，但查找时不方便识别。
+
+```git stash list ```查看隐藏的工作信息列表
+
+```git stash drop``` 删除隐藏的工作信息
+
+```git stash pop``` 恢复隐藏的工作信息，同时删除隐藏的工作信息
+
+```git stash apply [stash@{0}] ```恢复指定的隐藏工作信息，但是不会删除隐藏的工作信息
+
+### cherry-pick
+
+```git cherry-pick [commit-id]``` 这个是复制一次commit提交，然后在当前分支上重新提交一遍；也就是将指定commit的合并到当前分支；
+
+这种适用于在其他分支上修复了bug，但是这个bug在当前分支上依然存在，所以可以复制这个commit的过程，不必重写代码。
+
+### remote
+
+```git remote add origin``` 远程地址 关联远程仓库
+
+```git remote``` 查看本地添加了哪些远程分支地址
+
+```git remote -v ```查看本地添加了哪些远程分支地址更详细信息
+
+```git remote remove origin ```删除本地指定的远程地址
+
+### fetch
+
+```git fetch``` 拉取远程分支最新的```commit```到本地仓库的```origin/[branch-name]```
+
+### pull
+
+``git pull`` 从远程仓库拉取代码到工作空间
+
+```pull ``和`` fetch``的关系
+
+```git pull == git fetch + git merge```
+
+### tag
+
+```git tag``` 查看所有标签
+
+```git tag [version]``` 给当前最新的```commit```打上标签
+
+```git tag [version] [commit-id]``` 给指定的```commit-id```打上标签
+
+```git tag -a [version] -m [massage] [commit-id]``` 给指定的```commit-id```打上标签并附上说明文字
+
+```git tag -d [version]``` 删除标签
+
+### show
+
+```git show [tag-name]``` 查看标签的详细信息
+
+### rebase
+
+```git rebase -i HEAD~2``` 合并前两个历史提交，会弹出vim修改信息，修改第二行的pick为s，或者为squash，squash为合并的意识，然后保存退出编辑，会打开第二个vim编辑，合并并修改commit内容，保存退出会产生一个新的commit id，这样就合并了两个commit.
+
+
 
 ## 文件状态
 

@@ -29,10 +29,12 @@
 
 更换源
 1. 备份原来的源
-```sudo cp -v /etc/apt/sources.list /etc/apt/sources.list.backup```
+  ```sudo cp -v /etc/apt/sources.list /etc/apt/sources.list.backup```
 2. 终端执行chmod命令更改文件权限使软件源文件可编辑：
-```sudo chmod 777 /etc/apt/sources.list```
+  ```sudo chmod 777 /etc/apt/sources.list```
 3. 编辑     ```sudo gedit /etc/apt/sources.list```
+
+如果你已添加 PPA 仓库，请查看 `/etc/apt/sources.list.d/` 目录并删除相应的条目
 
 #### 阿里源
 
