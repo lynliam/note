@@ -57,6 +57,7 @@ mkdir xx_interfaces/msg
 cd ./msg
 #注意:msg文件开头首字母一定要大写
 #名字中不能出现下划线！！！！！！！！！！！！！！！
+#若单词中间有大写，则对应的hpp文件名会自动加上_和字母进行小写
 touch Xxx.msg
 code xxx.msg
 
