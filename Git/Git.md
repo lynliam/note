@@ -78,9 +78,11 @@
 
 要去GitHub上把密码换成token
 
+***token会过期***
+
 ```shell
 git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
-
+https://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@github.com/lynliam/note.git
 #  mytoken：
 #  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
 ```
