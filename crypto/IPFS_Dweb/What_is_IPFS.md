@@ -91,3 +91,4 @@ structure:
 +------------------------------+
 ```
 
+![Results from the CID Inspector tool for the first example](What_is_IPFS.assets/T0006L06-example-1.png)
