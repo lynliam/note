@@ -1,5 +1,7 @@
 # How IPFS works
 
+As a protocol for peer-to-peer data storage and delivery, IPFS is a *public network*: Nodes participating in the network store data affiliated with globally consistent [content addresses](https://docs.ipfs.tech/concepts/content-addressing/) (CIDs) and advertise that they have those CIDs available for other nodes to use through publicly viewable [distributed hash tables](https://docs.ipfs.tech/concepts/dht/) (DHTs).
+
 There are three fundamental principles to understanding IPFS:
 
 1. Unique identification via content addressing

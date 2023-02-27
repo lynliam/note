@@ -64,7 +64,7 @@ IPFS only works well when people are actively participating. IPFS is based on th
 
 
 
-### CIDs  (Content Idendifiers)
+## CIDs  (Content Idendifiers)
 
 > [learn CIDs](https://docs.ipfs.tech/concepts/content-addressing/#what-is-a-cid)
 
@@ -92,3 +92,5 @@ structure:
 ```
 
 ![Results from the CID Inspector tool for the first example](What_is_IPFS.assets/T0006L06-example-1.png)
+
+![Multibase Prefix](What_is_IPFS.assets/T0006L05-multibase-prefix.png)
