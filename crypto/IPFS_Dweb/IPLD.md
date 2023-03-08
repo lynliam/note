@@ -1,6 +1,6 @@
 # Interplanetary Linked Data (IPLD) [project](https://ipld.io/docs/)
 
-**A data model for interoperable protocols.**
+**A data model for interoperable(互通) protocols.**
 
 IPLD translates between hash-linked data structures, allowing for the unification of the data across distributed systems. Through IPLD, links can be traversed across protocols, allowing you to explore data regardless of the underlying protocol.
 
