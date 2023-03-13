@@ -204,6 +204,25 @@ docker inspect  <the-container-id>
 
 
 
+## 容器数据卷：
+
+==实现数据持久化==，将容器内的目录挂载到本地上实现数据共享。
+
+```shell
+docker run -it -v 容器内目录:本地目录
+```
+
+### 具名挂载&&匿名挂载：
+
+```shell
+#匿名挂载
+docker run -d -P --name nginx01 -v /etc/nginx nginx
+#具名挂载
+docker run -d -P -v name01:/etc/nginx nginx 
+```
+
+
+
 ## concept
 
 ### Dockerfile
