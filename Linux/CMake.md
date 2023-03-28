@@ -260,6 +260,9 @@ LIBRARY_OUTPUT_PATH
 #比如SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake)
 #这时候你就可以通过 INCLUDE 指令来调用自己的模块了
 CMAKE_MODULE_PATH
+
+#分别用来重新定义最终结果的存放目录，前面我们已经提到了这两个变量。
+EXECUTABLE_OUTPUT_PATH 和 LIBRARY_OUTPUT_PATH
 ```
 
 

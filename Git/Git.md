@@ -90,6 +90,21 @@ https://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@github.com/lynliam/note.git
 对远程仓库和本地仓库进行合并
 
 ```shell
+#慎用！！！！！！！！
 git pull origin master --allow-unrelated-histories
+```
+
+git回退到上一个commit
+
+```shell
+#查看commit id
+git log
+
+#回退
+#回退到某个版本，只回退了commit的信息，如果还要提交，直接commit即可（修改的内容变成未add的状态），索引（暂存区）和工作目录的内容是不变的，在三个命令中对现有版本库状态改动最小。
+git reset --soft <commit id>
+
+#彻底回退到某个版本，本地的源码也会变为上一个版本的内容，所有修改的内容都会丢失， (修改的代码 不会变成未add的状态)。索引（暂存区）内容和工作目录内容都会变给定提交时的状态。
+git reset --hard <commit id>
 ```
 
