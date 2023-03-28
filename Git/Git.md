@@ -84,7 +84,10 @@
 git remote set-url origin https://<your_token>@github.com/<USERNAME>/<REPO>.git
 https://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@github.com/lynliam/note.git
 #  mytoken：
-#  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
+
+https://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@github.com/lynliam/note.git
+
+#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
 ```
 
 对远程仓库和本地仓库进行合并
