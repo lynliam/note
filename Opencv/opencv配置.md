@@ -1,6 +1,12 @@
 # 安装
 
-## 一、环境包安装
+##  一、Windows版本安装
+
+
+
+## 二、Ubuntu版本安装
+
+### 一、环境包安装
 
 ```bash
 #第一二三行必选
@@ -13,7 +19,7 @@ $ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev li
 
 > 关于libjasper-dev包，不用安装
 
-## 二、下载编译安装
+### 二、下载编译安装
 
 ```shell
 cd ~/opencv-4.7.0
@@ -43,38 +49,59 @@ sudo make -j12
 sudo make install
 ```
 
-## 三、环境配置
+### 三、环境配置
 
-### 1.修改etc/bash.bashrc
+#### 1.修改etc/bash.bashrc
 
-我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在/usr/local/lib/pkgconfig下生成了opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
+我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在/usr/lib/pkgconfig下生成了opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
 
 ```shell
+#搜索opencv.pc文件目录
+find / -iname opencv4.pc
+
+#法一（未成功）：
 sudo gedit /etc/bash.bashrc
 
 #文件末尾添加以下内容 并保存
-PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/lib/pkgconfig
 export PKG_CONFIG_PATH
  
 #更新
 source /etc/bash.bashrc
 
+#法二（成功）：
+sudo vim /etc/profile.d/pkgconfig.sh
+
+#文件末尾添加以下内容 并保存
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+
+#保存并退出后激活：
+source /etc/profile
+
 ```
 
-### 2.修改动态库
+#### 2.修改动态库
 
 ```shell
 #打开下列文件
 sudo gedit /etc/ld.so.conf.d/opencv.conf 
  
 # 添加lib路經 在 末尾 保存退出
-/usr/local/lib
+/usr/lib
  
 # 更新
 sudo ldconfig
 ```
 
-## 四、测试
+#### 3.更新
+
+```shell
+sudo updatedb
+```
+
+
+
+### 四、测试
 
 ```shell
 #终端输入以下两命令，显示正常则安装成功
@@ -93,7 +120,7 @@ make
 
 
 
-## 五、Bug解决
+### 五、Bug解决
 
 1. ```Gtk-Message: 14:00:08.135: Failed to load module "canberra-gtk-module"```
 
@@ -105,3 +132,19 @@ sudo apt install libcanberra-gtk-module
 
 
 
+2. ```opencv 420.ddl 缺失```
+
+解决办法：
+
+在项目设置的调试中添加环境变量：
+
+```PATH=D:\Program Files\opencv\source\opencv\build\x64\vc15\bin $(LocalDebuggerEnvironment)```
+
+
+
+3. ```sudo updatedb sudo updatedb``` 的时候，显示“```sudo updatedb```找不到命令”
+
+解决方法：
+
+执行 `apt-get install mlocate`
+ 安装完成 `sudo updatedb`
