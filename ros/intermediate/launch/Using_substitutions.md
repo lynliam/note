@@ -26,6 +26,10 @@ setup(
 )
 ```
 
+> glob是python中的内置模块，该模块主要是用来查找文件与目录的。glob模块是按照 Unix shell 所使用的规则找出所有匹配特定模式的路径名称。我们只需要了解该模块的匹配规则与常用函数，就会使文件查找，路径匹配变得非常快捷简单。
+
+
+
 ## 2. Parent launch file
 
 create a launch file that will call and pass arguments to another launch file:
