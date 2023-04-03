@@ -7,7 +7,7 @@ apt 代理设置主要可以分为以下三种方式：
 ## 1.环境变量法：
 
 ```shell
-export http_proxy=http://127.0.0.1:8000
+export http_proxy=http://127.0.0.1:7890
 apt-get update
 ```
 
@@ -16,7 +16,7 @@ apt-get update
 ## 2.临时命令：
 
 ```shell
-sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8000/" update
+sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:7890/" update
 ```
 
 
@@ -26,9 +26,9 @@ sudo apt-get -o Acquire::http::proxy="http://127.0.0.1:8000/" update
 修改 `/etc/apt/apt.conf`，增加如下配置：
 
 ```shell
-Acquire::http::proxy "http://127.0.0.1:8000/";
-Acquire::ftp::proxy "ftp://127.0.0.1:8000/";
-Acquire::https::proxy "https://127.0.0.1:8000/";
+Acquire::http::proxy "http://127.0.0.1:7890/";
+Acquire::ftp::proxy "ftp://127.0.0.1:7890/";
+Acquire::https::proxy "https://127.0.0.1:7890/";
 ```
 
 > 这种方式会将代理设置持久化配置，但是不够灵活，如果代理出现问题需要再次修改配置文件进行调整。

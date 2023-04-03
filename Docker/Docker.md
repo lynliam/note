@@ -140,6 +140,10 @@ docker kill  <the-container-id>
 
 
 
+```
+docker run -d -it --name mcl --network host -v ${PWD}/qq/plugins:/app/plugins -v ${PWD}/qq/config:/app/config -v   ${PWD}/qq/data:/app/data -v ${PWD}/qq/bots:/app/bots --restart unless-stopped kagurazakanyaa/mcl:latest
+```
+
 ### 常用其他命令：
 
 #### 后台启动容器
