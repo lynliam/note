@@ -206,7 +206,9 @@ docker inspect  <the-container-id>
   # docker attach   进入正在执行的终端，不会启动新的进程
   ```
 
+![点击查看图片来源](/media/lynliam/data/markdown/Docker/Docker.assets/2363254-20211002145236621-74451512.png)
 
+![点击查看图片来源](/media/lynliam/data/markdown/Docker/Docker.assets/1512400-20200709142410215-1511709418.png)
 
 ## 容器数据卷：
 
@@ -224,6 +226,16 @@ docker run -d -P --name nginx01 -v /etc/nginx nginx
 #具名挂载
 docker run -d -P -v name01:/etc/nginx nginx 
 ```
+
+
+
+## DockerFile
+
+```shell
+docker history <docker-id>
+```
+
+
 
 
 
@@ -297,3 +309,4 @@ docker tag getting-started YOUR-USER-NAME/getting-started
 3. Persist the DB(DataBase):
 
 The container’s filesystem: the data is being **wiped clean** every single time we launch the container.
+
