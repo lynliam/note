@@ -26,6 +26,8 @@ install(DIRECTORY
 
 ## 3. launch file
 
+> Inside your `launch` directory, create a new launch file called `_launch.py`.
+
 ```shell
 import launch
 import launch_ros.actions
@@ -44,6 +46,8 @@ def generate_launch_description():
 ## 4.launch
 
 ```shell
+colcon build 
+
 ros2 launch cpp_launch_example my_script_launch.py
 ```
 

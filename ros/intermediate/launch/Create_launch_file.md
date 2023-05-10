@@ -1,5 +1,12 @@
 # Create a launch file
 
+### Backgroud:
+
+1. help the user describe the **configuration** of the programs
+2. reuse components throughout the system by giving different configuration
+3. monitoring the **state** of the processes
+4. reacting the changes
+
 ### example:
 
 ```python
@@ -35,7 +42,7 @@ def generate_launch_description():
     ])
 ```
 
-
+* 命名空间不同可以避免node和topic name冲突
 
 ### ros2 launch:
 
@@ -47,3 +54,10 @@ ros2 launch turtlesim_mimic_launch.py
 ros2 launch <package_name> <launch_file_name>
 ```
 
+> For packages with launch files, it is a good idea to add an `exec_depend` **dependency** on the `ros2launch` package in your package’s `package.xml`:
+>
+> ```
+> <exec_depend>ros2launch</exec_depend>
+> ```
+>
+> This helps make sure that the `ros2 launch` command is available after building your package. It also ensures that all [launch file formats](http://docs.ros.org/en/humble/How-To-Guides/Launch-file-different-formats.html) are recognized.

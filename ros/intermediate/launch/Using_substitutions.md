@@ -1,5 +1,7 @@
 # Using substitutions
 
+Substitutions can be used in arguments to provide more flexibility when describing reusable launch files and can be used to acquire specific information like a launch  configuration, an environment variable, or to evaluate an arbitrary  Python expression.
+
 ## 1. Create packages:
 
 ```shell
@@ -8,6 +10,8 @@ mkdir launch_tutorial/launch
 ```
 
 ```shell
+#这个文件就像cpp中的CMakeLists
+
 #Finally, make sure to add in changes to the setup.py of the package so that the launch files will be installed:
 
 import os
@@ -32,7 +36,7 @@ setup(
 
 ## 2. Parent launch file
 
-create a launch file that will call and pass arguments to another launch file:
+Create a launch file that will **call and pass arguments** to **another** launch file:
 
 ```python
 #FindPackageShare package is used to find path
