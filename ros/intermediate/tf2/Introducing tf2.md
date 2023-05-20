@@ -1,5 +1,17 @@
 # Introducing **tf2**
 
+tf2 is useful in a multi-robot example using turtlesim.
+
+Demo is using the tf2 library to create three coordinate frames: 
+
+* a `world` frame
+
+* a `turtle1` frame
+
+* a `turtle2` frame
+
+   This tutorial uses a **tf2 broadcaster** to **publish** the turtle coordinate frames and a **tf2 listener** to **compute the difference** in the turtle frames and move one turtle to follow the other.
+
 ## tf2 tools
 
 ```tf2-tools``` can look at what tf2 is doing behind the scenes----Who broadcast the frames and who receive the frame.
