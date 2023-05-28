@@ -226,3 +226,75 @@ $$
 
   	The situation the rotation angle of the middle gimbal is **parallel**, we say it lose **one degree of freedom**.
 
+
+
+### 3.4 Two Vector Representation
+
+For **arm-type** robots,  it is useful to consider a coordinate frame {E} attached to the end-effector. 
+
+$\widehat a = (a_x,a_y,a_z)$   ----------   represent z-zxis(called approach vector)
+
+$\widehat o = (o_x,o_y,o_z)$-------------   represent orientation.
+
+Two unit vectors are sufficient to define **the rotation matrix** (The remaining vector can be computed)
+$$
+R = \left \{
+\begin{matrix}
+n_x && o_x && a_x \\
+n_y && o_y && a_y \\
+n_z && o_z && a_z \\
+\end{matrix}
+\right\}
+$$
+
+### 3.5 Rotation about an Arbitrary Vector 
+
+Converting from angle and vector to a rotation matrix is achieved by this:
+$$
+R = I_{3*3}+sin{\theta}[\widehat v]_x+(1-cos\theta)[\widehat v]^2_x
+$$
+[v] is a **skew-symmetric matrix**
+
+### 3.6 Matrix Exponentials
+
+
+
+### 3.7 Unit Quaternions 
+
+The quaternion is an extension of the complex number.
+$$
+q=s+v \\
+=s+v_1i+v_2j+v_3k
+$$
+**Unit quaternion can be considered as rotation of $\theta$ about the unit vector $\widehat v$**
+$$
+q = \cos\frac{\theta}{2}<\widehat v\sin\frac{\theta}{2}>
+$$
+
+## POSE  in -Dimensions
+
+
+
+### Homogeneous Transformation Matrix
+
+**Point** Present:
+$$
+^AP=\left\{
+\begin{matrix}
+^AR_B & t\\
+0_{1×2} & 1
+\end{matrix}
+\right\}\ ^BP\\
+= ^AT_B\ ^BP
+$$
+$^AT_B$ is a homogeneous transformation matix.
+
+
+
+### Vector-Quaternion Pair
+
+ A compact and practical representation is **the vector** and **unit quaternion pair**
+
+* easy
+* singularity free
+
