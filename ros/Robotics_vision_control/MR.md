@@ -159,15 +159,74 @@ $$
 
 
 
-
+------
 
 ## Rigid-Body Motions and twists
 
 
 
+### Homogeneous Transformation Matrices
+
+**Definition 3.13:  ** The special Euclidean group SE(3), also known as the group of rigid-body motions or homogeneous transformation matrices in $R^3$, is the set of all **4 × 4** real matrices T of the form
+$$
+^AP=
+\begin{bmatrix}
+^AR_B & t\\
+0_{1×2} & 1
+\end{bmatrix}
+\ ^BP\\
+=^AT_B\ ^BP \\
+=
+\begin{bmatrix}
+r_{11} && r_{12} && r_{13} && p_1  \\
+r_{21} && r_{22} && r_{23} && p_2  \\
+r_{31} && r_{32} && r_{33} && p_3  \\
+0 && 0 && 0 && 1  
+\end{bmatrix}
+$$
+
+where $R ∈ SO(3)$ and $p ∈ R^3$ is a column vector.
 
 
 
+### Properties of Transformation Matrices
 
+#### Proposition 3.15. 
 
+The inverse of a transformation matrix T ∈ SE(3) is also a transformation matrix, and it has the following form:
+$$
+T^{-1} = \begin{bmatrix}
+R && p \\
+0 && 1
+\end{bmatrix}
+=  
+\begin{bmatrix}
+R^T && -R^Tp \\
+0 && 1
+\end{bmatrix}
+$$
+
+#### Rroposition 3.16. 
+
+The product of two transformation matrices is also a transformation matrix.
+
+#### Proposition 3.17.
+
+ The multiplication of transformation matrices is associative, so that $(T_1T_2)T_3 = T_1(T_2T_3)$, but generally not commutative: $T_1T_2 \neq T_2T_1$.
+
+#### Proposition 3.18. 
+
+Given T = (R, p) ∈ SE(3) and x, y ∈ R 3 , the following hold:
+
+1. $||T_X-T_Y|| = ||x-y||$ , where $||·||$ denotes the standard Euclidean norm in $R_3$ , i.e. , $||x|| = \sqrt {xTx}$.
+> standard Euclidean norm
+> 欧几里得范数指得就是通常意义上的距离范数。例如在欧式空间里，它表示两点间的距离(向量x的模长)。
+> 欧几里得范数就是三维空间中的距离向欧氏空间的延伸
+2. $<T_x-T_y, T y − T z> = <x - z, y − z>$ for all z $\in R^3$, where <.,.> denotes the standard Euclidean inner product $\in R^3, hx, yi = x^Ty$.
+
+### Use of Transformation Matrices
+
+* to represent the configuration (position and orientation) of a rigid body 
+*  to change the reference frame in which a vector or frame is represented
+*  to displace a vector or frame
 

@@ -108,3 +108,21 @@ git reset --soft <commit id>
 git reset --hard <commit id>
 ```
 
+
+
+git push 报错：
+
+```shell
+git push错误：RPC 失败。HTTP 408 curl 18 Transferred a partial file
+send-pack: unexpected disconnect while reading sideband packet
+```
+
+解决方法：
+
+```shell
+#原因分析：http缓存不够
+git config --global http.postBuffer 524288000
+```
+
+
+
