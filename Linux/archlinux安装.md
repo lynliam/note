@@ -57,9 +57,9 @@ lsblk
 cfdisk <硬盘编号>
 ```
 
-![img](archlinux.assets/49681f869a4357c27221f28aba9e84b83f51bc5c.png@942w_494h_progressive.webp)
+![img](archlinux安装.assets/49681f869a4357c27221f28aba9e84b83f51bc5c.png@942w_494h_progressive.webp)
 
-![img](archlinux.assets/1c906510ffefca62f98f1cb039d2c86ea87cd916.png@942w_494h_progressive.webp)
+![img](archlinux安装.assets/1c906510ffefca62f98f1cb039d2c86ea87cd916.png@942w_494h_progressive.webp)
 
 在分区管理界面，可以使用上、下、左、右键移动位置。对于 Arch Linux，以下分区是必须要有的：
 
@@ -90,7 +90,7 @@ Enter new partition name，输入分区名，回车。
 
 与创建根分区方法类似，在分区大小和 Hex code or GUID 上有所不同，Hex code or GUID 应为 8200。
 
-![img](archlinux.assets/b3893cb41b072df83ba09532d9c1102e293283b6.png@942w_437h_progressive.webp)
+![img](archlinux安装.assets/b3893cb41b072df83ba09532d9c1102e293283b6.png@942w_437h_progressive.webp)
 
 ### 分区格式化：
 
