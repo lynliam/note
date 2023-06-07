@@ -1,150 +1,158 @@
-常用CMD
+# 常用CMD
+
 ***
 
-* **文件类型**
-  
-  * -:正规文件
-    * data
-    * binary
-    * ascll
-  * l ：link文件
-  * d ：directory
-  * s ；数据接口文件
-  
-* 文件操作
-  * chgrp ：改变文件群组
-      ```
-      //example
-      //chgrp [-R] dirname/filename
-      // -R：改变连同次目录下所有文件
-    chgrp users initial_setup.bash
-    ```
-  * chmod ：改变文件权限
+## **文件类型**
+
+* -:正规文件
+  * data
+  * binary
+  * ascll
+* l ：link文件
+* d ：directory
+* s ；数据接口文件
+
+## 文件操作
+
+### chgrp ：改变文件群组
+
+```
+//example
+//chgrp [-R] dirname/filename
+// -R：改变连同次目录下所有文件
+chgrp users initial_setup.bash
+```
+
+### chmod ：改变文件权限
+
+```c
+chmod [-R] xyz （file or directory）
+//选项与参数：
+//xyz : 就是刚刚提到的数字类型的权限属性，为 rwx 属性数值的相加。
+// r:4 > w:2 > x:1
+//-R : 进行递回（recursive）的持续变更，亦即连同次目录下的所有文件都会变更
+
+//另一种方式
+//| chmod | u g o a | +（加入） -（除去） =（设置） | r w x | 文件或目录 |
+ chmod u=rwx,go=rx .bashrc
+```
+
+### chown ：改变所有者
+
+```c
+//example
+//chown [-R] 帐号名称:群组名称 文件或目录
+// -R：改变连同次目录下所有文件
+chown root initial_setup.bash
+```
+
+* ![image](E:\markdown\Linux\images\Linux_1.png)
+  * x 权限对于目录来说是是否能切换到此目录
+* umask(文件默认权限)
+  * umask  -S rwx方式显示
+  * umask     显示被拿掉的权限数字
+
+* 复制文件
+  ```c
+  cp original file  target file
+  ```
+
+## Linux目录
+
+* /：根目录（所有的目录都是由根目录延伸出来的）
+  * /bin ；/bin放置的是在单人维护模式下还能够被操作的指令  e.g. cat, chmod, chown, date, mv, mkdir, cp, bash
+  * /boot ：这个目录主要在放置开机会使用到的文件
+  * /dev ：任何设备与周边设备都是以文件的型态存在于这个目录当中的
+  * /etc ：系统主要的配置文件几乎都放置在这个目录内
+
+    * /etc/opt这个目录在放置第三方协力软件 /opt 的相关配置文件
+
+    * /etc/X11/（建议）：与 X Window 有关的各种配置文件都在这里，尤其是 xorg.conf 这个 X Server 的配置文件。
+    * /etc/sgml/ （建议）：与 SGML 格式有关的各项配置文件
+    * /etc/xml/（建议）：与 XML格式有关的各项配置文件
+  * /lib ：/lib放置的则是在开机时会用到的函数库
+  * /media：下面放置的就是可移除的设备
+  * /mnt：暂时挂载某些额外的设备
+  * /opt：第三方协力软件放置的目录。
+  * /run：系统开机后所产生的各项信息
+  * /srv：一些网络服务启动之后，这些服务所需要取用的数据目录
+  * /tmp：一般使用者或者是正在执行的程序暂时放置文件的地方
+  * /home：系统默认的使用者主文件夹（home directory）
+  * /root：
+  * /lost+found：
+  * /proc：虚拟文件系统
+  * /sys：一个虚拟的文件系统，主要也是记录核心与系统硬件信息较相关的信息
+* /usr（Unix Software Resource）：
+  * /usr/bin/
+  * /usr/lib/
+  * /usr/sbin/
+  * /usr/share/
+  * **以下为推荐目录***
+  * /usr/include/
+  * /usr/games/
+  * /usr/src/
+  * /usr/libexec/
+
+* /var：
+  * /var &emsp; ***目录主要针对常态性变动的文件，包括高速缓存（cache）、登录文件（log file）以及某些软件运行所产生的文件***
+  * /var/cache/ &emsp;  ***程序运行过程中产生的一些暂存盘***
+  * /var/lib/ &emsp; ***程序本身执行的过程中，需要使用到的数据文件放置的目录。在此目录下各自的软件应该要有各自的目录***
+  * /var/lock/ &emsp; ***某些设备或者是文件资源一次只能被一个应用程序所使用***
+  * /var/log/ &emsp; ***登录文件放置的目录***
+  * /var/run/ &emsp; ***某些程序或者是服务启动后，会将他们的PID放置在这个目录下***
+  * /var/spool/ &emsp; ***这个目录通常放置一些伫列数据，所谓的“伫列”就是排队等待其他程序使用的数据啦***
+
+
+
+### 文件目录和路径
+
+* 绝对路径 &emsp; ***所以绝对正确，不易出错***
+* 相对路径
+  ```c
+  .           //代表此层目录
+  ..          //代表上一层目录
+  -           //代表前一个工作目录
+  ~           //代表“目前使用者身份”所在的主文件夹
+  ~account    //代表 account 这个使用者的主文件夹（account是个帐号名称）
+  ```
+
+### **处理CMD**
+
+* grep (查找命令)
+* cd &emsp; change directory
+  ```
+  cd [相对路径或绝对路径]
+  ```
+* pwd &emsp; 显示当前目录
+  ```c
+  pwd [-P]
+  //选项与参数：-P ：显示出确实的路径，而非使用链接 （link） 路径。
+  ```
+* mkdir &emsp; 创建目录
+  ```c
+  mkdir [-mp] directory
+  //选项与参数：
+  //-m ：设置文件的权限喔！直接设置，不需要看默认权限 （umask） 的脸色～
+  //-p ：帮助你直接将所需要的目录（包含上层目录）递回创建起来！
+  //example :
+  mkdir -m 711 test2
+  ```
+* rmdir  &emsp; 删除空的目录
+  ```
+  rmdir [-p] 目录名称
+  //选项与参数：
+  //-p ：连同“上层”“空的”目录也一起删除
+  ```
+
+* $PATH（环境变量）
+  * echo $PATH ：  &emsp;显示环境变量
+  * PATH="${PATH}:/root"  &emsp; 添加环境变量
     ```c
-    chmod [-R] xyz （file or directory）
-    //选项与参数：
-    //xyz : 就是刚刚提到的数字类型的权限属性，为 rwx 属性数值的相加。
-    // r:4 > w:2 > x:1
-    //-R : 进行递回（recursive）的持续变更，亦即连同次目录下的所有文件都会变更
-    
-    //另一种方式
-    //| chmod | u g o a | +（加入） -（除去） =（设置） | r w x | 文件或目录 |
-     chmod u=rwx,go=rx .bashrc
+    //除了 $PATH 之外，如果想要更明确的定义出变量的名称，可以使用大括号 ${PATH} 来处理变量的调用
     ```
-  * chown ：改变所有者
-    ```c
-    //example
-    //chown [-R] 帐号名称:群组名称 文件或目录
-    // -R：改变连同次目录下所有文件
-    chown root initial_setup.bash
-    ```
-  * ![image](E:\markdown\Linux\images\Linux_1.png)
-    * x 权限对于目录来说是是否能切换到此目录
-  * umask(文件默认权限)
-    * umask  -S rwx方式显示
-    * umask     显示被拿掉的权限数字
-
-  * 复制文件
-    ```c
-    cp original file  target file
-    ```
-
-
-* ####Linux目录
-  * /：根目录（所有的目录都是由根目录延伸出来的）
-    * /bin ；/bin放置的是在单人维护模式下还能够被操作的指令  e.g. cat, chmod, chown, date, mv, mkdir, cp, bash
-    * /boot ：这个目录主要在放置开机会使用到的文件
-    * /dev ：任何设备与周边设备都是以文件的型态存在于这个目录当中的
-    * /etc ：系统主要的配置文件几乎都放置在这个目录内
-
-      * /etc/opt这个目录在放置第三方协力软件 /opt 的相关配置文件
-
-      * /etc/X11/（建议）：与 X Window 有关的各种配置文件都在这里，尤其是 xorg.conf 这个 X Server 的配置文件。
-      * /etc/sgml/ （建议）：与 SGML 格式有关的各项配置文件
-      * /etc/xml/（建议）：与 XML格式有关的各项配置文件
-    * /lib ：/lib放置的则是在开机时会用到的函数库
-    * /media：下面放置的就是可移除的设备
-    * /mnt：暂时挂载某些额外的设备
-    * /opt：第三方协力软件放置的目录。
-    * /run：系统开机后所产生的各项信息
-    * /srv：一些网络服务启动之后，这些服务所需要取用的数据目录
-    * /tmp：一般使用者或者是正在执行的程序暂时放置文件的地方
-    * /home：系统默认的使用者主文件夹（home directory）
-    * /root：
-    * /lost+found：
-    * /proc：虚拟文件系统
-    * /sys：一个虚拟的文件系统，主要也是记录核心与系统硬件信息较相关的信息
-  * /usr（Unix Software Resource）：
-    * /usr/bin/
-    * /usr/lib/
-    * /usr/sbin/
-    * /usr/share/
-    * **以下为推荐目录***
-    * /usr/include/
-    * /usr/games/
-    * /usr/src/
-    * /usr/libexec/
-
-  * /var：
-    * /var &emsp; ***目录主要针对常态性变动的文件，包括高速缓存（cache）、登录文件（log file）以及某些软件运行所产生的文件***
-    * /var/cache/ &emsp;  ***程序运行过程中产生的一些暂存盘***
-    * /var/lib/ &emsp; ***程序本身执行的过程中，需要使用到的数据文件放置的目录。在此目录下各自的软件应该要有各自的目录***
-    * /var/lock/ &emsp; ***某些设备或者是文件资源一次只能被一个应用程序所使用***
-    * /var/log/ &emsp; ***登录文件放置的目录***
-    * /var/run/ &emsp; ***某些程序或者是服务启动后，会将他们的PID放置在这个目录下***
-    * /var/spool/ &emsp; ***这个目录通常放置一些伫列数据，所谓的“伫列”就是排队等待其他程序使用的数据啦***
-
-
-
-* #### 文件目录和路径
-  
-  * 绝对路径 &emsp; ***所以绝对正确，不易出错***
-  * 相对路径
-    ```c
-    .           //代表此层目录
-    ..          //代表上一层目录
-    -           //代表前一个工作目录
-    ~           //代表“目前使用者身份”所在的主文件夹
-    ~account    //代表 account 这个使用者的主文件夹（account是个帐号名称）
-    ```
-
-
-  * **处理CMD**
-    * grep (查找命令)
-    * cd &emsp; change directory
-      ```
-      cd [相对路径或绝对路径]
-      ```
-    * pwd &emsp; 显示当前目录
-      ```c
-      pwd [-P]
-      //选项与参数：-P ：显示出确实的路径，而非使用链接 （link） 路径。
-      ```
-    * mkdir &emsp; 创建目录
-      ```c
-      mkdir [-mp] directory
-      //选项与参数：
-      //-m ：设置文件的权限喔！直接设置，不需要看默认权限 （umask） 的脸色～
-      //-p ：帮助你直接将所需要的目录（包含上层目录）递回创建起来！
-      //example :
-      mkdir -m 711 test2
-      ```
-    * rmdir  &emsp; 删除空的目录
-      ```
-      rmdir [-p] 目录名称
-      //选项与参数：
-      //-p ：连同“上层”“空的”目录也一起删除
-      ```
-
-    * $PATH（环境变量）
-      * echo $PATH ：  &emsp;显示环境变量
-      * PATH="${PATH}:/root"  &emsp; 添加环境变量
-        ```c
-        //除了 $PATH 之外，如果想要更明确的定义出变量的名称，可以使用大括号 ${PATH} 来处理变量的调用
-        ```
-    * 隐藏属性
-      *  lsattr
-      *  chattr  （设置隐藏属性）
+* 隐藏属性
+  *  lsattr
+  *  chattr  （设置隐藏属性）
 
 
 * Vi和Vim
@@ -154,51 +162,52 @@
 
 
 
-* **文件与文件系统的压缩，打包和备份**
-    * Linux常见压缩指令
-      * *.zip   &emsp;  &emsp; &emsp; zip 程序压缩的文件；
-      * *.gz     &emsp;  &emsp; &emsp;    gzip 程序压缩的文件；
-      * *.bz2     &emsp;  &emsp; &emsp;   bzip2 程序压缩的文件；
-      * *.xz     &emsp;  &emsp; &emsp;    xz 程序压缩的文件；
-      * *.tar     &emsp;  &emsp; &emsp;   tar 程序打包的数据，并没有压缩过；
-      * *.tar.gz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 gzip 的压缩
-      * *.tar.bz2  &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 bzip2 的压缩
-      * *.tar.xz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 xz 的压缩
+### **文件与文件系统的压缩，打包和备份**
 
+* Linux常见压缩指令
+  * *.zip   &emsp;  &emsp; &emsp; zip 程序压缩的文件；
+  * *.gz     &emsp;  &emsp; &emsp;    gzip 程序压缩的文件；
+  * *.bz2     &emsp;  &emsp; &emsp;   bzip2 程序压缩的文件；
+  * *.xz     &emsp;  &emsp; &emsp;    xz 程序压缩的文件；
+  * *.tar     &emsp;  &emsp; &emsp;   tar 程序打包的数据，并没有压缩过；
+  * *.tar.gz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 gzip 的压缩
+  * *.tar.bz2  &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 bzip2 的压缩
+  * *.tar.xz   &emsp;  &emsp; &emsp;  tar 程序打包的文件，其中并且经过 xz 的压缩
+
+*
+```
+  gzip [-cdtv#] 文件名
+  zcat 文件名.gz
+  选项与参数：
+  -c ：将压缩的数据输出到屏幕上，可通过数据流重导向来处理；
+  -d ：解压缩的参数；
+  -t ：可以用来检验一个压缩文件的一致性～看看文件有无错误；
+  -v ：可以显示出原文件/压缩文件的压缩比等信息；
+  -# ：# 为数字的意思，代表压缩等级，-1 最快，但是压缩比最差、-9 最慢，但是压缩比最好！默认是 -6
+```
+  * zcat/zmore/zless 则可以对应于cat/more/less 的方式来读取纯文本文件被压缩后的压缩文件
+* bzip2
+  * 指令和gzip一模一样
+    ```
+    -c ：将压缩的过程产生的数据输出到屏幕上！
+    -d ：解压缩的参数
+    -k ：保留原始文件，而不会删除原始的文件喔！
+    -z ：压缩的参数 （默认值，可以不加）
+    -v ：可以显示出原文件/压缩文件的压缩比等信息；
+    -# ：与 gzip 同样的，都是在计算压缩比的参数， -9 最佳， -1 最快！
+    ```
     *
-      ```
-      gzip [-cdtv#] 文件名
-      zcat 文件名.gz
-      选项与参数：
-      -c ：将压缩的数据输出到屏幕上，可通过数据流重导向来处理；
-      -d ：解压缩的参数；
-      -t ：可以用来检验一个压缩文件的一致性～看看文件有无错误；
-      -v ：可以显示出原文件/压缩文件的压缩比等信息；
-      -# ：# 为数字的意思，代表压缩等级，-1 最快，但是压缩比最差、-9 最慢，但是压缩比最好！默认是 -6
-      ```
-      * zcat/zmore/zless 则可以对应于cat/more/less 的方式来读取纯文本文件被压缩后的压缩文件
-    * bzip2
-      * 指令和gzip一模一样
-        ```
-        -c ：将压缩的过程产生的数据输出到屏幕上！
-        -d ：解压缩的参数
-        -k ：保留原始文件，而不会删除原始的文件喔！
-        -z ：压缩的参数 （默认值，可以不加）
-        -v ：可以显示出原文件/压缩文件的压缩比等信息；
-        -# ：与 gzip 同样的，都是在计算压缩比的参数， -9 最佳， -1 最快！
-        ```
-        *
-      ```
-      xz [-dtlkc#] 文件名
-      [dmtsai@study ~]$ xcat 文件名.xz
-      选项与参数：
-      -d ：就是解压缩啊！
-      -t ：测试压缩文件的完整性，看有没有错误
-      -l ：列出压缩文件的相关信息
-      -k ：保留原本的文件不删除～
-      -c ：同样的，就是将数据由屏幕上输出的意思！
-      -# ：同样的，也有较佳的压缩比的意思！
-      ```
+  ```
+  xz [-dtlkc#] 文件名
+  [dmtsai@study ~]$ xcat 文件名.xz
+  选项与参数：
+  -d ：就是解压缩啊！
+  -t ：测试压缩文件的完整性，看有没有错误
+  -l ：列出压缩文件的相关信息
+  -k ：保留原本的文件不删除～
+  -c ：同样的，就是将数据由屏幕上输出的意思！
+  -# ：同样的，也有较佳的压缩比的意思！
+  ```
 
 
     * tar
@@ -236,34 +245,34 @@
 
 
 
-* 设置环境变量
+## 设置环境变量
 
-  * 临时设置
+* 临时设置
 
-    ```
-    export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
-    ```
+  ```
+  export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
+  ```
 
-  * 设置当前用户的全局变量
+* 设置当前用户的全局变量
 
-    ```
-    //要先打开vim ~/.bashrc
-    //然后再添加
-    ```
+  ```
+  //要先打开vim ~/.bashrc
+  //然后再添加
+  ```
 
-  * 使生效
+* 使生效
 
-    ```
-    source .bashrc
-    ```
+  ```
+  source .bashrc
+  ```
 
-  * 所有用户的全局变量
+* 所有用户的全局变量
 
-    ```
-    vim /etc/profile
-     export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
-     source profile
-    ```
+  ```
+  vim /etc/profile
+   export PATH=/home/yan/share/usr/local/arm/3.4.1/bin:$PATH
+   source profile
+  ```
 
 
 ```shell
@@ -315,5 +324,250 @@ sudo vim /etc/environment
 #有效期限：永久有效
 #用户局限：对所有用户
 ​
+```
+
+
+
+## find 命令：
+
+### 一、简介
+
+**`find [paths(查找路径)] [expression(查找条件)] [actions(处理动作)] 2>/dev/null`**
+
+>     find命令接受一个或多个路径(paths)作为搜索范围，并在该路径下递归搜索。
+>     
+>     即检索完指定目录后，还会对该目录下的子目录进行检索，直至检索完所有层级下文件
+>     
+>     默认情况下(不带任何搜索条件)，find命令会返回指定目录下的 所有文件 ，所以通常通过特定的 expression 对结果进行筛选
+>     
+>     find默认命令的 action 是 print ，将所有检索结果打印至标准输出
+>     
+>     可以通过自定义 action ，让 find 命令对搜索到的结果执行特定的操作
+>     
+>     由于权限等问题，可能查找报错，建议最后将报错重定向 2>/dev/null ，避免显示大量无用信息
+>
+
+### 二、搜索条件
+
+#### 名称
+
+```shell
+-name "文件名称": 区分大小写，支持使用glob 通配符 * ? []  [^]
+            
+-iname "文件名称"：不区分字母大小写
+                    
+-path "/path/name" : 匹配某个文件或目录的完整路径，而不仅仅是匹配文件名
+
+#example:
+# 查找 /usr 目录下所有文件名以 .txt 结尾的文件
+find /usr -name '*.txt'
+
+#查找 /usr 目录下所有文件名刚好为 4 个字符的文件
+find /usr -name '????'
+
+#查找 /usr 下所有文件名以 .txt 结尾的文件或目录，且该文件的父目录必须是 src
+find /usr -path '*/src/*.txt'	
+
+```
+
+#### 根据文件类型
+
+```shell
+-type 类型
+    f：普通文件
+    d：目录文件
+    l：符号链接文件
+    s：套接字文件
+    b：块设备文件
+    c：字符设备文件
+    p：管道文件
+    
+# 检索 /usr 下所有文件名以 python 开头的目录
+find /usr -type d -name 'python*'
+```
+
+#### 大小
+
+```shell
+-size [+|-] #Unit
+
+#Unit常用单位：K M G
+#+ 或 - 符号表示大于或小于当前条件
+
+#Unit : （#-1，#]
+-#Unit : [0,#-1] : 小于指定大小文件
++#Unix : (#,) : 大于指定大小文件
+
+# 查找大于100M的文件
+find / -size +100M 
+
+```
+
+#### 时间
+
+```shell
+Linux 系统中，与文件相关联的时间参数有以下三种：
+
+修改时间（Modification time）：最后一次文件内容有过更改的时间点
+访问时间（Access time）：最后一次文件有被读取过的时间点
+变更时间（Change time）：最后一次文件有被变更过的时间点（如内容被修改，或权限等 metadata 被修改）
+
+与此对应的是 find 命令中的 -mtime，-atime 和 -ctime 三个选项
+
+以"天"为单位
+    -atime [+|-]#
+        #: [#,#+1) : 这里的#表示#天之前的“一天之内”被访问过的文件
+        +#: [#+1,OO]: 列出在#天之前（不包含#天本身）被访问过的文件
+        -#: [0,#) : 列出在#天之内（包含#天本身）被访问过的文件
+        
+    -mtime [+|-]
+    -ctime [+|-]
+
+以"分钟"为单位
+    -amin
+    -mmin
+    -cmin
+    
+# 查找两天之前的一天内被访问的文件（距离现在的前48 ~ 72 小时之间）
+find -atime  2 
+
+# 查找距离此时2天内被访问的文件（距离现在前48小时之内）
+find -atime -2 
+
+# 两天之前，不包括两天之前的一天的被访问的文件（离此时72小时之前）
+find -atime +2 
+
+```
+
+#### 权限：
+
+```shell
+-perm [+|-] Mode
+Mode : 精确权限匹配            
++Mode ：任何一类(u,g,o)对象的权限中只要有一位匹配即可
+-Mode ：完全包含此mode时才可以匹配,每一类对象都必须同时拥有为其指定的权限标准
+
+
+# 查找在/tmp目录下权限是755的文件
+find  /tmp  -perm  755           
+
+# 表示必须所有类别用户都满足有写权限
+find  /tmp  -perm  -222        
+
+# 表示只要有一类用户（属主，属组，其他）的匹配写权限就行
+find  /tmp  -perm  +222
+```
+
+#### 文件所有权：
+
+```shell
+-user username ：查找属主为指定用户的文件
+-group groupname ：查找指定属组的文件
+
+-uid userid：查找属主为指定uid号的文件
+-gid groupid 查找属组为指定gid号的文件
+
+-nouser ：查找没有属主的文件
+-nogroup : 查找没有属组的文件
+
+# 查找/var目录下属主为root，且属组为mail的所有文件或目录、
+find /var -user root -a -group mail
+```
+
+#### 逻辑组合：
+
+```shell
+与 -a
+或 -o
+非 -not
+
+!A -a !B = !(A -o B)
+!A -o !B = !(A -a B)
+
+
+# 查找/etc目录下最近一周内其内容修改过，且属主不为root，也不是hadoop的文件或目录
+ find /etc -mtime -7 -not \( -user root -o -user hadoop \)
+ 
+ # 查找5分钟内或50分钟前被修改 ，并且 类型为文件的 所有文件
+ find / '(' -mmin -5 -o -mtime +50 ')' -a -type f
+```
+
+### 三、处理动作
+
+```shell
+-print ：默认的处理动作，显示至屏幕
+
+-ls ：类似于对查找到的文件执行 "ls -l"命令
+
+-delete ：删除查找到的文件
+
+-fls /path/to/somefile ：查找到的所有文件的长格式信息保存至指定文件中
+
+# 其中的大括号{}作为检索到的文件的 占位符 ，用于引用查找到的文件名称自身
+# 而分号（ ;）作为命令结束的标志, 需要转义 , 也可以用 + 号表示
+# -exec command {} \;  等同于 -exec command {} +
+
+
+-ok command {} \; 
+	对查找到的每个文件执行由command指定的命令
+    对于每个文件执行命令之前，都会交互式要求用户确认
+    
+-exec command {} \; 
+	对查找到的每个文件执行由command指定的命令
+
+
+# 浏览所有 1G 以上大小的文件的详细信息
+find / -type file -size +1G -ls 
+
+# 删除 home 目录下所有的空目录：
+find ~ -type d -empty -delete
+
+# 删除/var下空文件
+find /var -size 0 -type f -exec rm -rf {} \;
+
+
+# 删除海量文件，rm会很慢甚至卡死
+# 一般用 find 或 rsync 来删除大量文件
+# rsync 速度快于 find
+
+# 可以用 time 测试速度
+#time find ./ -type f -delete     
+find ./ -type f -delete  
+
+#  test  time find ./ -type f -exec rm {} \;
+find ./ -type f -exec rm {} \;  
+
+# 使用rsync进行删除
+# 首先建立空文件夹blanktest
+# time rsync -a --delete blanktest/ test/
+rsync -a --delete blanktest/ test/ 
+```
+
+> xargs（英文全拼： eXtended ARGuments）是给命令传递参数的一个过滤器，也是组合多个命令的一个工具。
+>
+> xargs 可以将管道或标准输入（stdin）数据转换成命令行参数，也能够从文件的输出中读取数据。
+
+```shell
+#find 结合 xargs
+# 将find查找的所有文件 作为参数传递给 grep进行过滤
+find /path | xargs grep -ri "string" 
+# 查找大于200M的文件，并显示具体大小
+find / -type f -size +200M 2>/dev/null | xargs du -sh
+
+# 查找大于200M的文件，并显示详细信息
+find / -type f -size +200M 2>/dev/null | xargs ls -l
+
+# 查找系统中 最大的 10 个文件
+find / -type f -exec du -sh {} + 2>/dev/null | sort -rh | head -n 10
+
+# 查找 /etc 下 文件内包含 "password" 的文件
+find /etc | xargs grep -ri "password" 
+
+# 遍历查找所有目录下的 Inode数量
+for i in /*; do echo $i; find $i  2>/dev/null | wc -l; done
+
+# 删除大与100M，时间在7天前的文件
+find /test -size +100M -mtime +7 -delete
+
 ```
 
