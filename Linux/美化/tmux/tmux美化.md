@@ -290,3 +290,8 @@ Set the label when there is one client, or more than one client
 set -g @dracula-clients-singular client
 set -g @dracula-clients-plural clients
 ```
+
+
+
+## 2. tmux 快捷键
+
