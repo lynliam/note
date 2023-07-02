@@ -820,6 +820,29 @@ import modname as md
 
 ## 类
 
+```python
+class ElectronicCar(Car):
+    def __init__(self, make, model, year):
+        '''初始化'''
+        super().__init__(make, model, year)
+        
+    def fill_gas_tank():       #重写父方法
+        """ddd"""
+        print("don't need tank")
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ## Python3输入输出
