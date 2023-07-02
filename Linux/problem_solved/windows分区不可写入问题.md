@@ -16,6 +16,12 @@ or fast restarting.)
 
 
 
+# ==一般情况为Windows 11 在休眠！！！！！！！==
+
+# ==进入Windows 正常关机即可==
+
+
+
 ## 解决方法：
 
 ### 1. 安装```ntfs-3g```
