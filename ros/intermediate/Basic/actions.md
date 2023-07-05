@@ -162,3 +162,54 @@ private:
 RCLCPP_COMPONENTS_REGISTER_NODE(action_tutorials_cpp::FibonacciActionServer)
 ```
 
+
+
+
+
+## Action_server:
+
+```c++
+rclcpp_action::GoalResponse handle_goal(
+            const rclcpp_action::GoalUUID &uuid,
+            std::shared_ptr<const Fibonacci::Goal> goal
+        ) ;
+
+rclcpp_action::CancelResponse handle_cancel(
+            const std::shared_ptr<GoalHandleFibonacci> goal_handle
+        );
+
+void handle_accepted(const std::shared_ptr<GoalHandleFibonacci> goal_handle)
+{
+    const auto goal = goal_handle->get_goal();
+    auto feedback = std::make_shared<Fibonacci::Feedback>();
+}
+```
+
+
+
+## Action_client:
+
+```c++
+void goal_response_callback(
+            const GoalHandleFibonacci::SharedPtr &goal_handle
+        )
+void feedback_callback(GoalHandleFibonacci::SharedPtr goal_handle, const std::shared_ptr<const Fibonacci::Feedback> feedback)
+
+void result_callback(const GoalHandleFibonacci::WrappedResult &result)
+{
+    switch (result.code) {
+            case rclcpp_action::ResultCode::SUCCEEDED:
+                break;
+            case rclcpp_action::ResultCode::ABORTED:
+                RCLCPP_ERROR(this->get_logger(), "Goal was aborted");
+               return;
+            case rclcpp_action::ResultCode::CANCELED:
+                RCLCPP_ERROR(this->get_logger(), "Goal was canceled");
+                return;
+            default:
+                RCLCPP_ERROR(this->get_logger(), "Unknown result code");
+                return;
+                }
+}
+```
+
