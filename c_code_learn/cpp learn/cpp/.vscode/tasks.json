@@ -1,0 +1,69 @@
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe 生成活动文件",
+            "command": "D:\\Program File\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+
+
+
+        "-I","D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/include",
+        "-I",
+        "D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/include/opencv2",
+        "-L",
+        "D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/x64/mingw/bin",
+        "-L",
+        "D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/x64/mingw/lib",
+        "-l",
+        "libopencv_calib3d455",
+        "-l",
+        "libopencv_core455",
+        "-l",
+        "libopencv_dnn455",
+        "-l",
+        "libopencv_features2d455",
+        "-l",
+        "libopencv_flann455",
+        "-l",
+        "libopencv_gapi455",
+        "-l",
+        "libopencv_highgui455",
+        "-l",
+        "libopencv_imgcodecs455",
+        "-l",
+        "libopencv_imgproc455",
+        "-l",
+        "libopencv_ml455",
+        "-l",
+        "libopencv_objdetect455",
+        "-l",
+        "libopencv_photo455",
+        "-l",
+        "libopencv_stitching455",
+        "-l",
+        "libopencv_video455",
+        "-l",
+        "libopencv_videoio455"
+
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        }
+    ],
+    "version": "2.0.0"
+}

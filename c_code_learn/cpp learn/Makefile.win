@@ -1,0 +1,28 @@
+# Project: 项目1
+# Makefile created by Embarcadero Dev-C++ 6.3
+
+CPP      = g++.exe
+CC       = gcc.exe
+WINDRES  = windres.exe
+OBJ      = C:/Users/Quan2/Desktop/si78c.o
+LINKOBJ  = C:/Users/Quan2/Desktop/si78c.o
+LIBS     = -L"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/lib" -L"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/lib" -static-libgcc
+INCS     = -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/include" -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include"
+CXXINCS  = -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/include" -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/x86_64-w64-mingw32/include" -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include" -I"D:/Program File (x86)/Dev/Dev-Cpp/TDM-GCC-64/lib/gcc/x86_64-w64-mingw32/9.2.0/include/c++"
+BIN      = 项目1.exe
+CXXFLAGS = $(CXXINCS) 
+CFLAGS   = $(INCS) 
+DEL      = D:\Program File (x86)\Dev\Dev-Cpp\devcpp.exe INTERNAL_DEL
+
+.PHONY: all all-before all-after clean clean-custom
+
+all: all-before $(BIN) all-after
+
+clean: clean-custom
+	${DEL} $(OBJ) $(BIN)
+
+$(BIN): $(OBJ)
+	$(CC) $(LINKOBJ) -o $(BIN) $(LIBS)
+
+C:/Users/Quan2/Desktop/si78c.o: C:/Users/Quan2/Desktop/si78c.c
+	$(CC) -c C:/Users/Quan2/Desktop/si78c.c -o C:/Users/Quan2/Desktop/si78c.o $(CFLAGS)
