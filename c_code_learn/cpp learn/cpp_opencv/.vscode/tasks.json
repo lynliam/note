@@ -1,0 +1,56 @@
+
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build it",
+            "type": "shell",
+            "command": "g++",
+            "args":[
+            "${fileBasename}",
+            "-o",
+            "${fileBasenameNoExtension}", 
+            "-ID:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/include",
+            "-LD:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/x64/mingw/bin",
+        "-l",
+        "libopencv_calib3d455",
+        "-l",
+        "libopencv_core455",
+        "-l",
+        "libopencv_dnn455",
+        "-l",
+        "libopencv_features2d455",
+        "-l",
+        "libopencv_flann455",
+        "-l",
+        "libopencv_gapi455",
+        "-l",
+        "libopencv_highgui455",
+        "-l",
+        "libopencv_imgcodecs455",
+        "-l",
+        "libopencv_imgproc455",
+        "-l",
+        "libopencv_ml455",
+        "-l",
+        "libopencv_objdetect455",
+        "-l",
+        "libopencv_photo455",
+        "-l",
+        "libopencv_stitching455",
+        "-l",
+        "libopencv_video455",
+        "-l",
+        "libopencv_videoio455",
+        "-l",
+        "opencv_ffmpeg455_64"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

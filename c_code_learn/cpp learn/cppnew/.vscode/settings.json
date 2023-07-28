@@ -1,0 +1,16 @@
+{
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "time.h": "c",
+        "cmath": "c",
+        "*.tcc": "c",
+        "string": "cpp",
+        "algorithm": "c",
+        "cstdlib": "c",
+        "stdio.h": "c"
+    },
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt -lgraphics64 -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus && $dir$fileNameWithoutExt"
+    },
+    "cmake.sourceDirectory": "d:\\cpp learn\\cpp"
+}

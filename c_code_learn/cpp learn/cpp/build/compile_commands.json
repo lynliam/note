@@ -1,0 +1,7 @@
+[
+{
+  "directory": "D:/cpp learn/cpp/build",
+  "command": "g++  @CMakeFiles/main.dir/includes_CXX.rsp -g -o CMakeFiles\\main.dir\\src\\main.cpp.obj -c \"D:\\cpp learn\\cpp\\src\\main.cpp\"",
+  "file": "D:/cpp learn/cpp/src/main.cpp"
+}
+]

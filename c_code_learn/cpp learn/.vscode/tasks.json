@@ -1,0 +1,47 @@
+{
+
+    "version": "2.0.0",
+   
+    "tasks": [
+   
+     {
+   
+      "type": "shell",
+   
+      "label": "gcc.exe build active file",//一定与preLaunchTask一致
+   
+      "command": "D:\\Program File\\mingw64\bin\\g++.exe", //改为你自己的路径
+   
+      "args": [
+   
+       "-g",
+   
+       "${file}",
+   
+       // "${fileDirname}\\printf.c",
+   
+       "-o",
+   
+       "${fileDirname}\\${fileBasenameNoExtension}.exe"
+   
+      ],
+   
+      "options": {
+   
+       "cwd": "D:\\Program File\\mingw64\\bin" //改为自己的路径的bin文件夹
+   
+      },
+   
+      "problemMatcher": [
+   
+       "$gcc"
+   
+      ],
+   
+      "group": "build"
+   
+     }
+   
+    ]
+   
+   }

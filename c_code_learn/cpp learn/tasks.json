@@ -1,0 +1,69 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "opencv4.1.0 compile task",
+            "type": "shell",
+            "command": "g++",
+            "args":[
+            "-g",
+            // "${fileBasename}",
+            "${workspaceRoot}\\${fileBasename}",
+            "-o",
+            "${workspaceRoot}\\${fileBasenameNoExtension}", 
+            // "${workspaceFolder}\\${fileBasenameNoExtension}.exe",
+            "-I",
+            "D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/include",
+            "-L",
+            "D:/Program Files/opencv/OpenCV-MinGW-Build-OpenCV-4.5.5-x64/x64/mingw/bin",
+        "-l",
+        "libopencv_calib3d455",
+        "-l",
+        "libopencv_core455",
+        "-l",
+        "libopencv_dnn455",
+        "-l",
+        "libopencv_features2d455",
+        "-l",
+        "libopencv_flann455",
+        "-l",
+        "libopencv_gapi455",
+        "-l",
+        "libopencv_highgui455",
+        "-l",
+        "libopencv_imgcodecs455",
+        "-l",
+        "libopencv_imgproc455",
+        "-l",
+        "libopencv_ml455",
+        "-l",
+        "libopencv_objdetect455",
+        "-l",
+        "libopencv_photo455",
+        "-l",
+        "libopencv_stitching455",
+        "-l",
+        "libopencv_video455",
+        "-l",
+        "libopencv_videoio455",
+            // "-l",
+            // "libopencv_videostab341"
+            "-l",
+            "opencv_ffmpeg455_64"
+            ],
+            "options": {
+                "cwd": "D:/Program File/mingw64/bin"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "presentation": { 
+                "panel": "new" //默认为“shared“表示共享，改成new之后每个进程创建新的端口
+            }
+        }
+    ]
+}
