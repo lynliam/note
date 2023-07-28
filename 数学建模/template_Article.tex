@@ -1,0 +1,36 @@
+\documentclass[UTF8]{ctexart}
+\usepackage{graphicx}
+\usepackage{amsmath}
+
+%opening
+\title{整数规划}
+\author{liam}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+整数规划即为\textit{变量是整数的规划}，一般指\textbf{线性规划}。不是所有的整数线性规划都能够求解。分为：
+\begin{enumerate}
+	\item 最优解全为整数
+	\item 无可行解
+	\item 有可行解但优解值变差
+\end{enumerate}
+\end{abstract}
+
+\section{0-1型整数规划}
+即变量仅取值0或1的整数规划。
+\subsection{相互排斥的约束条件}
+比如两个不等式中，同一时间只能满足一个，那么可以将其合并为一个等式，再加上一个非负约束条件，即可将其转化为0-1型整数规划。
+\begin{equation}
+\left\{
+	\begin{aligned}
+		x_1 + x_2 &\leq 1 \\
+		x_1 + x_2 &\geq 1
+	\end{aligned}
+\right.
+\end{equation}
+
+\end{document}
