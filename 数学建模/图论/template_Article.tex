@@ -1,0 +1,125 @@
+\documentclass[12pt,a4paper]{ctexart}
+
+\usepackage{subfigure}
+\usepackage[graphicx]{realboxes}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% (1) choose a font that is available as T1
+\usepackage{lmodern}
+% (2) specify encoding
+\usepackage[T1]{fontenc}
+% (3) load symbol definitions
+\usepackage{textcomp}
+
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+
+
+\definecolor{mygrey}{rgb}{0.945,0.945,0.945}
+\definecolor{myred}{rgb}{1, 0.49, 0.63}
+
+\lstset{
+breaklines=true,
+ basicstyle=\fontspec{Consolas},
+ columns=fixed,       
+ numbers=left,                                        % 在左侧显示行号
+ numberstyle=\tiny\color{gray},                       % 设定行号格式
+ frame=none,                                          % 不显示背景边框
+ backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+ keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+ numberstyle=\footnotesize\color{darkgray},           
+ commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+ stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+ showstringspaces=false,                              % 不显示字符串中的空格
+ %language=python,                                        % 设置语言
+}
+%\def\inline{\lstinline[basicstyle=\fontspec{微软雅黑},keywordstyle={}]}
+%opening
+\title{The Note of Graph Theory}
+\author{Liam}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+I hate definition!
+\end{abstract}
+
+\section{definition}
+\begin{center}
+    \colorbox{mygrey}{\color{myred}\textbf{simple graph}:}
+    \begin{itemize}
+        \item a non-empty finite set $V(G)$ of elements \textbf{vertices}
+        \item a finnite set $E(G)$ of distinct unordered pairs of deistinct elements \textbf{edges}
+        \item at most \textbf{one edge} joining a given pair of vertices
+    \end{itemize}
+\end{center}
+\begin{center}
+    \colorbox{mygrey}{\color{myred}\textbf{general graph}:}
+    \begin{itemize}
+        \item multiple edges
+        \item loops
+    \end{itemize}
+\end{center}
+\begin{center}
+    \colorbox{mygrey}{\color{myred}graph}
+    \begin{itemize}
+        \item a non-empty finite set $V(G)$ of elements \textbf{vertices}
+        \item a finnite family $E(G)$ of distinct unordered pairs of not necessarily deistinct elements \textbf{edges}
+        \item the use of \textcolor{myred}{family} permits the existence of multiple edge
+        \item vertex-set  edge-family
+    \end{itemize}
+\end{center}
+$\{v,w\}$ is said to join the vertices v , w and is again abbreviated to $vw$. Example : $vv$ 
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}isomorphism}
+    \begin{itemize}
+        \item one-one correspondence between the vertices of $G_1$ and those of $G_2$ such that the number of edges joining any two vertices of $G_1$ equals the number of edges joining the corresponding vertices of $G_2$
+        \item the \textbf{unlabelled graphs} and \textbf{labelled graphs} is different
+    \end{itemize}
+\end{center}
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}connected graphs}
+    \begin{itemize}
+        \item A graph is connected of it cannot be expressed as a union of graghs and disconnected otherwise.
+    \end{itemize}
+\end{center}
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}Adjacency and degrees}
+    \begin{itemize}
+        \item the $v,w$ is \textbf{adjacency} if there is an edge vw joining them. and $v,w$ are incident with such edge
+        \item degree of a vetex is the number of edges incident with itself.
+        \item A vetex of degree 0 is an isolated vertex 
+        \item A vetex of degree 1 is an end vertex 
+    \end{itemize}
+\end{center}
+The \textbf{degree sequence} of a graph consists of degrees written in \textbf{increasing order}
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}Handshaking lemma}\colorbox{mygrey}{In any graph the sum of all the vertex-degrees}
+    \colorbox{mygrey}{is an even number.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
+\end{center}
+\colorbox{mygrey}{\color{myred}Corollary}\colorbox{mygrey}{In any graph the number of vertices of odd degree is even.}
+\begin{center}
+    \colorbox{mygrey}{\color{myred}Subgraphs}
+    \begin{itemize}
+        \item A graph is a \textbf{subgraph} of graph G if each of its vertices belongs to $V(G)$ and each of its edges belongs to $E(G)$
+        \item we can obtain subgraphs by deleting edges and vertices.
+        \item $G-F$
+    \end{itemize}
+\end{center}
+\end{document}
