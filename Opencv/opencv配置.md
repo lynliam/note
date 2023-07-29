@@ -1,10 +1,268 @@
 # 安装
 
-##  一、Windows版本安装
+##  一、Windows版本安装--VScode & Mingw64 & MSYS2
+
+## 下载安装MSYS2
+
+> [MSYS2](https://www.msys2.org/)
+
+### 安装完成后：
+
+```shell
+pacman -Syu
+pacman -S --needed mingw-w64-x86_64-gcc mingw-w64-x86_64-gdb mingw-w64-x86_64-make mingw-w64-x86_64-pkgconf base base-devel msys2-w32api-runtime
+
+pacman -Syuu
+pacman -S mingw-w64-x86_64-gcc
+pacman -S mingw-w64-x86_64-pkg-config
+pacman -S mingw-w64-x86_64-zlib
+```
+
+### 添加环境变量：
+
+![在这里插入图片描述](opencv配置.assets/9b442bc16b16448d81f9928eff87415c.png)
+
+### 添加系统变量`PKG_CONFIG_PATH`
+
+![img](opencv配置.assets/7458bd69042f44ae9f0d9efbcdea0d36.png)
+
+### 安装opencv_mingw64
+
+> [Package: mingw-w64-x86_64-opencv - MSYS2 Packages](https://packages.msys2.org/package/mingw-w64-x86_64-opencv)
+
+```shell
+pacman -Syuu
+pacman -S mingw-w64-x86_64-opencv
+pacman -S mingw-w64-x86_64-qt6-5compat
+pacman -S mingw-w64-x86_64-vtk
+```
+
+至此安装过程结束，所有的dll 文件应该已经都安装好了。
+
+### vscode配置
+
+```json
+//c_cpp_properties.json
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "F:\\Environment\\MinGW\\mingw64\\include",
+                "F:\\Environment\\MinGW\\mingw64\\x86_64-w64-mingw32\\include",
+                "F:\\Environment\\opencv\\mingw-w64-x86_64-opencv-4.8.0-2\\mingw64\\include\\opencv4"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\g++.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64",
+            "configurationProvider": "ms-vscode.cmake-tools"
+        }
+    ],
+    "version": 4
+}
+```
+
+```json
+//launch.json
+{
+    // 使用 IntelliSense 了解相关属性。 
+    // 悬停以查看现有属性的描述。
+    // 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "g++.exe - 生成和调试活动文件",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${fileDirname}\\${fileBasenameNoExtension}.exe",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${fileDirname}",
+            "environment": [],
+            "externalConsole": true,//由false改为true后可显示运行框
+            "MIMode": "gdb",
+            "miDebuggerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\gdb.exe",
+            "setupCommands": [
+                {
+                    "description": "为 gdb 启用整齐打印",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "C/C++: g++.exe 生成活动文件"
+        }
+    ]
+}
+
+```
+
+```json
+//tasks.json
+{
+    "tasks": [
+        {
+            "type": "cppbuild",
+            "label": "C/C++: g++.exe 生成活动文件",
+            "command": "F:\\Environment\\MSYS2\\mingw64\\bin\\g++.exe",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-std=c++11",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",
+                "-IF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/include/opencv4",
+"-LF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/lib",
+"-lopencv_gapi",
+"-lopencv_stitching",
+"-lopencv_alphamat",
+"-lopencv_aruco",
+"-lopencv_bgsegm",
+"-lopencv_ccalib",
+"-lopencv_cvv",
+"-lopencv_dnn_objdetect",
+"-lopencv_dnn_superres",
+"-lopencv_dpm",
+"-lopencv_face",
+"-lopencv_freetype",
+"-lopencv_fuzzy",
+"-lopencv_hdf",
+"-lopencv_hfs",
+"-lopencv_img_hash",
+"-lopencv_intensity_transform",
+"-lopencv_line_descriptor",
+"-lopencv_mcc",
+"-lopencv_ovis",
+"-lopencv_quality",
+"-lopencv_rapid",
+"-lopencv_reg",
+"-lopencv_rgbd",
+"-lopencv_saliency",
+"-lopencv_sfm",
+"-lopencv_stereo",
+"-lopencv_structured_light",
+"-lopencv_phase_unwrapping",
+"-lopencv_superres",
+"-lopencv_optflow",
+"-lopencv_surface_matching",
+"-lopencv_tracking",
+"-lopencv_highgui",
+"-lopencv_datasets",
+"-lopencv_text",
+"-lopencv_plot",
+"-lopencv_videostab",
+"-lopencv_videoio",
+"-lopencv_viz",
+"-lopencv_wechat_qrcode",
+"-lopencv_xfeatures2d",
+"-lopencv_shape",
+"-lopencv_ml",
+"-lopencv_ximgproc",
+"-lopencv_video",
+"-lopencv_xobjdetect",
+"-lopencv_objdetect",
+"-lopencv_calib3d",
+"-lopencv_imgcodecs",
+"-lopencv_features2d",
+"-lopencv_dnn",
+"-lopencv_flann",
+"-lopencv_xphoto",
+"-lopencv_photo",
+"-lopencv_imgproc",
+"-lopencv_core"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        }
+    ],
+    "version": "2.0.0"
+}
+```
+
+下面这个文件应该没什么用
+
+```json
+//settings.json
+{
+    "C_Cpp.errorSquiggles": "enabled",
+    "files.associations": {
+        "time.h": "c",
+        "cmath": "c",
+        "*.tcc": "c",
+        "string": "cpp",
+        "algorithm": "c",
+        "cstdlib": "c",
+        "stdio.h": "c"
+    },
+    "code-runner.executorMap": {
+        "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt -lgraphics64 -luuid -lmsimg32 -lgdi32 -limm32 -lole32 -loleaut32 -lwinmm -lgdiplus && $dir$fileNameWithoutExt"
+    },
+    "cmake.sourceDirectory": "d:\\cpp learn\\cpp"
+}
+
+```
+
+## 二、Windows版本 --- Visual Studio 2022
+
+下载安装Windows版本的安装包
+
+<img src="opencv配置.assets/image-20230729170643010.png" alt="image-20230729170643010" style="zoom:67%;" />
+
+安装完毕后添加环境变量。
+
+> 添加环境变量 `%opencv%\build\x64\vc15\bin`其中 `%opencv%`为你自己的opencv文件夹的位置
+
+### **在Visual Studio2022上配置OpenCV4.8.0**
+
+1、打开visual studio 2022创建新项目，选择C++控制台应用
+
+![img](opencv配置.assets/8ebc0b9cae6a4a94b8be9407599acfe2.png)
+
+2、点击顶部标签栏 项目 中 属性
+
+![img](opencv配置.assets/5fd231852d334655b723c175b9557375.png)
+
+3、 点击VC++目录中的包含目录，编辑，选择路径opencv\build\include，添加到我们的包含目录中
+
+![img](opencv配置.assets/c452eb3a69cb4a438c2e1a8af01d4240.png)
+
+![img](opencv配置.assets/94e0756eed484658ae5e67ad2b3c5e0b.png)
+
+3、点击VC++目录中的库目录，编辑，选择路径opencv\build\x64\vc15\lib，添加到我们的库目录中
+
+![img](opencv配置.assets/d6a456f924cc4a298c7a81e3b212672b.png)
+
+![img](opencv配置.assets/d1294e6df353415e861db4b0c8cfd358.png)
 
 
 
-## 二、Ubuntu版本安装
+点击 链接器 的 输入 中的 附加依赖项
+
+编辑，复制文件夹opencv\build\x64\vc15\lib中的opencv_world454d.lib文件，粘贴到我们的附加依赖项中
+
+![img](opencv配置.assets/62283459b13b4b3cbf9ba6547ca4f10b.png)
+
+![img](opencv配置.assets/41d2a524cb6f47c7beb06ada408d743b.png)
+
+
+
+## 三、Ubuntu版本安装
 
 ### 一、环境包安装
 
@@ -118,7 +376,7 @@ make
 ./opencv_example ## 生成一个可执行文件 拖入终端执行 也可
 ```
 
-### 五、Vscode配置
+### 五、Ubuntu_Vscode配置
 
 ```json
 {
