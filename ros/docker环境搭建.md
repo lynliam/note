@@ -20,6 +20,23 @@ sudo docker run -it -v ~/d/docker/humble_container_data_1:/data -v /dev:/dev --p
 echo 'source /opt/ros/humble/setup.bash'>> ~/.bashrc
 sudo apt install rviz2
 sudo apt install gazebo
+apt-get install -y python3-pip openssh-server gdb gdbserver
+apt-get update && \
+apt-get install -y \
+build-essential \
+libgl1-mesa-dev \
+libglew-dev \
+libsdl2-dev \
+libsdl2-image-dev \
+libglm-dev \
+libfreetype6-dev \
+libglfw3-dev \
+libglfw3 \
+libglu1-mesa-dev \
+freeglut3-dev \
+vim 
+pip install rosdepc
+rosdepc init && rosdepc update
 ```
 
 ## dockerfile版

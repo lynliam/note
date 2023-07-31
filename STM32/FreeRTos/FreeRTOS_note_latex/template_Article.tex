@@ -1,0 +1,150 @@
+\documentclass[11pt,a4paper]{ctexart}
+
+\usepackage{subfigure}
+\usepackage[graphicx]{realboxes}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% (1) choose a font that is available as T1
+\usepackage{lmodern}
+% (2) specify encoding
+\usepackage[T1]{fontenc}
+% (3) load symbol definitions
+\usepackage{textcomp}
+
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\usepackage{tabularx}
+\usepackage{array}
+
+
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+
+
+\definecolor{mygrey}{rgb}{0.945,0.945,0.945}
+\definecolor{myred}{rgb}{1, 0.49, 0.63}
+\definecolor{myblue}{rgb}{0,0.36, 0.67}
+
+\lstset{
+	breaklines=true,
+	basicstyle=\fontspec{Consolas},
+	columns=fixed,       
+	numbers=left,                                        % 在左侧显示行号
+	numberstyle=\tiny\color{gray},                       % 设定行号格式
+	frame=none,                                          % 不显示背景边框
+	backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+	keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+	numberstyle=\footnotesize\color{darkgray},           
+	commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+	showstringspaces=false,                              % 不显示字符串中的空格
+	language=c++,                                        % 设置语言
+}
+%\def\inline{\lstinline[basicstyle=\fontspec{微软雅黑},keywordstyle={}]}
+
+
+%opening
+\title{FreeRTOS}
+\author{Liam}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+Something to add\dots
+\end{abstract}
+
+\section{裸机系统与多任务系统}
+\subsection{裸机系统}
+\subsubsection{轮询系统}
+\textcolor{myblue}{定义}：
+\par
+轮询系统即是在裸机编程的时候，初始化好相关的硬件，然后将主程序在一个\textbf{死循环}里面不断地循环，顺序处理各种事件。（当有要检测外部信号的时候实时性较差）
+\subsubsection{前后台系统}
+\textcolor{myblue}{定义}：
+\par
+前后台系统即是在轮询系统上加上了\textbf{中断}，外部事件的响应在终端里面完成，事件处理还是在轮询系统中完成。
+中断被称为\textbf{前台}，\colorbox{mygrey}{\color{myred}\lstinline|main()|}函数被称为\textbf{后台}。
+~\\
+\par
+相对于轮询系统，前后台系统确保事不会丢失，加上中断可嵌套，大大提高程序的实时响应功能。
+\subsection{多任务系统}
+相对于前后台系统，多任务系统的事件响应都是在中断中完成，但是事件的处理实在任务中完成的。
+
+\begin{quote}
+	多任务系统中，\textbf{任务}与\textbf{中断}一样，也具有优先级，优先级高的任务会被优先执行。当一个紧急事件在中断中被标记之后，如果事件对应的任务的
+	优先级足够高，就会立即得到相应。
+\end{quote}
+\par
+在多任务系统中，根据程序的功能，我们把程序中体分割成\textbf{分割成一个个独立的，无限循环不能返回的小程序}----任务。各个任务独立互不干扰，
+各自具备自身的优先级，它由操作系统调度管理。
+
+\begin{center}
+	\begin{tabular}{|c|c|c|c|c|}
+		\hline
+		& 模型 & 事件响应 & 事件处理 & 特点 \\ \hline
+		& 轮询系统 & 主程序 & 主程序 & 轮询响应并处理事件 \\ \hline
+		& 前后台系统 & 中断 & 主程序 & 实时响应事件，轮询处理 \\ \hline
+		& 多任务系统 & 中断 & 任务 & 实时响应并处理事件 \\ \hline
+	\end{tabular}
+\end{center}
+
+\subsection{数据结构--列表与列表项}
+\textcolor{myblue}{列表和列表项}对应C语言中的链表和节点。
+~\\
+\textcolor{myred}{链表复习}
+\subsubsection{单向列表}
+节点本身包含一个指针，用于只想后一个节点，并且可以携带一些私有信息。
+
+列表一般包含一个\textbf{节点计数器}，\textbf{节点插入和删除操作器}
+\subsubsection{双向列表}
+节点中将会有两个节点指针，一个指向头一个指向尾部。
+
+\subsection{FreeRTOS链表实现}
+FreeRTOS中链表的实现，均在\colorbox{mygrey}{\color{myred}\lstinline|list.h|}和\colorbox{mygrey}{\color{myred}\lstinline|list.c|}中。示意图：
+\begin{center}
+	\begin{tabular}{|c|}
+		\hline
+		xLISt\textunderscore tIEM \\ \hline
+		pxNext \\ \hline
+		pxPrevious \\ \hline
+		pvOwner \\ \hline
+		pvContainer \\ \hline
+	\end{tabular}
+\end{center}
+
+\begin{lstlisting}
+struct xLIST_ITEM
+{
+	TickType_t xItemValue;           //辅助值，帮助节点进行顺序排列
+	struct xLIST_ITEM * pxNext;      //指向下一个节点
+	struct xLIST_ITEM * pxPrevious;  //指向上一个节点
+	void * pvOwner;                  //指向拥有该节点的内核对象
+	void * pvContainer;              //指向该节点所在链表
+	void * pvContainer;              //指向给节点所在链表
+};
+typedef struct xLIST_ITEM ListItem_t;
+\end{lstlisting}
+\begin{quote}
+	在FreeRTOS中，凡是涉及数据类型的地方，标准的C数据类型用{\color{myred}\lstinline|typedef|}重新设置在{\color{myred}\lstinline|portmacro.h|}
+\end{quote}
+
+\subsubsection{实现根节点}
+\begin{lstlisting}
+	typedef struct xLIST
+	{
+		UBaseType_t uxNumberOfItems;        //链表节点计数器
+		ListItem_t * pxIndex;               //链表节点索引指针
+		MiniListItem_t xListEnd;            //链表最后一个节点
+	} List_t
+\end{lstlisting}
+\end{document}
