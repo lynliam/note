@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.15)  31 JUL 2023 23:13
+This is XeTeX, Version 3.141592653-2.6-0.999995 (TeX Live 2023) (preloaded format=xelatex 2023.7.15)  1 AUG 2023 14:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -615,17 +615,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 75--78
 ]
 LaTeX Font Info:    Font shape `TU/SimSun(0)/m/sl' in size <10.95> not available
 (Font)              Font shape `TU/SimSun(0)/m/it' tried instead on input line 128.
- [2] [3] (./template_Article.aux)
+ [2] [3] [4] (./template_Article.aux)
 Package rerunfilecheck Info: File `template_Article.out' has not changed.
 (rerunfilecheck)             Checksum: 31DDEDBC10507AE3CE7A1CF09BE52883;1095.
  ) 
 Here is how much of TeX's memory you used:
- 17790 strings out of 476683
- 384107 string characters out of 5807575
- 1935012 words of memory out of 5000000
- 37740 multiletter control sequences out of 15000+600000
+ 17811 strings out of 476683
+ 384881 string characters out of 5807575
+ 1951012 words of memory out of 5000000
+ 37761 multiletter control sequences out of 15000+600000
  566431 words of font info for 91 fonts, out of 8000000 for 9000
  1348 hyphenation exceptions out of 8191
- 89i,9n,97p,439b,1754s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 89i,9n,97p,439b,1756s stack positions out of 10000i,1000n,20000p,200000b,200000s
 
-Output written on template_Article.xdv (3 pages, 39328 bytes).
+Output written on template_Article.xdv (4 pages, 52556 bytes).

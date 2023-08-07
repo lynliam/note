@@ -130,7 +130,6 @@ struct xLIST_ITEM
 	struct xLIST_ITEM * pxPrevious;  //指向上一个节点
 	void * pvOwner;                  //指向拥有该节点的内核对象
 	void * pvContainer;              //指向该节点所在链表
-	void * pvContainer;              //指向给节点所在链表
 };
 typedef struct xLIST_ITEM ListItem_t;
 \end{lstlisting}
@@ -145,6 +144,19 @@ typedef struct xLIST_ITEM ListItem_t;
 		UBaseType_t uxNumberOfItems;        //链表节点计数器
 		ListItem_t * pxIndex;               //链表节点索引指针
 		MiniListItem_t xListEnd;            //链表最后一个节点
-	} List_t
+	} List_t;
 \end{lstlisting}
+
+链表根节点初始化
+\begin{lstlisting}
+void vListInitialise(List_t * const pxList)
+{
+	pxList -> pxIndex = ( ListItem_t *) &(pxList->xListEnd);        //将链表索引指针指向最后一个节点
+	pxList->xListEnd.xItemValue = portMAX_DELAY;                    //辅助排序设置为最大
+	pxList->xListEnd.pxNext = (ListItem * ) &(pxList ->xListEnd);   //最后一个节点的pxNext和previous指向自己
+	pxList->xListEnd.pxPrevious = (ListItem_t * ) &(pxList->xListEnd);
+	pxList->uxNumberOfItems = (UBaseType_t) 0U;   //节点计数值为0，表示列表为空。
+}
+\end{lstlisting}
+
 \end{document}

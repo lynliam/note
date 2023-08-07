@@ -33,11 +33,19 @@ pacman -S mingw-w64-x86_64-zlib
 ```shell
 pacman -Syuu
 pacman -S mingw-w64-x86_64-opencv
-pacman -S mingw-w64-x86_64-qt6-5compat
+pacman -S mingw-w64-x86_64-qt6-5c ompat
 pacman -S mingw-w64-x86_64-vtk
 ```
 
 至此安装过程结束，所有的dll 文件应该已经都安装好了。
+
+添加环境变量
+
+![image-20230801160243272](opencv配置.assets/image-20230801160243272.png)
+
+![image-20230801160258518](opencv配置.assets/image-20230801160258518.png)
+
+![image-20230801160320099](opencv配置.assets/image-20230801160320099.png)
 
 ### vscode配置
 
@@ -51,14 +59,14 @@ pacman -S mingw-w64-x86_64-vtk
                 "${workspaceFolder}/**",
                 "F:\\Environment\\MinGW\\mingw64\\include",
                 "F:\\Environment\\MinGW\\mingw64\\x86_64-w64-mingw32\\include",
-                "F:\\Environment\\opencv\\mingw-w64-x86_64-opencv-4.8.0-2\\mingw64\\include\\opencv4"
+                "F:\\Environment\\opencv\\mingw-w64-x86_64-opencv-4.8.0-2\\mingw64\\include\\opencv4"               
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "compilerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\g++.exe",
+            "compilerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\g++.exe",                   //这里也要改
             "cStandard": "c11",
             "cppStandard": "c++17",
             "intelliSenseMode": "gcc-x64",
@@ -88,7 +96,7 @@ pacman -S mingw-w64-x86_64-vtk
             "environment": [],
             "externalConsole": true,//由false改为true后可显示运行框
             "MIMode": "gdb",
-            "miDebuggerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\gdb.exe",
+            "miDebuggerPath": "F:\\Environment\\MinGW\\mingw64\\bin\\gdb.exe",                      //这里也要改
             "setupCommands": [
                 {
                     "description": "为 gdb 启用整齐打印",
@@ -118,8 +126,8 @@ pacman -S mingw-w64-x86_64-vtk
                 "${file}",
                 "-o",
                 "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "-IF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/include/opencv4",
-"-LF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/lib",
+                "-IF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/include/opencv4",    //这里也要改
+"-LF:/Environment/opencv/mingw-w64-x86_64-opencv-4.8.0-2/mingw64/lib",                                //这里也要改
 "-lopencv_gapi",
 "-lopencv_stitching",
 "-lopencv_alphamat",
@@ -217,6 +225,12 @@ pacman -S mingw-w64-x86_64-vtk
 }
 
 ```
+
+最后
+
+### restart  your computer
+
+
 
 ## 二、Windows版本 --- Visual Studio 2022
 
