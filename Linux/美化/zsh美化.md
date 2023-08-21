@@ -91,6 +91,35 @@ p10k configure
 
 1. 代替ls的插件 exa
 
+```shell
+#Cargo
+
+#If you already have a Rust environment set up, you can use the cargo install command:
+
+cargo install exa
+
+#Cargo will build the exa binary and place it in $HOME/.cargo.
+
+#To build without Git support, run cargo install --no-default-features exa is also available, if the requisite dependencies are not installed.
+```
+
+### [Install Rust and Cargo](https://doc.rust-lang.org/cargo/getting-started/installation.html#install-rust-and-cargo)
+
+The easiest way to get Cargo is to install the current stable release of [Rust](https://www.rust-lang.org/) by using [rustup](https://rustup.rs/). Installing Rust using `rustup` will also install `cargo`.
+
+On Linux and macOS systems, this is done as follows:
+
+```
+curl https://sh.rustup.rs -sSf | sh
+```
+
+It will download a script, and start the installation. If everything goes well, you’ll see this appear:
+
+```
+
+Rust is installed now. Great!
+```
+
 ```bash
 brew install exa
 #.zimrc中配置
