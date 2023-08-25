@@ -17,6 +17,8 @@
 
 \usepackage{graphicx}
 
+\usepackage{float}
+
 \hypersetup{hidelinks,
 	colorlinks=true,
 	allcolors=black,
@@ -99,7 +101,7 @@ $\{v,w\}$ is said to join the vertices v , w and is again abbreviated to $vw$. E
 \end{center}
 
 \begin{center}
-    \colorbox{mygrey}{\color{myred}Adjacency and degrees}
+    \colorbox{mygrey}{\color{myred}Adjacency and degrees（邻接）}
     \begin{itemize}
         \item the $v,w$ is \textbf{adjacency} if there is an edge vw joining them. and $v,w$ are incident with such edge
         \item degree of a vetex is the number of edges incident with itself.
@@ -111,7 +113,7 @@ The \textbf{degree sequence} of a graph consists of degrees written in \textbf{i
 
 \begin{center}
     \colorbox{mygrey}{\color{myred}Handshaking lemma}\colorbox{mygrey}{In any graph the sum of all the vertex-degrees}
-    \colorbox{mygrey}{is an even number.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
+    \colorbox{mygrey}{is an even number.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
 \end{center}
 \colorbox{mygrey}{\color{myred}Corollary}\colorbox{mygrey}{In any graph the number of vertices of odd degree is even.}
 \begin{center}
@@ -122,4 +124,97 @@ The \textbf{degree sequence} of a graph consists of degrees written in \textbf{i
         \item $G-F$
     \end{itemize}
 \end{center}
+
+By the way, $G \backslash e$ is the subgraph of G obtained by deleting the edge e 
+and $G \backslash v$ is the subgraph of G obtained by deleting the vertex v and all edges incident with it.
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}The complement of a simple graph}
+    \begin{itemize}
+        \item \textbf{complement} $\overline{G}$ is the simple graph with the same vertex-set as G and with two vertices adjacent in $\overline{G}$ if and only if they are not adjacent in G.
+    \end{itemize}
+\end{center}
+
+\begin{center}
+    \colorbox{mygrey}{\color{myred}Matrix representation of graphs}
+~\\
+There are two matrix representations of graphs, the \textbf{adjacency matrix} and the \textbf{incidence matrix}.
+    \begin{itemize}
+        \item \textbf{adjacency matrix} $A(G)$ is the $n \times n$ matrix whose $(i,j)$-entry is 1 if $v_i$ is adjacent to $v_j$ and is 0 otherwise.
+        \item \textbf{incidence matrix} $B(G)$ is the $n \times m$ matrix whose $(i,j)$-entry is 1 if $v_i$ is incident with $e_j$ and is 0 otherwise.
+    \end{itemize}
+\end{center}
+
+\subsection{Examples}
+
+\subsubsection{Null graphs}
+A graph whose edge-set is empty is called a \textbf{null graph} 
+and is denoted by $N_n$ or simply $N$ if the number of vertices is clear from the context.
+
+\subsubsection{Complete graphs}
+A graph with $n$ vertices in which each pair of distinct vertices is joined by an edge is 
+called a \textbf{complete graph} and is denoted by $K_n$ or simply $K$ if the number of vertices 
+is clear from the context. You can check that $K_n$ has $\frac{n(n-1)}{2}$ edges.
+
+\subsubsection{Cycle graphs, path graphs and wheels}
+A \textbf{connected graph} in which each vertex has degree 2 is called a \textbf{cycle graph} 
+and is denoted by $C_n$ or simply $C$ if the number of vertices is clear from the context.
+You can check that $C_n$ has $n$ vertices and $n$ edges.
+\par
+A graph obtained from $C_n$ by removing an edge is the \textbf{path graph} $P_n$ or 
+simply $P$ if the number of vertices is clear from the context.
+\par
+The gragh obtained from $C_{n-1}$ by joining each vertex to a new vertex v is the $wheel$,denoted by $W_n$ or simply $W$ if the number of vertices is clear from the context.
+
+\subsubsection{Regular graphs}
+A graph is \textbf{regular} if each of its vertices has the same degree. 
+If each vertex has degree $r$, the graph is said to be \textbf{r-regular}. 
+A \textbf{complete graph} is $r-regular$ for $r=n-1$.
+Note that \textbf{cubic graphs} are $3-regular$ graphs, and \textbf{null graphs} are $0-regular$ graphs.
+
+\subsubsection{Platonic graphs}
+A \textbf{Platonic graph} is a \textbf{regular} graph with the property that the number of vertices
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{images/Platonic.png}
+    \caption{Platonic graphs}
+    \label{fig:platonic}
+\end{figure}
+
+
+\subsubsection{Bipartite graphs}
+If the vertex-set of G can be split into two disjoint sets $X$ and $Y$ 
+such that each edge of G joins a vertex in $X$ to a vertex in $Y$, 
+then G is said to be \textbf{bipartite}.
+\par
+A \textbf{complete bipartite graph} is a bipartite graph in which every vertex in $X$ is adjacent to every vertex in $Y$ and is denoted by $K_{X,Y}$.
+
+\subsection{Cubes}
+The \textbf{cube} $Q_n$ is the graph whose vertices are the $2^n$ binary strings of length $n$
+
+
+
+
+
+\section{Paths and cycles}
+\subsection{Connectivity}
+\begin{center}
+    \colorbox{mygrey}{\color{myred}Walks}
+    \begin{itemize}
+        \item A \textbf{walk} in a graph G is a sequence of vertices $v_0,v_1,...,v_n$ such that $v_iv_{i+1}$ is an edge of G for $i=0,1,...,n-1$.
+        \item We call $V_0$ the \textbf{initial vertex} and $v_n$ the \textbf{terminal vertex} of the walk.
+        \item A \textbf{length} of a walk is the number of edges in it.
+        \item A \textbf{closed walk} is a walk in which $v_0=v_n$.
+        \item A \textbf{trail} is a walk in which all \textcolor{myred}{edges} are distinct.
+        \item A \textbf{path} is a trail in which all \textcolor{myred}{vertices} are distinct.
+        \item A \textbf{cycle} is a closed trail in which all vertices are distinct except for $v_0=v_n$.
+        \subitem $\circ$ A \textbf{triangle} is a cycle of length 3.
+    \end{itemize}
+
+\end{center}
+
+\begin{quote}
+    A graph G is bipartite if and only if every cycle of G has even length.
+\end{quote}
+
 \end{document}
