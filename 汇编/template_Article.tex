@@ -1,0 +1,114 @@
+\documentclass[11pt,a4paper]{ctexart}
+
+\usepackage{subfigure}
+\usepackage[graphicx]{realboxes}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+% (1) choose a font that is available as T1
+\usepackage{lmodern}
+% (2) specify encoding
+\usepackage[T1]{fontenc}
+% (3) load symbol definitions
+\usepackage{textcomp}
+
+\usepackage{hyperref}
+
+\usepackage{graphicx}
+
+\usepackage{tabularx}
+\usepackage{array}
+
+
+\hypersetup{hidelinks,
+	colorlinks=true,
+	allcolors=black,
+	pdfstartview=Fit,
+	breaklinks=true}
+
+
+\definecolor{mygrey}{rgb}{0.945,0.945,0.945}
+\definecolor{myred}{rgb}{1, 0.49, 0.63}
+\definecolor{myblue}{rgb}{0,0.36, 0.67}
+
+\lstset{
+	breaklines=true,
+	basicstyle=\fontspec{Consolas},
+	columns=fixed,       
+	numbers=left,                                        % 在左侧显示行号
+	numberstyle=\tiny\color{gray},                       % 设定行号格式
+	frame=none,                                          % 不显示背景边框
+	backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+	keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+	numberstyle=\footnotesize\color{darkgray},           
+	commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+	stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+	showstringspaces=false,                              % 不显示字符串中的空格
+	language=c++,                                        % 设置语言
+}
+%\def\inline{\lstinline[basicstyle=\fontspec{微软雅黑},keywordstyle={}]}
+
+%opening
+\title{汇编}
+\author{Liam}
+
+\begin{document}
+\maketitle
+
+\section{基础知识}
+\subsection{存储器}
+存储器中存储了\textbf{指令}和\textbf{数据}，同时存储器又被划分为若干个存储单元。
+CPU对数据进行读写需要获取：地址信息，控制信息，数据信息。通过：\textbf{地址总线}，\textbf{控制总线}和\textbf{数据总线}进行传输。
+
+\subsubsection{地址总线}
+一个CPU有N根地址线，则该CPU的地址总线的宽度为N，这样CPU可以寻址$2^N$个内存单元。注意：每个内存单元可以容纳8位的数据比特。
+
+\subsection{数据总线}
+数据总线宽度决定了数据传输速度。
+
+\subsection{控制总线}
+控制总线宽度决定了CPU对外部器件的控制能力。
+
+\subsection{内存地址空间}
+各种物理器件，在CPU操控的时候，都是将他们看作内存来对待---所有物理存储器被看作\textbf{一个由若干存储单元组成的逻辑存储器}。每个物理存储器在这个逻辑存储器中占有一个地址段，
+即一段地址空间。CPU向对应的地址读写数据，相当于向对应的物理存储器中读写数据。
+
+\section{寄存器}
+CPU由原算起，控制器和寄存器等器件构成，二程序员通过改变寄存器中的内容来实现对CPU的控制。
+\subsection{通用寄存器}
+一个16位寄存器可以存储16位的数据，并且有些可以将16位寄存器拆成\textbf{高八位寄存器}和\textbf{低八位寄存器}使用。
+
+\subsection{物理地址}
+么一个内存单元在内存空间中都有唯一的地址，我们称为\textbf{物理地址}。
+
+\subsection{16位结构的CPU}
+\begin{itemize}
+	\item 运算器一次处理16位数据
+	\item 寄存器最大宽度为16位
+	\item 寄存器和运算器之间通路为16位
+\end{itemize}
+\subsection{16位8086CPU给出20位寻址能力的办法}
+采用公式（即段地址左移4位）：
+\begin{equation}
+	\text{物理地址}=\text{段地址}\times 16 +\text{偏移地址}
+\end{equation}
+来合成20位物理地址。（注意本身内存是没有被划分成一段段的，只是人们为了管理而虚指的）
+\subsection{段寄存器}
+\subsubsection{CS和IP}
+CS为段寄存器，IP为指令指针寄存器。在8086PC机中，任意时刻CS中内容为M，IP中内容为N，则CPU将会从$M\times 16+N$单元开始，
+读取一条指令并执行。
+~\\
+步骤：
+\begin{enumerate}
+	\item \colorbox{mygrey}{\color{myblue}CS:IP} 指向的内存单元读取指令，指令进入指令缓冲区
+	\item IP=IP+所读取的指令的长度并指向下一条指令
+	\item 执行指令，回到步骤1
+\end{enumerate}
+
+\subsection{修改CS，IP指令}
+通过指令 $jmp \text{段地址}:\text{偏移地址}$  来将修改CS和IP。
+\par
+通过指令 $jmp 某一合法寄存器$  ，来将修改CS和IP，所以任意代码段的执行，只能依靠CS:PC来确定执行。
+
+\end{document}
