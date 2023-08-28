@@ -18,7 +18,6 @@ sudo docker run -it -v ~/d/docker/humble_container_data_1:/data -v /dev:/dev --p
 
 #ROS2——bashrc
 echo 'source /opt/ros/humble/setup.bash'>> ~/.bashrc
-sudo apt install rviz2
 sudo apt install gazebo
 apt-get install -y python3-pip openssh-server gdb gdbserver
 apt-get update && \
@@ -37,9 +36,11 @@ freeglut3-dev \
 vim 
 pip install rosdepc
 rosdepc init && rosdepc update
+
+#测试gazebo ，rviz2如果黑屏，请参考本目录下面的Solved_problems 里面的  rviz2黑屏
 ```
 
-## dockerfile版
+## dockerfile版（我没有测试，问wxz）
 
 ```shell
 FROM osrf/ros:humble-desktop
