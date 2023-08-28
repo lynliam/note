@@ -70,36 +70,16 @@ FROM osrf/ros:humble-desktop
 RUN rm /etc/apt/sources.list
 ADD sources.list /etc/apt/
 RUN apt clean && apt update &&apt upgrade -y && apt-get install -y python3-pip openssh-server gdb gdbserver
-
-# nvidia-container-runtime
-ENV NVIDIA_VISIBLE_DEVICES \
-${NVIDIA_VISIBLE_DEVICES:-all}
-
-ENV NVIDIA_DRIVER_CAPABILITIES \
-${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
-
-RUN apt-get update && \
-apt-get install -y \
-build-essential \
-libgl1-mesa-dev \
-libglew-dev \
-libsdl2-dev \
-libsdl2-image-dev \
-libglm-dev \
-libfreetype6-dev \
-libglfw3-dev \
-libglfw3 \
-libglu1-mesa-dev \
-freeglut3-dev \
-vim \
-minicom
-
+    #安装rosdepc<https://zhuanlan.zhihu.com/p/398754989>
 RUN sudo pip install rosdepc 
+
 RUN sudo rosdepc init && rosdepc update
+
 USER root
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 
+# 创建项目源码目录，这个目录将成为 Container 里面构建和执行的工作区
 RUN mkdir -p /root/2ROS2workspace
 WORKDIR /root/2ROS2workspace
 ENV LC_ALL C.UTF-8
