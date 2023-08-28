@@ -13,6 +13,29 @@ xhost(参数)
 //+：关闭访问控制，允许任何主机访问本地的X服务器；
 //-：打开访问控制，仅允许授权清单中的主机访问本地的X服务器。
 
+#容器换源
+vim /etc/apt/source.list
+
+#粘贴源--------------------------------------------------------------------------------------------------------------
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+
+# deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+#---------------------------------------------------------------------------------------------------------------------
+
 #启动镜像
 sudo docker run -it -v ~/d/docker/humble_container_data_1:/data -v /dev:/dev --privileged --group-add video --volume=/tmp/.X11-unix:/tmp/.X11-unix  --env="DISPLAY=$DISPLAY" --env="QT_X11_NO_MITSHM=1" --name=humble_ros_2 osrf/ros:humble-desktop  /bin/bash 
 
