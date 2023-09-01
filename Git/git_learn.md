@@ -225,6 +225,8 @@ git reset HEAD [file-name]
 
 ```git branch --set-upstream-to=origin/[branch-name] [branch-name]``` 把本地分支和远程分支进行连接
 
+git push origin --delete <branchname>    `<branchname>`是要删除的远程分支的名称。
+
 ### merge
 
 ```git merge``` 合并本地```origin/[branch-name]```和```HEAD->[branch-name]```的代码，并同步到工作空间

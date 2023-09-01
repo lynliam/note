@@ -1,8 +1,8 @@
 ## DockerFile 构建
 
-![点击查看图片来源](/media/lynliam/data/markdown/Docker/DockerFile.assets/87f9c17f58cfc1e84f776e716fee77a2.png)
+![点击查看图片来源](DockerFile.assets/87f9c17f58cfc1e84f776e716fee77a2.png)
 
-![点击查看图片来源](/media/lynliam/data/markdown/Docker/DockerFile.assets/1285498-20210923172431869-597752749.png)
+![点击查看图片来源](DockerFile.assets/1285498-20210923172431869-597752749.png)
 
 指令解释：
 
