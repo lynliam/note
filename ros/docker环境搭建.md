@@ -13,12 +13,34 @@ xhost(参数)
 //+：关闭访问控制，允许任何主机访问本地的X服务器；
 //-：打开访问控制，仅允许授权清单中的主机访问本地的X服务器。
 
+#容器换源
+vim /etc/apt/sources.list
+
+#粘贴源--------------------------------------------------------------------------------------------------------------
+# 默认注释了源码镜像以提高 apt update 速度，如有需要可自行取消注释
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-backports main restricted universe multiverse
+
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-security main restricted universe multiverse
+
+# deb http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+# deb-src http://security.ubuntu.com/ubuntu/ jammy-security main restricted universe multiverse
+
+# 预发布软件源，不建议启用
+# deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+# deb-src https://mirrors.tuna.tsinghua.edu.cn/ubuntu/ jammy-proposed main restricted universe multiverse
+#---------------------------------------------------------------------------------------------------------------------
+
 #启动镜像
 sudo docker run -it -v ~/d/docker/humble_container_data_1:/data -v /dev:/dev --privileged --group-add video --volume=/tmp/.X11-unix:/tmp/.X11-unix  --env="DISPLAY=$DISPLAY" --env="QT_X11_NO_MITSHM=1" --name=humble_ros_2 osrf/ros:humble-desktop  /bin/bash 
 
 #ROS2——bashrc
 echo 'source /opt/ros/humble/setup.bash'>> ~/.bashrc
-sudo apt install rviz2
 sudo apt install gazebo
 apt-get install -y python3-pip openssh-server gdb gdbserver
 apt-get update && \
@@ -37,45 +59,27 @@ freeglut3-dev \
 vim 
 pip install rosdepc
 rosdepc init && rosdepc update
+
+#测试gazebo ，rviz2如果黑屏，请参考本目录下面的Solved_problems 里面的  rviz2黑屏
 ```
 
-## dockerfile版
+## dockerfile版（我没有测试，问wxz）
 
 ```shell
 FROM osrf/ros:humble-desktop
 RUN rm /etc/apt/sources.list
 ADD sources.list /etc/apt/
 RUN apt clean && apt update &&apt upgrade -y && apt-get install -y python3-pip openssh-server gdb gdbserver
-
-# nvidia-container-runtime
-ENV NVIDIA_VISIBLE_DEVICES \
-${NVIDIA_VISIBLE_DEVICES:-all}
-
-ENV NVIDIA_DRIVER_CAPABILITIES \
-${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
-
-RUN apt-get update && \
-apt-get install -y \
-build-essential \
-libgl1-mesa-dev \
-libglew-dev \
-libsdl2-dev \
-libsdl2-image-dev \
-libglm-dev \
-libfreetype6-dev \
-libglfw3-dev \
-libglfw3 \
-libglu1-mesa-dev \
-freeglut3-dev \
-vim \
-minicom
-
+    #安装rosdepc<https://zhuanlan.zhihu.com/p/398754989>
 RUN sudo pip install rosdepc 
+
 RUN sudo rosdepc init && rosdepc update
+
 USER root
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
 
+# 创建项目源码目录，这个目录将成为 Container 里面构建和执行的工作区
 RUN mkdir -p /root/2ROS2workspace
 WORKDIR /root/2ROS2workspace
 ENV LC_ALL C.UTF-8

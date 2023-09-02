@@ -15,7 +15,7 @@ add-apt-repository ppa:kisak/kisak-mesa && apt install -y mesa-utils && glxgears
 其中 glxgears 是测试3d功能的，不安装也行
 
 如果提示add-apt-repository commond not found
-   
+
     sudo apt install --reinstall software-properties-common
 
 ### PPA换源：
