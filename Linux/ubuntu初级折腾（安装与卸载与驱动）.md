@@ -7,21 +7,24 @@
 3. windows11下按着shift+重启键可以进疑难解答—＞uefi管理（进BIOS）
 4. 重启进安装界面
 5. 选Ubuntu
-6. 过程点（something else），并拒绝联网
+6. 过程点（something else）
 
 
 ***
 ### 分区
 
-1. /根目录
-2.  swap  交换分区，和运行内存相关
-3.  /var  系统运行时要改变的数据
-4.  /home  用户目录文件
-5.  /usr  软件存在处
-6.  /opt
-7.  /scr
-8.  /efi  双硬盘请放于主windows硬盘（创建efi分区512Mb）记得选择引导分区
-9. over
+1. /efi  双硬盘请放于主windows硬盘（创建efi分区512Mb）记得选择引导分区
+2. swap  交换分区，和运行内存相关
+3. /根目录
+4. over
+
+> 下面的分区不需要在分类
+>
+> 1. /var  系统运行时要改变的数据
+> 2. /home  用户目录文件
+> 3. /usr  软件存在处
+> 4. /opt
+> 5. /scr
 
 ***
 
