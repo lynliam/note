@@ -1,9 +1,9 @@
 # Fdb version 4
-["pdflatex"] 1692673361 "e:/markdown/数学建模/图论/template_Article.tex" "template_Article.pdf" "template_Article" 1692673363 0
+["pdflatex"] 1694091043 "e:/markdown/数学建模/图论/template_Article.tex" "template_Article.pdf" "template_Article" 1694091045 0
   "c:/Windows/Fonts/msyh.ttc" 1689136656 19701556 07c864a5b15e68fa47639738197fae38 ""
   "c:/Windows/Fonts/simhei.ttf" 1651842600 9753388 6abc0fcfbaa40600f9cecca3afeb3aa7 ""
   "c:/Windows/Fonts/simsun.ttc" 1689136657 18008680 490583a172d4371a68d1e0526a6bca81 ""
-  "e:/markdown/数学建模/图论/template_Article.tex" 1692673360 9272 4e4cc15465f3d0864d1216b0f8d6ad0a ""
+  "e:/markdown/数学建模/图论/template_Article.tex" 1694091029 9274 686c311e6a145a7a370f7094aa5268cf ""
   "e:/texlive/2023/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc" 1689132701 2375 baa924870cfb487815765f9094cf3728 ""
   "e:/texlive/2023/texmf-dist/fonts/enc/dvips/lm/lm-mathit.enc" 1689132701 2405 5dcf2c1b967ee25cc46c58cd52244aed ""
   "e:/texlive/2023/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc" 1689132701 2840 216e6e45ad352e2456e1149f28885bee ""
@@ -161,10 +161,10 @@
   "e:/texlive/2023/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1689133608 4662804 22465f629ad4ac3769d68a5f0c21fc8b ""
   "e:/texlive/2023/texmf-var/web2c/pdftex/pdflatex.fmt" 1689133717 7883450 6d10de02f95f842f50214d4e619de5bf ""
   "e:/texlive/2023/texmf.cnf" 1689133589 713 e69b156964470283e0530f5060668171 ""
-  "images/Platonic.png" 1692584021 346031 94c4a27982184f6bb2adf2ff55bfda92 ""
-  "template_Article.aux" 1692673362 2116 7d10f4c9e899eea413fa13f5f32aa6cf "pdflatex"
-  "template_Article.out" 1692673362 1487 82bf282e3c235364f901add32b926c5d "pdflatex"
-  "template_Article.tex" 1692673360 9272 4e4cc15465f3d0864d1216b0f8d6ad0a ""
+  "images/Platonic.png" 1693627353 346031 94c4a27982184f6bb2adf2ff55bfda92 ""
+  "template_Article.aux" 1694091045 2116 7d10f4c9e899eea413fa13f5f32aa6cf "pdflatex"
+  "template_Article.out" 1694091045 1487 82bf282e3c235364f901add32b926c5d "pdflatex"
+  "template_Article.tex" 1694091029 9274 686c311e6a145a7a370f7094aa5268cf ""
   (generated)
   "template_Article.aux"
   "template_Article.log"
