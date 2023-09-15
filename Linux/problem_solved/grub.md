@@ -8,8 +8,8 @@
 #终端中输入 
 sudo gedit /etc/default/grub  
 
-#设置
-default-set=2 #(从0开始数起，如果希望第三项，选2)
+#在这个文件里面找到下面的东西，然后改为第几个：
+GRUB_DEFAULT=2 #(从0开始数起，如果希望第三项，选2)
 
 #执行一下
 sudo update-grub
