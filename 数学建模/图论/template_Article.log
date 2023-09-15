@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.12)  7 SEP 2023 20:50
+This is pdfTeX, Version 3.141592653-2.6-1.40.25 (TeX Live 2023) (preloaded format=pdflatex 2023.7.12)  22 AUG 2023 11:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -669,7 +669,7 @@ Here is how much of TeX's memory you used:
  1141 hyphenation exceptions out of 8191
  78i,7n,80p,733b,593s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simhei.ttf><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><c:/Windows/Fonts/simsun.ttc><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmbx12.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi12.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmmi8.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr10.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr12.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr17.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmr8.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmro12.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy10.pfb><e:/texlive/2023/texmf-dist/fonts/type1/public/lm/lmsy8.pfb>
-Output written on template_Article.pdf (6 pages, 568117 bytes).
+Output written on template_Article.pdf (6 pages, 567985 bytes).
 PDF statistics:
  193 PDF objects out of 1000 (max. 8388607)
  141 compressed objects within 2 object streams
