@@ -159,4 +159,28 @@ void vListInitialise(List_t * const pxList)
 }
 \end{lstlisting}
 
+\section{任务的定义与任务切换}
+\subsection{任务}
+在多任务系统中，我们根据功能不同，将整个系统分割为一个个独立且无法返回的函数。
+\subsubsection{定义任务栈}
+在多任务系统中，要为每一个任务独立分配\textbf{栈空间}
+\begin{lstlisting}
+	#define TASK1_STACK_SIZE
+	StackType_t Task1Stack[TASK1_STACK_SIZE];
+\end{lstlisting}
+\subsubsection{定义任务控制块}
+在裸机系统中，任务是CPU按照顺序执行的；在多任务系统中是由系统调度的。系统为顺利调取任务，为每个任务都定义了一个\textbf{任务控制块}，
+\begin{lstlisting}
+typedef struct tskTaskControlBlock
+{
+	volatile StackType_t *pxTopOfStack;
+	ListItem_t xStateListItem;  //这是一个内置在TCB控制块中的链表节点。
+	StackType_t *pxStack;
+	char pcTaskName[configMAX_TASK_NAME_LEN];
+}tskTCB;
+typedef tskTCK TCB_t;
+\end{lstlisting}
+\subsubsection{实现任务创建函数}
+任务栈、函数实体和任务控制块都需要最终联系起来才能由系统统一调度。
+
 \end{document}
