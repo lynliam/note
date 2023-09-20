@@ -145,7 +145,7 @@ if(a*b = c)...;              //Oops! a Typo.
 
 ### 3.3    Member Functions
 
-The fact:  ***the member functions differing only in their constness can be overloaded.***
+The fact:  ***the member functions differing only in their `constness` can be overloaded.***
 
 > 2.常成员函数的主要特点：
 > 1）不能更新类的 hon-static 成员变量
@@ -154,4 +154,26 @@ The fact:  ***the member functions differing only in their constness can be over
 > 4）常对象只能调用常成员函数，而不能调用其他的成员函数。
 
 > **It is illegal to modify the return value of a function that return a build-in type.**
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
