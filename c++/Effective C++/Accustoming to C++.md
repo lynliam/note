@@ -157,13 +157,58 @@ The fact:  ***the member functions differing only in their `constness` can be ov
 
 
 
+```c++
+class TextBlock
+{
+    public:
+    ...
+    const char& operator[](std::size_t position) const
+    {return text[Position];}
+    
+    private:
+    std::string text;
+};
+
+TextBlock tb("Hello");
+std::cout<<tb[0];
+
+const TextBlock ctb("World");
+std::cout << ctb[0];                   
+ctb[0] = 'x';                   //error!!!
+```
+
+#### 3.3.1 Mutable
+
+> `mutable`   frees non-static data members from the constraints of `bitwise constness`;
+>
+> mutable 可以突破`const`的限制，那么 类的常成员函数可以改变 `mutable` 修饰的变量。
 
 
 
+### 3.4    Avoid Duplication in `const` and  `Non-const`  Member Functions
 
+ When you want to keep both the versions of such function (`const version` and `non-const version` ), it will bring many problems such as attendant compolation time, maintenance, and code-bloat headaches.
 
+> `const_cast<>()`
 
-
+```c++
+class TextBlock
+{
+    public:
+    ...
+    const char& operator[](std::size_t position) const
+    {return text[Position];}
+    
+    char& operator[](std::size_t position)
+    {
+        return 
+            const_cast<char& >(static_cast<const TextBlock&>(*this)[position]);  //先将 *this 从 TextBlock& 转换为 cosnt TextBlock& 调用const 版本的 operator[]
+    }
+    
+    private:
+    std::string text;
+};
+```
 
 
 
