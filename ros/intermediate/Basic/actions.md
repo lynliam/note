@@ -164,8 +164,6 @@ RCLCPP_COMPONENTS_REGISTER_NODE(action_tutorials_cpp::FibonacciActionServer)
 
 
 
-
-
 ## Action_server:
 
 ```c++

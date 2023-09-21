@@ -10,10 +10,10 @@
 
 The dependencies in this file are generally referred to as “rosdep keys”
 
-* ```<test_depend>```         		      For dependencies only used in testing the code
-* ```<build_depend>```           	      For dependencies only used in building the code
-* ```<build_export_depend>```       needed by headers the code exports
-* ```<exec_depend>```                      only used when running the code 
+* ```<test_depend>```         		      For dependencies only used in testing the code.
+* ```<build_depend>```           	      For dependencies only used in building the code.
+* ```<build_export_depend>```       needed by headers the code exports.
+* ```<exec_depend>```                      only used when running the code.
 * ```<depend>```                               For mixed purposes,which covers build, export, and execution time dependencies.
 
 
@@ -39,10 +39,6 @@ rosdep update
 # ignore installing dependencies
 rosdep install --from-paths src -y --ignore-src
 ```
-
-
-
-
 
 * Rosdepc
 
