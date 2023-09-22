@@ -212,9 +212,75 @@ class TextBlock
 
 
 
+### Summary
+
+* Using `const` helps compilers detect errors
+* Compilers enforce bitwise constness, but you should program using logical constness.
+* Having the non-const version call the const version.
 
 
 
+## 4.0   Make sure that objects are initialized before they're used
+
+### 4.1 Initialize the built-in type manually
+
+Using **C part of C++**, initialization would probably incur a runtime cost.
+
+Because the rules of initialization by compiler is too complicated, so the best way is to **always initialize your objects**. 
+
+### 4.2  Using the initialization list
+
+When you doing this:
+
+```c++
+class A
+{
+  public:
+    A(const std::string &Name){
+    name = Name;
+    }
+  private:
+    std::string name;
+};
+```
+
+You should know it is **assigned**.
+
+* The assignment-version first called default constructors to initialize the `name`， then promptly assigned new value. So it is a waste.
+* The initialization-version will call the copy-constructors once.
+
+The initialization order is always the same: **base class is initialized before derived class and the order of declaration is obeyed when initializing.** 
+
+### 4.3   Using local static objects to replace the non-local static objects
+
+When you define a static object in a function, then it was the local static object. In this way, you can prevent the situation when you want to using other static objects in other source files.  Because ***the order of initialization of non-local static objects defined in different translation units is undefined.*** 
+
+The solution:
+
+```c++
+class FileSys{...};
+FileSys& tfs()
+{
+    static FileSys fs;
+    return fs;
+}
+
+class A(){...};
+A::A(param)
+{
+    std::size_t disk = tfs().numDisks();
+}
+```
+
+Always solving the problems in **multithreads**.
+
+
+
+### Summary
+
+* Manually initialize objects of built-in type.
+* prefer use of the **member initialization list** to assignment in a constructor.  Initialization order is the order of declaration.
+* Using local static objects to replace the non-local static objects.
 
 
 
