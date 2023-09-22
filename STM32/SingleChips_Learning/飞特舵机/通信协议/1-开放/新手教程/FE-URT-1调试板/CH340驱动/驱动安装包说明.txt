@@ -1,0 +1,11 @@
+资料名称：CH341SER.EXE 
+资料类型：驱动&工具 
+资料大小：237KB 
+资料版本：3.4 
+更新时间：2016-09-28 
+软件简介： CH340/CH341的USB转串口WINDOWS驱动程序的安装包，
+支持32/64位 Windows 10/8.1/8/7/VISTA/XP，SERVER 2016/2012/2008/2003，2000/ME/98，
+通过微软数字签名认证，支持USB转3线和9线串口等，用于随产品发行到最终用户。
+适用范围： CH340G，CH340C，CH340B，CH340E，CH340T，CH340R，CH341A，CH341T，CH341H 
+详见：
+http://www.wch.cn/download/CH341SER_EXE.html
