@@ -114,7 +114,7 @@ public:
  * 如果是一个电机可以不用
  * @param ID_
  */
-    int set_ID(uint8_t ID_)
+    void set_ID(uint8_t ID_)
     {
         ID = ID_;
         uint8_t bBuf[8];
@@ -180,50 +180,107 @@ public:
         Host2SCS(bBuf,bBuf+1,angle);
         return genWrite(SMS_ANGEL_MIN, bBuf, 2);
     }
+
 /**
- * 别用
+ * PING状态查询指令
  */
-    void search_state()
+    uint8_t search_state()
     {
+        uint16_t rxLen = 0;
         uint8_t bag[6];
         bag[0]=0xFF;
         bag[1]=0xFF;
         bag[2]=ID;
-        bag[3]=0x02;
-        bag[4]=0x01;
+        bag[3]=INST_READ;
+        bag[4]=INST_PING;
         bag[5]= check_sum(bag,5);
-
         HAL_UART_Transmit(&uart_servo_handle,bag,6,0xff);
-        HAL_UART_Receive_IT(&uart_servo_handle,bag,6);
+        HAL_UARTEx_ReceiveToIdle(&uart_servo_handle,receive_bag6,6,&rxLen,0x20);
+
+        if(receive_bag6[0] == 0xFF && receive_bag6[1] == 0xFF)
+            if(check_sum(receive_bag6,5) == receive_bag6[5])
+                Error = receive_bag6[4];
+        else
+            Error = 0xFF;
+        return Error;
+        //HAL_UART_Transmit(&huart1,receive_bag8,8,0xff);
     }
 /**
- * 未测试
+ * 读取指令
  * @param param1
  * @param param2
  */
     void read_data(uint8_t param1,uint8_t param2)
     {
+        uint16_t rxLen = 0;
         uint8_t bag[8];
         bag[0]=0xFF;
         bag[1]=0xFF;
         bag[2]=ID;
-        bag[3]=0x04;
-        bag[4]=0x02;
+        bag[3]=INST_REG_WRITE;
+        bag[4]=INST_READ;
         bag[5]=param1;
         bag[6]=param2;
         bag[7]= check_sum(bag,7);
         HAL_UART_Transmit(&uart_servo_handle,bag,8,0xff);
-        HAL_UART_Receive_IT(&uart_servo_handle,receive_bag8,8);
+        HAL_UARTEx_ReceiveToIdle(&uart_servo_handle,receive_bag8,8,&rxLen,0xff);
     }
 
+    /**
+     * 获取当前速度
+     * @return
+     */
+    uint16_t get_current_speed()
+    {
+        read_data(SMS_STS_PRESENT_SPEED_L,0x02);
+        Current_Speed = SCS2Host(receive_bag8[5],receive_bag8[6]);
+        return Current_Speed;
+    }
+
+    /**
+     * 获取当前位置
+     * @return
+     */
+    uint16_t get_current_pos()
+    {
+        read_data(SMS_STS_PRESENT_POSITION_L,0x02);
+        Current_Pos = SCS2Host(receive_bag8[5],receive_bag8[6]);
+        return Current_Pos;
+    }
+
+    /**
+     * 写锁
+     * @param num
+     * @return
+     */
+    uint8_t write_LockNum(uint8_t num)
+    {
+        if(num != 0 && num != 1)
+            return -1;
+        return writeByte(SMS_STS_LOCK,num);
+    }
+
+
+    uint8_t receive_bag6[6];
     uint8_t receive_bag7[7];
     uint8_t receive_bag8[8];
+
 private:
     UART_HandleTypeDef uart_servo_handle;
     uint16_t ID;
     uint8_t End;
     uint8_t Error;
+    uint16_t Current_Pos;
+    uint16_t Current_Speed;
 
+
+
+    /**
+     * 校验和
+     * @param data
+     * @param num
+     * @return
+     */
     uint8_t check_sum(uint8_t *data, uint8_t num)
     {
         uint8_t sum = 0;
@@ -277,6 +334,8 @@ private:
         return 0;
     }
 
+
+
     /**
      * 写数组函数
      * @param MemAddr
@@ -320,8 +379,9 @@ private:
         writeBuf(MemAddr, &bDat, 1, INST_WRITE);
         return 0;
     }
-
 };
+
+
 
 
 #endif //SERVO_USART_SERVO_UART_HPP
