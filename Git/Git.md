@@ -188,3 +188,15 @@ git push origin main -f
 
 
 
+### git  push到另一个仓库
+
+```shell
+git remote                      											     #查看当前远程仓库
+git remote add newOrigin main                                                        #设置一个仓库名称newOrigin   和分支  main
+git remote set_url newOrigin https://<your_token>@github.com/<USERNAME>/<REPO>.git   #设置url地址
+git pull newOrigin main --allow-unrelated-histories                                  #与远程仓库合并
+git push newOrigin main                                                              #push 到远程仓库
+```
+
+
+

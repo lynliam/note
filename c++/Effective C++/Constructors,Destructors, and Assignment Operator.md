@@ -90,19 +90,86 @@ During destruction of the object, if an exception is throw, it will be a disaste
 
 ### Solution:
 
-* Terminate the program
+* Terminate the program（终止程序）
 
   ```c++
+  DBCo：：~DBConn()
+  {
+      try{db.close();}
+      catch(...)
+      {
+          ...;
+          std::abort();
+      }
+  }
   ```
 
-* Swallow the exception
+* Swallow the exception  (吞掉)
 
   ```c++
+  DBCo：：~DBConn()
+  {
+      try{db.close();}
+      catch(...)
+      {
+          ...;
+      }
+  }
   ```
 
-  
+* User's Handle Function:
+
+  ```c++
+  void close()
+  {
+      db.close();
+      closed = true;
+  }
+  ```
+
+### Summary
+
+* Destructors should never emit exception. The destructors should **catch any exception** and then **swallow them or terminate the program**.
+* The class should provide a regular function to have a way to handle the exception.
+
+
+
+## 9.0   Never call virtual functions during construction or destruction.
+
+### Solution:
+
+Turn the function to be a non-virtual function.
+
+### Summary 
+
+* Never call virtual functions during construction or destruction. Because such call will never go to a more derived class than that of the currently executing constructor or destructor.  Informally speaking, during base construction, virtual functions aren't.
 
 ###  
+
+## 10.0    Have assignment operators return a reference to `*this`
+
+
+
+## 11.0    Handle assignment  to self  in `operator=`
+
+Example:
+
+```c++
+class Wiget(){};
+Wiget a;
+a=a;                //An assignment to self
+
+*py = *px   //potential assignment to self
+```
+
+
+
+
+
+### Summary
+
+* Make sure `operator=` is well-behaved when an object is assigned to itself. Techniques include comparing address of source and target objects , careful statement ordering and copy-and-swap
+* Make sure that any function operating on ore than one object behaves correctly if two or more of the objects are the same.
 
 
 
