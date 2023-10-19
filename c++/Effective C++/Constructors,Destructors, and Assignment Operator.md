@@ -90,6 +90,7 @@ During destruction of the object, if an exception is throw, it will be a disaste
 
 ### Solution:
 
+<<<<<<< Updated upstream
 * Terminate the program（终止程序）
 
   ```c++
@@ -171,6 +172,22 @@ a=a;                //An assignment to self
 * Make sure `operator=` is well-behaved when an object is assigned to itself. Techniques include comparing address of source and target objects , careful statement ordering and copy-and-swap
 * Make sure that any function operating on ore than one object behaves correctly if two or more of the objects are the same.
 
+=======
+* Terminate the program
+
+  ```c++
+  ```
+
+* Swallow the exception
+
+  ```c++
+  ```
+
+  
+
+###  
+
+>>>>>>> Stashed changes
 
 
 
