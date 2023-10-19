@@ -530,11 +530,11 @@ size_t xTotalHeapSize = configTOTAL_HEAP_SIZE;
 	xFreeBytesRemaining = pxFirstFreeBlock->xBlockSize;
 
 	/* Work out the position of the top bit in a size_t variable. */
-	xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );
+	xBlockAllocatedBit = ( ( size_t ) 1 ) << ( ( sizeof( size_t ) * heapBITS_PER_BYTE ) - 1 );              //这一行代码似乎是在设置一个名为xBlockAllocatedBit的变量的值。该值是通过将二进制1（由( size_t ) 1表示）向左移动size_t数据类型每字节的位数减一得到的。这个计算的目的是确定size_t值的最高位的位置，这可以用来检查一个内存块是否已分配。具体来说，如果size_t值的最高位设置为1，则表示该内存块已分配。
 }
 ```
 
-相比于
+相比于   `heap_2.c`  中的初始化函数，在创建空闲块链表时使用了`pucAlignedHeap`作为链表的起始地址，而不是总堆空间减去`xHeapStructSize`。这可能是因为在某些情况下，空闲块链表需要从堆区的起始地址开始，而不是从总堆空间减去`xHeapStructSize`的位置开始。
 
 
 
