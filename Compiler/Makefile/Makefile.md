@@ -535,3 +535,391 @@ clean:
 	-rm -f *.o
 ```
 
+
+
+### 4.4       嵌套执行`make`
+
+在每个子目录都写一个 `Makefile` 的好处在于使得 本身的 Makefile 更加简洁清晰易懂。
+
+```makefile
+subsystem:
+	cd subdir && subdir
+```
+
+传递变量到下一级  `Makefile`:
+
+```makefile
+export <variable>
+
+unexport <variable>
+
+#传递所有变量
+export
+```
+
+
+
+### 4.5     定义命令包
+
+```makefile
+define run
+yacc $(firstword $^)
+mv y.tab.c $@
+endif
+```
+
+
+
+## Chapter Five
+
+### 5.1     变量的基础
+
+使用变量：
+
+```makefile
+obj = program.o
+program : ${obj}
+	cc -o program $(objects)
+	
+$(objects) : defs.h
+```
+
+
+
+### 5.2   变量中的变量
+
+变量可以嵌套使用：
+
+```makefile
+foo = $(bar)
+bar = $($(id))
+id =ii.o
+```
+
+操作符的使用：
+
+> **`:= `**     防止前面的变量使用后面的变量
+>
+> **`=`**       变量的定义可以不在使用变量前
+>
+> **`?=`**     条件判断操作符（ifndef endif）
+
+技巧定义一个空字符：
+
+```makefile
+nullstring = 
+space = $(nullstring) #辅助注释
+#or
+space = $(nullstring) $(nullstring)
+```
+
+
+
+### 5.3   变量高级用法
+
+1. 替换共有部分
+
+```makefile
+$(var:.o=.c)
+#将字符串var的后缀 .o 替换为 .c
+```
+
+2. 静态模式
+
+```makefile
+bar:= $(foo:%.o=%.c)
+```
+
+
+
+### 5.4     追加变量值
+
+**`+=`**    : 如果这个变量之前没有定义，则   `+=`   变为 `=`  ,如果定义了，就会继承前次操作的赋值符。
+
+```makefile
+variable := value
+variable += more
+
+# 等价于
+
+variable := value
+variable := $(variable) more
+```
+
+
+
+### 5.5       override   指令
+
+添加这个关键词后，这个变量将会接收来自make命令行的参数设置。
+
+```makefile
+override <variable>; =<vable>;
+```
+
+
+
+### 5.6   多行变量
+
+使用 define  来设置变量可以换行
+
+```makefile
+define two-lines
+echo fooo
+echo $(bar)
+endef
+```
+
+
+
+### 5.7      环境变量
+
+### 5.8      目标变量
+
+设置局部变量：
+```makefile
+<target ...> : <variable-assignment>
+<target ...> : override <variable-assignment>
+```
+
+接下来的例子中，prog 中含有局部变量 `$(CFLAGS)`
+
+```makefile
+prog : prog.o foo.o bar.o
+	$(CC) $(CFLAGS) prog.o foo.o bar.o
+```
+
+
+
+### 5.9       模式变量
+
+可以给目标变量定义变量：
+
+```makefile
+%.o : CFLAGS = -o
+```
+
+语法：
+
+```makefile
+<pattern ...> : <variable-assignment>
+<pattern ...> : override <variable-assignment>
+```
+
+
+
+## Chapter Six
+
+条件变量：
+
+```makefile
+ifeq ($(strp $(foo)),)
+<text-if-empty>
+endif
+
+ifdef <variable-name>
+else
+endif
+
+ifndef <variable-name>
+```
+
+
+
+## Chapter Seven
+
+### 7.1      函数调用语法
+
+```makefile
+$(<function> <arguments>)
+```
+
+
+
+### 7.2  字符串处理函数
+
+```makefile
+$(subst <from>,<to>,<text>)
+
+$(patsubst <pattern>,<replacement>,<text>)
+
+$(filter <pattern...>,<text>)
+```
+
+filter 函数
+
+```makefile
+sources := foo.c bar.c baz.s ugh.h
+foo: $(sources)
+	cc $(filter %.c %.s,$(sources)) -o foo
+```
+
+sort     排序函数
+
+```makefile
+$(sort <list>)
+```
+
+
+
+### 7.3       文件名操作函数
+
+#### 取目录函数——dir。
+
+```makefile
+$(dir <names...>)
+```
+
+#### 名称：取文件函数——notdir。
+
+```makefile
+$(notdir <names...>)
+```
+
+从文件名序列  中取出各个文件名的后缀。
+
+```makefile
+$(suffix <names...>)
+```
+
+把前缀/后缀  加到  中的每个单词前面/后面
+
+```makefile
+$(addprefix <prefix>,<names...>)
+
+$(addsuffix <suffix>,<names...>)
+```
+
+#### shell 函数
+
+```makefile
+contents := $(shell cat foo)
+files := $(shell echo *.c)
+```
+
+
+
+## Chapter  Eight
+
+### 8.1 make 的退出码
+
+ make 命令执行后有三个退出码： 
+
+* 0 表示成功执行。 
+* 1 如果 make 运行时出现任何错误，其返回 1。 
+* 2 如果你使用了 make 的“-q”选项，并且 make 使得一些目标不需要更新，那么返回 2。
+
+
+
+### 8.2    指定Makefile
+
+```makefile
+make -f hchen.mk
+```
+
+
+
+### 8.3       指定目标
+
+```makefile
+.PHONY: all
+all: prog1 prog2 prog3 prog4
+```
+
+* all: 这个伪目标是所有目标的目标，其功能一般是编译所有的目标。 
+* clean: 这个伪目标功能是删除所有被 make 创建的文件。 
+* install: 这个伪目标功能是安装已编译好的程序，其实就是把目标执行文件拷贝到指定的目标中去。 
+* print: 这个伪目标的功能是例出改变过的源文件。 • tar: 这个伪目标功能是把源程序打包备份。也就是一个 tar 文件。 
+* dist: 这个伪目标功能是创建一个压缩文件，一般是把 tar 文件压成 Z 文件。或是 gz 文件。 
+* TAGS: 这个伪目标功能是更新所有的目标，以备完整地重编译使用。 
+* check 和 test: 这两个伪目标一般用来测试 makefile 的流程。
+
+
+
+### 8.4      make  参数
+
+![image-20231020191718232](Makefile.assets/image-20231020191718232.png)
+
+![image-20231020191731946](Makefile.assets/image-20231020191731946.png)
+
+![image-20231020191754137](Makefile.assets/image-20231020191754137.png)
+
+
+
+## Chapter Nine
+
+### 9.1      使用隐含规则
+
+我们也可以使用 make 的参数 -r 或 --no-builtin-rules 选项来取消所有的预设置的隐含规则。当然，即使是我们指定了 -r 参数，某些隐含规则还是会生效，因为有许多的隐含规则都是使用了 “后缀规则”来定义的，所以，只要隐含规则中有“后缀列表”（也就一系统定义在目标 .SUFFIXES 的依 赖目标），那么隐含规则就会生效。
+
+
+
+1. 编译 C 程序的隐含规则。 `.o` 的目标的依赖目标会自动推导为 `.c` ，并且其生成命令是 `$(CC) –c $(CPPFLAGS) $(CFLAGS) `
+2.  编译 C++ 程序的隐含规则。` .o `的目标的依赖目标会自动推导为 .cc 或是 .C ，并且其生成命令是 `$(CXX) –c $(CPPFLAGS) $(CXXFLAGS) `。（建议使用 .cc 作为 C++ 源文件的后缀，而不是 .C ）
+3. 汇编和汇编预处理的隐含规则。 .o 的目标的依赖目标会自动推导为 .s ，默认使用编译器 as ，并且其生成命令是：$ (AS) $(ASFLAGS) 。.s 的目标的依赖目标会自动推导为 .S ，默认使用 C 预编译器 cpp ，并且 其生成命令是：$(AS) $(ASFLAGS) 。 
+4. 链接 Object 文件的隐含规则。 目标依赖于 `.o `，通过运行 C 的编译器来运行链接程序生成（一般是 ld ），其生成命令 是：`$(CC) $(LDFLAGS) .o $(LOADLIBES) $(LDLIBS) `。这个规则对于只有一个源文件的工程 有效，同时也对多个 Object 文件（由不同的源文件生成）的也有效。例如如下规则:
+
+```makefile
+ x : y.o z.o 
+```
+
+并且 x.c 、y.c 和 z.c 都存在时，隐含规则将执行如下命令: 
+
+```makefile
+cc -c x.c -o x.o 
+cc -c y.c -o y.o 
+cc -c z.c -o z.o 
+cc x.o y.o z.o -o x 
+rm -f x.o 
+rm -f y.o 
+rm -f z.o 
+```
+
+如果没有一个源文件（如上例中的 x.c）和你的目标名字（如上例中的 x）相关联，那么，你最好写 出自己的生成规则，不然，隐含规则会报错的。
+
+
+
+### 9.3 隐含规则使用的变量
+
+#### 9.3.1 关于命令的变量。 
+
+* AR : 函数库打包程序。默认命令是 ar 
+* AS : 汇编语言编译程序。默认命令是 as 
+* CC : C 语言编译程序。默认命令是 cc 
+* CXX : C++ 语言编译程序。默认命令是 g++
+* CPP : C 程序的预处理器（输出是标准输出设备）。默认命令是 $(CC) –E
+* RM : 删除文件命令。默认命令是 rm –f
+
+#### 9.3.2 关于命令参数的变量 
+
+下面的这些变量都是相关上面的命令的参数。如果没有指明其默认值，那么其默认值都是空。 
+
+* ARFLAGS : 函数库打包程序 AR 命令的参数。默认值是 rv
+* ASFLAGS : 汇编语言编译器参数。（当明显地调用 .s 或 .S 文件时） 
+* CFLAGS : C 语言编译器参数。 
+* CXXFLAGS : C++ 语言编译器参数。
+* CPPFLAGS : C 预处理器参数。（C 和 Fortran 编译器也会用到）。 
+* LDFLAGS : 链接器参数。（如：ld ）
+
+
+
+### 9.4       定义模式规则
+
+模式规则中，至少在规则的目标定义中要包含 % ，否则，就是一般的规则。目标中的 % 定义表示对 文件名的匹配，% 表示长度任意的非空字符串。例如：%.c 表示以 .c 结尾的文件名（文件名的长度至少 为 3），而 s.%.c 则表示以 s. 开头，.c 结尾的文件名（文件名的长度至少为 5）。
+
+```makefile
+%.o : %.c ; <command ......>;
+```
+
+```makefile
+%.o : %.c
+	$(CC) -c $(CFLAGS) $(CPPFLAGS) $< -o $
+```
+
+#### 9.4.1 自动化变量
+
+![image-20231020192933201](Makefile.assets/image-20231020192933201.png)
+
+![image-20231020192948277](Makefile.assets/image-20231020192948277.png)
+
+![image-20231020193001266](Makefile.assets/image-20231020193001266.png)
+
