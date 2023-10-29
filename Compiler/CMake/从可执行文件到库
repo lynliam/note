@@ -1,0 +1,58 @@
+# 第一章
+
+## 1.1   单个文件编译
+
+```cmake
+cmake_minimum_required(VERSION 3.5)
+PROJECT(Demo1 LANGUAGES CXX)
+set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+add_executable(hello demo1.cpp)
+```
+
+
+
+## 1.2  切换生成器
+
+```cmake
+cmake -G ninja ..
+```
+
+- `build.ninja`和`rules.ninja`：包含Ninja的所有的构建语句和构建规则。
+- `CMakeCache.txt`：CMake会在这个文件中进行缓存，与生成器无关。
+- `CMakeFiles`：包含由CMake在配置期间生成的临时文件。
+- `cmake_install.cmake`：CMake脚本处理安装规则，并在安装时使用。
+
+`cmake --build .`将`ninja`命令封装在一个跨平台的接口中。
+
+
+
+## 1.3   构建和链接静态库和动态库
+
+```cmake
+add_library(message
+  STATIC
+    Message.hpp
+    Message.cpp
+  )
+  
+  add_executable(hello-world hello-world.cpp)
+  target_link_libraries(hello-world message)
+```
+
+- `add_library(message STATIC Message.hpp Message.cpp)`：生成必要的构建指令，将指定的源码编译到库中。`add_library`的第一个参数是目标名。整个`CMakeLists.txt`中，可使用相同的名称来引用库。生成的库的实际名称将由CMake通过在前面添加前缀`lib`和适当的扩展名作为后缀来形成。生成库是根据第二个参数(`STATIC`或`SHARED`)和操作系统确定的。
+- `target_link_libraries(hello-world message)`: 将库链接到可执行文件。此命令还确保`hello-world`可执行文件可以正确地依赖于消息库。因此，在消息库链接到`hello-world`可执行文件之前，需要完成消息库的构建。
+
+编译成功后，构建目录包含`libmessage.a`一个静态库(在GNU/Linux上)和`hello-world`可执行文件。
+
+CMake接受其他值作为`add_library`的第二个参数的有效值，我们来看下本书会用到的值：
+
+- **STATIC**：用于创建静态库，即编译文件的打包存档，以便在链接其他目标时使用，例如：可执行文件。
+- **SHARED**：用于创建动态库，即可以动态链接，并在运行时加载的库。可以在`CMakeLists.txt`中使用`add_library(message SHARED Message.hpp Message.cpp)`从静态库切换到动态共享对象(DSO)。
+- **OBJECT**：可将给定`add_library`的列表中的源码编译到目标文件，不将它们归档到静态库中，也不能将它们链接到共享对象中。如果需要一次性创建静态库和动态库，那么使用对象库尤其有用。我们将在本示例中演示。
+- **MODULE**：又为DSO组。与`SHARED`库不同，它们不链接到项目中的任何目标，不过可以进行动态加载。该参数可以用于构建运行时插件。
+
+CMake还能够生成特殊类型的库，这不会在构建系统中产生输出，但是对于组织目标之间的依赖关系，和构建需求非常有用：
+
+- **IMPORTED**：此类库目标表示位于项目外部的库。此类库的主要用途是，对现有依赖项进行构建。因此，`IMPORTED`库将被视为不可变的。我们将在本书的其他章节演示使用`IMPORTED`库的示例。参见: https://cmake.org/cmake/help/latest/manual/cmakebuildsystem.7.html#imported-targets
+- **INTERFACE**：与`IMPORTED`库类似。不过，该类型库可变，没有位置信息。它主要用于项目之外的目标构建使用。我们将在本章第5节中演示`INTERFACE`库的示例。参见: https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#interface-libraries
+- **ALIAS**：顾名思义，这种库为项目中已存在的库目标定义别名。不过，不能为`IMPORTED`库选择别名。参见: https://cmake.org/cmake/help/latest/manual/cmake-buildsystem.7.html#alias-libraries
