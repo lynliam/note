@@ -200,3 +200,19 @@ git push newOrigin main                                                         
 
 
 
+### git  拉取远程覆盖本地
+
+有时候会遇到这种情景，我们本地的代码不需要了，需要使用远端的代码强制覆盖，这时候可以使用下面的命令
+
+```shell
+git fetch --all
+```
+
+然后再执行下面的命令，重置为远端的代码，即使用远端的代码将本地覆盖 origin/远端分之名
+
+```shell
+git reset --hard origin/main
+```
+
+
+
