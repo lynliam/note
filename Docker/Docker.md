@@ -206,7 +206,7 @@ docker inspect  <the-container-id>
   # docker attach   进入正在执行的终端，不会启动新的进程
   ```
 
-![点击查看图片来源](/media/lynliam/data/markdown/Docker/Docker.assets/2363254-20211002145236621-74451512.png)
+http://20.25.137.39:13739/c37db0f95c![点击查看图片来源](/media/lynliam/data/markdown/Docker/Docker.assets/2363254-20211002145236621-74451512.png)
 
 ![点击查看图片来源](/media/lynliam/data/markdown/Docker/Docker.assets/1512400-20200709142410215-1511709418.png)
 
