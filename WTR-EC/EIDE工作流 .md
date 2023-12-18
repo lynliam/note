@@ -1,4 +1,4 @@
-# EIDE 工作流 
+# EIDE 工作流
 
 `CubeMX` - `VS Code` - `EIDE` 工作流 （Modified By Liam  2023-12-18）
 
@@ -25,7 +25,7 @@
 
   * 安装选择ZIP压缩包形式的
 
-  <img src="EIDE工作流 .assets/image-20231218111544848.png" alt="image-20231218111544848" style="zoom:50%;" />
+  <img src="EIDE工作流.assets/image-20231218111544848.png" alt="image-20231218111544848" style="zoom: 50%;" />
 
   把上面那俩的环境变量添加好。
 
@@ -41,11 +41,11 @@
 
 生成工程文件的时候，选 ==Makefile==
 
-![image-20231218104008346](EIDE工作流 .assets/image-20231218104008346.png)
+<img src="EIDE工作流.assets/image-20231218104008346.png" alt="image-20231218104008346" style="zoom:67%;" />
 
 注意请勾选：  ***Copy only the necessary library files***
 
-![image-20231218104033441](EIDE工作流 .assets/image-20231218104033441.png)
+<img src="EIDE工作流.assets/image-20231218104033441.png" alt="image-20231218104033441" style="zoom:67%;" />
 
 生成之后，注意观察，`startup_stm23f427xx.s`  文件中需要有几百行代码。（有时候CubeMX抽风，会生成错的）
 
@@ -61,15 +61,15 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 弹出文件夹选择窗口，选择工程目录的上一级文件夹
 
-![image-20231218104501654](EIDE工作流 .assets/image-20231218104501654.png)
+![image-20231218104501654](EIDE工作流.assets/image-20231218104501654.png)
 
 出现如下警告时，点 yes，并在之后的弹窗中选择切换到工作区
 
-![1662706878643](EIDE工作流 .assets/1662706878643.png)
+![1662706878643](EIDE工作流.assets/1662706878643.png)
 
 之后在 VS Code 中的资源管理器应该可以看到这些文件（夹）
 
-![image-20231218104841702](EIDE工作流 .assets/image-20231218104841702.png)
+![image-20231218104841702](EIDE工作流.assets/image-20231218104841702.png)
 
 > （如果看不到 `Core`, `Drivers` 等文件夹，***很可能是项目名称不一致或没有选择上一级文件夹***，导致 EIDE 工程创建到了别的地方，建议 remake）
 
@@ -77,7 +77,7 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 打开 EIDE 插件栏（如下图）
 
-![1662707546433](EIDE工作流 .assets/1662707546433.png)
+![1662707546433](EIDE工作流.assets/1662707546433.png)
 
 #### 添加 .s 文件
 
