@@ -87,7 +87,7 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 这里选 asm 或 any
 
-![1662707645078](EIDE工作流 .assets/1662707645078.png)
+![1662707645078](EIDE工作流.assets/1662707645078.png)
 
 然后选择名称类似 `startup_stm32xxxxx.s` 的 `.s` 文件（不同芯片文件不同）
 
@@ -95,15 +95,15 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 项目资源 - 右键 - 添加源文件夹，选择普通文件夹
 
-![image-20231218105042860](EIDE工作流 .assets/image-20231218105042860.png)
+![image-20231218105042860](EIDE工作流.assets/image-20231218105042860.png)
 
 添加 `Core`, `Drivers` 等所有包含 .c 文件的文件夹
 
-![image-20231218105139968](EIDE工作流 .assets/image-20231218105139968.png)
+![image-20231218105139968](EIDE工作流.assets/image-20231218105139968.png)
 
 添加完成后：
 
-![image-20231218105203812](EIDE工作流 .assets/image-20231218105203812.png)
+![image-20231218105203812](EIDE工作流.assets/image-20231218105203812.png)
 
 #### 配置 GCC 
 
@@ -130,7 +130,7 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 配置完成后：
 
-![image-20231218105500572](EIDE工作流 .assets/image-20231218105500572.png)
+![image-20231218105500572](EIDE工作流.assets/image-20231218105500572.png)
 
 #### 烧录器配置
 
@@ -138,7 +138,7 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 例如：
 
-![image-20231218105328573](EIDE工作流 .assets/image-20231218105328573.png)
+![image-20231218105328573](EIDE工作流.assets/image-20231218105328573.png)
 
 #### 项目属性
 
@@ -146,15 +146,15 @@ EIDE - 新建项目 - 空项目 - Cortex-M - 输入项目名称（需要和 Cube
 
 > ## （==强烈建议==）如果设置中勾选了 `EIDE.Source Tree: Auto Search Include Path`（如下图），那么 EIDE 会自动搜索项目资源中添加的文件夹，这里就不用手动填入了
 
-![1662708868034](EIDE工作流 .assets/1662708868034.png)
+![1662708868034](EIDE工作流.assets/1662708868034.png)
 
 > ## 如果不进行上面的步骤，否则参考 Makefile 填入  这里：
 
-![image-20231218105929491](EIDE工作流 .assets/image-20231218105929491.png)
+![image-20231218105929491](EIDE工作流.assets/image-20231218105929491.png)
 
 点击项目属性右边的按钮：
 
-![image-20231218105957868](EIDE工作流 .assets/image-20231218105957868.png)
+![image-20231218105957868](EIDE工作流.assets/image-20231218105957868.png)
 
 将Makefile中的头文件引用部分，添加进入这个文件 的 IncludeFolders 
 
@@ -171,7 +171,7 @@ C_INCLUDES =  \
 
 添加完成长这样：
 
-![image-20231218110144329](EIDE工作流 .assets/image-20231218110144329.png)
+![image-20231218110144329](EIDE工作流.assets/image-20231218110144329.png)
 
 ##### 预处理器宏定义
 
@@ -188,23 +188,23 @@ C_DEFS =  \
 
 在预处理器定义栏点击 `+` 出现这个：
 
-![1662709241685](EIDE工作流 .assets/1662709241685.png)
+![1662709241685](EIDE工作流.assets/1662709241685.png)
 
 将刚刚找到的 C_DEFS = 后面的复制过来  ，注意去掉 `-D` 和 `\`
 
 可以用 `;` 分隔每个定义，例如 `USE_HAL_DRIVER;STM32F407xx`（不同芯片不一样）
 
-<img src="EIDE工作流 .assets/image-20231218105647639.png" alt="image-20231218105647639" style="zoom:67%;" />
+<img src="EIDE工作流.assets/image-20231218105647639.png" alt="image-20231218105647639" style="zoom:67%;" />
 
 **至此，配置完成！`F7` 编译一下试试？**
 
-![image-20231218110906037](EIDE工作流 .assets/image-20231218110906037.png)
+![image-20231218110906037](EIDE工作流.assets/image-20231218110906037.png)
 
 ## 一些技巧
 
 ### 一键编译烧录
 在 EIDE 工程打开时，按 `ctrl`+`shift`+`p`，输入 `eide` 可以找到许多相关命令
 
-![1662709577082](EIDE工作流 .assets/1662709577082.png)
+![1662709577082](EIDE工作流.assets/1662709577082.png)
 
 可以给 eide: 构建、烧录分配快捷键，实现一键编译烧录（当然你每次在这里点也可以）
