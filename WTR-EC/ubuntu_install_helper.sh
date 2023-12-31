@@ -17,8 +17,8 @@ echo "----------------------------------start----------------------------------"
 
 echo "正在换源..."
 mkdir -p temp
-file_path="./temp/source.list"
-destination_path="/etc/apt/source.list"
+file_path="./temp/sources.list"
+destination_path="/etc/apt/sources.list"
 if [ -e "$file_path" ]; then
     rm "$file_path"
 fi
@@ -93,8 +93,8 @@ fi
 sed -i "s/"ubuntu"/${arch_map[$system_arch]}/g" "$file_path"
 sed -i "s/$default_version_code/$version_code/g" "$file_path"
 
-echo "原来存在的源备份为：/etc/apt/source.list.backup"
-sudo mv "$destination_path" "/etc/apt/source.list.backup"
+echo "原来存在的源备份为：/etc/apt/sources.list.backup"
+sudo mv "$destination_path" "/etc/apt/sources.list.backup"
 sudo cp "$file_path" "/etc/apt/"
 
 if [ -e "$destination_path" ]; then
