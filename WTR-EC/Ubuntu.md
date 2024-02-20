@@ -372,9 +372,86 @@ source ：读入环境配置文件的指令
 
 ### 管线命令
 
-就如同前面所说的， bash 命令执行的时候有输出的数据会出现！ 那么如果这群数据必需要经过几道手续之后才能得到我们所想要的格式，应该如何来设置？ 这就牵涉到管线命令的问题了 （pipe） ，管线命令使用的是“ | ”这个界定符号！ 另外，管线命令与“连续下达命令”是不一样的呦！ 
+" | " 是一个界定符号。它被bash解析为将上一个命令的标准输出定向为下一个命令的标准输入。可见，" | "的下一个命令是要能够接收标准输入的。所以，我们将能够**读取标准输入**的命令称为管线命令。
+
+#### 撷取命令(cut、grep)
+
+撷取命令通常是针对 一行一行 来分析，而不是整篇文件分析！
+
+#### 2.1 cut
+
+这个指令可以将一段信息的某一段给切出来，处理的信息是以 行 为单位的！常见用法如下：
+
+```shell
+# 范例一
+root@ubuntu:~# echo ${PATH}
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin
+root@ubuntu:~# echo ${PATH} | cut -d ':' -f 1
+/usr/local/sbin
+root@ubuntu:~# echo ${PATH} | cut -d ':' -f 2
+/usr/local/bin
+root@ubuntu:~# echo ${PATH} | cut -d ':' -f 3
+/usr/sbin
+root@ubuntu:~# echo ${PATH} | cut -d ':' -f 1,3
+/usr/local/sbin:/usr/sbin
+root@ubuntu:~# echo ${PATH} | cut -d ':' -f 1-3
+/usr/local/sbin:/usr/local/bin:/usr/sbin
+
+```
 
 
+
+### grep
+
+cut 是在一行信息中取出某部分我们想要的。而grep是在分析一行信息时，若其中有我们想要的信息，则整行拿出来！常见用法如下：
+
+```shell
+ls /dev | grep ttyUSB
+```
+
+
+
+#### 双向重导向(tee)
+
+tee这个命令，既可以读取标准输入，还能向指定文件输出的同时向标准输出设备输出
+
+![在这里插入图片描述](Ubuntu.assets/fd4316d984e84f76a3d62039d3bb6853.png)
+
+```shell
+# tee : ls的输出保存到1.txt的同时输出到终端
+root@ubuntu:~# ls -l /home | tee 1.txt | cat
+total 12
+drwxr-xr-x  5 root   root   4096 3月   8  2022 sqlite3
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+drwxr-xr-x  2 test   test   4096 11月  9 20:57 test
+root@ubuntu:~# cat 1.txt
+total 12
+drwxr-xr-x  5 root   root   4096 3月   8  2022 sqlite3
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+drwxr-xr-x  2 test   test   4096 11月  9 20:57 test
+
+# grep : ls的输出保存到4.txt但没有向终端输出，可能cat都没运行过
+root@ubuntu:~# ls -l /home | grep 'study' > 4.txt | cat
+root@ubuntu:~# cat 4.txt
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+
+# tee : 以追加的方式保存到1.txt的同时向终端输出
+root@ubuntu:~# ls -l /home | tee -a 1.txt | cat	
+total 12
+drwxr-xr-x  5 root   root   4096 3月   8  2022 sqlite3
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+drwxr-xr-x  2 test   test   4096 11月  9 20:57 test
+root@ubuntu:~# cat 1.txt
+total 12
+drwxr-xr-x  5 root   root   4096 3月   8  2022 sqlite3
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+drwxr-xr-x  2 test   test   4096 11月  9 20:57 test
+total 12
+drwxr-xr-x  5 root   root   4096 3月   8  2022 sqlite3
+drwxr-xr-x 16 study  study  4096 11月 15 23:54 study
+drwxr-xr-x  2 test   test   4096 11月  9 20:57 test
+
+```
 
 
 
