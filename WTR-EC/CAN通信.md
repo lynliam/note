@@ -1,5 +1,9 @@
 # CAN协议通信
 
+Data: 2024-02-20
+
+Gathered by Liam
+
 ## 0   基础
 
 ### 0.1   发展史
