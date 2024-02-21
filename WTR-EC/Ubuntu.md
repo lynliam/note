@@ -837,6 +837,10 @@ pip install  minicom
 
 ## 10   有用的工具
 
+遇到问题，你再去解决。
+
+
+
 ### 10.1    git 
 
 ![image-20230113233916685](Ubuntu.assets/image-20230113233916685-1708485481706-4.png)
@@ -863,6 +867,8 @@ git pull [remote-name] [branch-name]
 ### 10.2   docker
 
 虚拟化容器
+
+
 
 
 
