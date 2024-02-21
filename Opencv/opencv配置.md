@@ -278,7 +278,7 @@ pacman -S mingw-w64-x86_64-vtk
 
 ## 三、Ubuntu版本安装
 
-### 一、环境包安装
+### 一、环境包安装（CPP & Python）
 
 ```bash
 #第一二三行必选
@@ -290,6 +290,14 @@ $ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev li
 ```
 
 > 关于libjasper-dev包，不用安装
+
+### 二、单独python版本
+
+```shell
+pip install opencv-python
+```
+
+
 
 ### 二、下载编译安装
 

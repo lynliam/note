@@ -4,11 +4,11 @@ Data:  2024-02-21
 
 Author: Liam  
 
-本章内容目的： 了解 Linux 系统架构，文件架构，常见命令, 使用技巧...    ---  妄图提高大家自己搜索解决问题的能力
+本章内容目的： 了解 Linux 系统架构，文件架构，常见命令, 使用技巧...    
 
-铺垫 `ROS2`
+铺垫 `ROS2`, `opencv`
 
-目录
+目录	
 
 * 简介和安装
 * 文件系统结构
@@ -27,7 +27,24 @@ Linux 和我们熟知的 Windows 一样，都是 `操作系统` 。简单说，�
 ### 0.0   安装Linux
 
 * 双系统的安装方法
-* 虚拟机安装方法 VMware
+
+步骤：
+
+1. 找一个空磁盘区域，该区域未分区
+2. 找一个空U盘，使用balenaEtcher 制作U盘安装器
+3. 进入bios， 关闭安全启动，把U盘调成启动项第一个
+4. 保存bios设置，重启进入安装界面
+5. （可能遇到奇奇怪怪无法显示图形化安装界面的问题，一般是由于nvidia 导致）
+6. 语言先选 English
+7. normal install
+8. 选其他安装方式 something else
+9. 分区 三个区即可， efi启动区  、swap交换分区 、根目录（btrfs格式） ，并且将下面的boot area 选成你分的 efi 分区
+10. 继续
+11. 结束
+12. 收尾工作
+
+*  虚拟机安装方法 VMware
+  * 详见哔哩哔哩  `[]~(￣▽￣)~*`
 
 
 
@@ -78,7 +95,7 @@ Linux中的文件，不仅指磁盘上的文本、图片、视频文件，也包
 
 | 目录           | 说明                                                         |
 | -------------- | ------------------------------------------------------------ |
-| /bin           | 所有用户可用的基本命令程序文件                               |
+| /bin           | 所有用户可用的基本命令程序文件    zsh bash ls                |
 | /boot          | 引导加载器必须用到的各静态文件，如kernel、ramfs（initrd），以及grub(bootloader)等 |
 | /dev           | 设备文件与特殊文件                                           |
 | /etc           | 系统程序的静态配置文件                                       |
@@ -116,7 +133,7 @@ usr意为universal shared read-only file，全局共享只读文件，即该目�
 | /usr/share     | 命令手册也和自带文档等架构特有的文件的存储位置，例如doc, man等 |
 | /usr/X11R6     | X-Window程序的安装位置（可选）                               |
 | /usr/src       | 程序源码文件的存储位置                                       |
-| /usr/local     | 第三方软件的安装路径，也是一个独立层级                       |
+| /usr/local     | 本地软件安装路径，也是一个独立层级                           |
 | /usr/games     | 游戏或教育程序                                               |
 
 
@@ -197,6 +214,8 @@ usr意为universal shared read-only file，全局共享只读文件，即该目�
 
 ```shell
 mount
+
+unmont
 ```
 
 
@@ -283,7 +302,6 @@ chgrp
 * cp
 * rm
 * mv
-* pwd
 * dirname
 
 
@@ -317,10 +335,12 @@ $PATH
 
 ### 3.3   文件内容查询
 
-* cat 由第一行开始显示文件内容
+* **cat 由第一行开始显示文件内容**
+  * ![image-20240221143612476](Ubuntu.assets/image-20240221143612476.png)
+
 * tac 从最后一行开始显示，可以看出 tac 是 cat 的倒着写！
 * nl 显示的时候，顺道输出行号！
-* more 一页一页的显示文件内容
+* **more 一页一页的显示文件内容**
 * less 与 more 类似，但是比 more 更好的是，他可以往前翻页！
 * head 只看头几行
 * tail 只看尾巴几行
@@ -332,7 +352,11 @@ $PATH
 
 由于Linux并不依赖扩展名识别文件类型，所以需要使用file查看
 
+```
+file
+```
 
+![image-20240221143955102](Ubuntu.assets/image-20240221143955102.png)
 
 ## 4 指令与文件的搜寻
 
@@ -398,6 +422,10 @@ tar -jxv -f /root/etc.tar.bz2 etc/shadow
 
 ## [6   Vim 使用](https://zhuanlan.zhihu.com/p/628940845)
 
+nano  vim 
+
+ctrl + x
+
 ### 基础命令：
 
 ## ![image-20240220205839577](Ubuntu.assets/image-20240220205839577.png) 
@@ -448,7 +476,7 @@ unset mynme
 #### 命令别名设置： alias, unalias
 
 ```shell
-alias | grep l
+alias a='ls -alF'
 ```
 
 
@@ -467,6 +495,12 @@ source ：读入环境配置文件的指令
 /etc/environment.d/xx.sh
 ```
 
+profile ------ 全体用户
+
+bashrc ------- 当前用户
+
+environment ------ 系统
+
 
 
 ### 数据流重导向
@@ -477,7 +511,7 @@ source ：读入环境配置文件的指令
 ![image-20240220222135737](Ubuntu.assets/image-20240220222135737.png)
 
 * 标准输入：  `<` or `<<`
-* 标准输出： `>` or `>>`
+* ==标准输出==： `>` or `>>`
 * 标准错误输出：`2>`   or  `2>>`
 
 Linux进程在启动后，通常就会打开3个文件句柄，标准输入文件（stdin），标准输出文件（stdout）和 标准错误文件（stderr）。
@@ -586,9 +620,7 @@ ls /dev | grep ttyUSB
 
 
 
-
-
-#### 双向重导向(tee)
+#### 双向重导向(tee) 
 
 tee这个命令，既可以读取标准输入，还能向指定文件输出的同时向标准输出设备输出
 
@@ -639,6 +671,9 @@ systemctl status xxx
 systemctl restart xxx
 systemctl start xxx
 systemctl stop xxx
+
+#开机自启
+#这个命令会在系统启动时启用指定的服务或单元，使其在系统启动时自动运行。
 systemctl enabled xxx
 systemctl disabled xxx
 ```
@@ -657,10 +692,54 @@ uname -a
 
 ## 网络管理
 
-查看所有网络接口的IP地址，可以使用命令 `ip addr`
+查看所有网络接口的IP地址，可以使用命令 `ip addr` = `ip a`
 
-```
+```shell
+❯ ip a
+#回环地址
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
 
+#有线
+2: enp52s0: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc fq_codel state DOWN group default qlen 1000
+    link/ether 6c:24:08:be:97:04 brd ff:ff:ff:ff:ff:ff
+
+#wifi
+3: wlp0s20f3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 70:a8:d3:4b:e2:f4 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.14/24 brd 192.168.1.255 scope global dynamic noprefixroute wlp0s20f3
+       valid_lft 65914sec preferred_lft 65914sec
+    inet6 2409:8a50:a03f:c7a0:44b1:4e9f:47da:7d9d/64 scope global temporary dynamic
+       valid_lft 243970sec preferred_lft 65338sec
+    inet6 2409:8a50:a03f:c7a0:a763:6820:11b2:2e17/64 scope global dynamic mngtmpaddr noprefixroute
+       valid_lft 243970sec preferred_lft 157570sec
+    inet6 fe80::2df3:2f14:aa9e:aa62/64 scope link noprefixroute
+       valid_lft forever preferred_lft forever
+
+#docker
+4: docker0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue state UP group default
+    link/ether 02:42:85:02:97:dc brd ff:ff:ff:ff:ff:ff
+    inet 172.17.0.1/16 brd 172.17.255.255 scope global docker0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::42:85ff:fe02:97dc/64 scope link
+       valid_lft forever preferred_lft forever
+
+5: utun: <POINTOPOINT,MULTICAST,NOARP,UP,LOWER_UP> mtu 9000 qdisc mq state UNKNOWN group default qlen 500
+    link/none
+    inet 198.18.0.1/16 scope global utun
+       valid_lft forever preferred_lft forever
+    inet6 fe80::1cfb:181e:719c:77f9/64 scope link stable-privacy
+       valid_lft forever preferred_lft forever
+       
+#docker 虚拟网卡
+7: vethc7764d0@if6: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc noqueue master docker0 state UP group default
+    link/ether 3a:3a:cd:72:7e:f4 brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet6 fe80::383a:cdff:fe72:7ef4/64 scope link
+       valid_lft forever preferred_lft forever
 ```
 
 ### ping 检测网络连通性
@@ -679,7 +758,7 @@ wget就是一个下载文件的命令行工具。
 
 例如：
 
-```
+```shell
 wget https://mirrors.aliyun.com/centos/timestamp.txt
 ```
 
@@ -699,10 +778,10 @@ ufw enable
 
 如果是Putty远程登录，并且当前没有允许SSH访问的ufw规则，执行这个命令可能就会断开连接。
 
-可以执行如下命令检查 当前的 防火墙设置
+可以执行如下命令检查 当前的 防火墙设置。
 
 ```py
-ufw status
+sudo ufw status
 ```
 
 
@@ -714,8 +793,9 @@ ufw status
 ### 通过apt源安装：
 
 ```shell
-#更新软件源
+#更新软件库目录
 sudo apt update
+
 #更新软件
 sudo apt upgrade
 #安装软件
@@ -741,7 +821,7 @@ sudo dpkg -i linux_qq_56.deb
 
 
 
-### pip 安装：
+### pip 安装：python
 
 此类适用于  python 软件
 
@@ -750,6 +830,10 @@ pip install  minicom
 ```
 
 
+
+软件分发方式不同，就不同
+
+### 
 
 ## 10   有用的工具
 
