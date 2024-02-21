@@ -848,7 +848,7 @@ pip install  minicom
 git init
 
 #从网上克隆仓库
-git clone [url]
+git clone https://github.com/SSC202/STM32_Basic.git
 
 
 git add .
