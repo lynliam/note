@@ -328,7 +328,7 @@ git clone https://github.com/opencv/opencv_contrib.git
 #将上面命令改为：
 cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True -D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules ..
 
-# 将 <opencv_contrib>
+# 将 <opencv_contrib> 改为你的 opencv-contrib 的位置
 ```
 
 
