@@ -331,6 +331,10 @@ cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERAT
 # 将 <opencv_contrib> 改为你的 opencv-contrib 的位置
 ```
 
+```shell
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True -D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules ..
+```
+
 
 
 ```c
