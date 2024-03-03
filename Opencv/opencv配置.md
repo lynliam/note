@@ -308,8 +308,30 @@ cd ./build
 ```
 
 ```shell
-cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D   -D OPENCV_ENABLE_NONFREE=True ..
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True ..
 ```
+
+==如果你想安装 包== `opencv-contrib`:
+
+```shell
+git clone https://github.com/opencv/opencv_contrib.git
+```
+
+
+
+```shell
+#增加在CMake命令中
+-D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules <opencv_source_directory>
+
+
+#将上面命令改为：
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True -D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules ..
+
+# 将 <opencv_contrib>
+```
+
+
 
 ```c
 /*
@@ -398,7 +420,20 @@ make
 ./opencv_example ## 生成一个可执行文件 拖入终端执行 也可
 ```
 
-### 五、Ubuntu_Vscode配置
+### 五、卸载
+
+卸载原有Opencv
+在ubuntu终端命令行输入以下命令进入安装opencv的build目录并进行卸载操作。
+
+```shell
+cd build
+sudo make uninstall
+cd  .. 
+sudo rm -r build
+
+```
+
+### 六、Ubuntu_Vscode配置
 
 ```json
 {

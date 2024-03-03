@@ -36,3 +36,8 @@ There are 7 transitions exposed to a supervisory process, they are:
 - `shutdown`
 - `destroy`
 
+
+
+## 3.   Explanation
+
+ 无需多言 看图就行
