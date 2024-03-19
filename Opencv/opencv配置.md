@@ -359,11 +359,11 @@ sudo make install
 
 #### 1.修改etc/bash.bashrc
 
-我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在/usr/lib/pkgconfig下生成了opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
+我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在 某个地方生成了  opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
 
 ```shell
 #搜索opencv.pc文件目录
-find / -iname opencv4.pc
+sudo find / -iname opencv4.pc
 
 #法一（未成功）：
 sudo gedit /etc/bash.bashrc
