@@ -285,7 +285,7 @@ pacman -S mingw-w64-x86_64-vtk
 $ sudo apt-get install build-essential                     # 这是为了安装编译所需的库
 $ sudo apt-get install cmake pkg-config git                # 这是为了安装一些必要的工具
 $ sudo apt-get install  libgtk2.0-dev  libavcodec-dev libavformat-dev libswscale-dev 
-$ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+$ sudo apt-get install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev 
 
 ```
 
@@ -359,7 +359,7 @@ sudo make install
 
 #### 1.修改etc/bash.bashrc
 
-我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在 某个地方生成了  opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
+我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在 **某个地方**生成了  opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
 
 ```shell
 #搜索opencv.pc文件目录
@@ -379,7 +379,7 @@ source /etc/bash.bashrc
 sudo vim /etc/profile.d/pkgconfig.sh
 
 #文件末尾添加以下内容 并保存
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 
 #保存并退出后激活：
 source /etc/profile

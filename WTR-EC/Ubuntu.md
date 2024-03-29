@@ -85,7 +85,7 @@ Linux中，文件是个非常广泛的概念。
 
 Linux中的文件，不仅指磁盘上的文本、图片、视频文件，也包括硬件设备，比如串口、声卡、输入设备、输出设备等。
 
-![image](Ubuntu.assets/36462795_57458150-6e766780-72a3-11e9-9ca3-ac553449f525.png)
+![image](Ubuntu.assets/2.png)
 
 根据  [Filesystem Hierarchy Standard](https://refspecs.linuxfoundation.org/FHS_3.0/fhs-3.0.pdf):  
 
@@ -265,7 +265,7 @@ chgrp
 
 比如下图
 
-![image](Ubuntu.assets/36257654_57497214-51747f80-7309-11e9-862f-11d235f43e84.png)
+![image](Ubuntu.assets/1.png)
 
 其 中的 photos（假设它是个目录） 的绝对路径 就是 `/home/jono/photos`
 
