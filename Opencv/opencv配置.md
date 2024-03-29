@@ -285,7 +285,7 @@ pacman -S mingw-w64-x86_64-vtk
 $ sudo apt-get install build-essential                     # 这是为了安装编译所需的库
 $ sudo apt-get install cmake pkg-config git                # 这是为了安装一些必要的工具
 $ sudo apt-get install  libgtk2.0-dev  libavcodec-dev libavformat-dev libswscale-dev 
-$ sudo apt-get install python-dev python-numpy libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev libjasper-dev libdc1394-22-dev
+$ sudo apt-get install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev 
 
 ```
 
@@ -308,8 +308,34 @@ cd ./build
 ```
 
 ```shell
-cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D   -D OPENCV_ENABLE_NONFREE=True ..
+
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True ..
 ```
+
+==如果你想安装 包== `opencv-contrib`:
+
+```shell
+git clone https://github.com/opencv/opencv_contrib.git
+```
+
+
+
+```shell
+#增加在CMake命令中
+-D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules <opencv_source_directory>
+
+
+#将上面命令改为：
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True -D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules ..
+
+# 将 <opencv_contrib> 改为你的 opencv-contrib 的位置
+```
+
+```shell
+cmake -D CMAKE_INSTALL_PREFIX=/usr -D CMAKE_BUILD_TYPE=Release -D OPENCV_GENERATE_PKGCONFIG=ON -D OPENCV_ENABLE_NONFREE=True -D OPENCV_EXTRA_MODULES_PATH=<opencv_contrib>/modules ..
+```
+
+
 
 ```c
 /*
@@ -333,11 +359,11 @@ sudo make install
 
 #### 1.修改etc/bash.bashrc
 
-我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在/usr/lib/pkgconfig下生成了opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
+我们之前安装的时候 `OPENCV_GENERATE_PKGCONFIG=ON` 所以在 **某个地方**生成了  opencv4.pc文件，里面记录了OpenCV头文件、库文件的路經。需要进行如下配置：
 
 ```shell
 #搜索opencv.pc文件目录
-find / -iname opencv4.pc
+sudo find / -iname opencv4.pc
 
 #法一（未成功）：
 sudo gedit /etc/bash.bashrc
@@ -353,7 +379,7 @@ source /etc/bash.bashrc
 sudo vim /etc/profile.d/pkgconfig.sh
 
 #文件末尾添加以下内容 并保存
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PKG_CONFIG_PATH=/usr/lib/x86_64-linux-gnu/pkgconfig:$PKG_CONFIG_PATH
 
 #保存并退出后激活：
 source /etc/profile
@@ -398,7 +424,20 @@ make
 ./opencv_example ## 生成一个可执行文件 拖入终端执行 也可
 ```
 
-### 五、Ubuntu_Vscode配置
+### 五、卸载
+
+卸载原有Opencv
+在ubuntu终端命令行输入以下命令进入安装opencv的build目录并进行卸载操作。
+
+```shell
+cd build
+sudo make uninstall
+cd  .. 
+sudo rm -r build
+
+```
+
+### 六、Ubuntu_Vscode配置
 
 ```json
 {

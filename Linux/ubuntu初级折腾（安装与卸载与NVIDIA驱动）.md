@@ -246,23 +246,23 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
 
 1. `win + r` 打开运行，输入 `diskpart`
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/15.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609107659-3.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/14.png)
 
 2. 输入 `list disk` 因为我的 win10 EFI 系统分区在 磁盘1 中，所以接着输入 `select disk 1` 进入
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609125721-6.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/13.png)
 
 3. 接着输入 `list partition` 查看具体分区列表，根据容量找到 win10 EFI 系统分区，这里是分区 1，输入 `select partition 1` 进入
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609141737-9.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/12.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609147576-12-1703070250661-16-1703070251649-18-1703070253040-20-1703070253664-22-1703070254696-24.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/11.png)
 
 5. 为 win10 的 EFI 系统分区分配盘符【assign letter = e】这里e为盘符(不区分大小写)，**不要和已有的盘符重复**，分配完成后不要关闭此窗口，进入资源管理器可看到 E 盘
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609173524-15.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/10.png)
 
 ![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/20210405014604973.png)
 
@@ -271,21 +271,21 @@ Windows把系统硬件(RTC)时间当作本地时间(local time)，即系统时�
 1. 直接打开我们会发现权限不够，打不开。
    这里我们要运用一个小技巧，先用管理员权限打开记事本，然后通过记事本菜单栏里的【打开】来访问，可以看到 EFI 文件夹，进入**找到 ubuntu 文件夹，删除即可**
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609201337-20.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/6.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609204746-23.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/5.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609209075-26.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/4.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609213403-29.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/3.png)
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609217916-32.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/2.png)
 
 ## 删除为 win10 的 EFI 系统分区 分配的盘符
 
 1. 在刚才的 cmd 窗口输入 `remove letter=e`，关闭窗口退出，至此完成
 
-![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L1pDaGVuMTk5Ng==,size_16,color_FFFFFF,t_70-1694609231858-35.png)
+![在这里插入图片描述](ubuntu初级折腾（安装与卸载与NVIDIA驱动）.assets/1.png)
 
 ***
 
