@@ -284,12 +284,27 @@ pacman -S mingw-w64-x86_64-vtk
 #第一二三行必选
 $ sudo apt-get install build-essential                     # 这是为了安装编译所需的库
 $ sudo apt-get install cmake pkg-config git                # 这是为了安装一些必要的工具
-$ sudo apt-get install  libgtk2.0-dev  libavcodec-dev libavformat-dev libswscale-dev 
+$ sudo apt-get install  libgtk3.0-dev  libavcodec-dev libavformat-dev libswscale-dev 
 $ sudo apt-get install libtbb2 libtbb-dev libjpeg-dev libpng-dev libtiff-dev 
 
 ```
 
 > 关于libjasper-dev包，不用安装
+
+推荐下载Eigen 矩阵库[Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page)
+
+![image-20240425152147903](opencv配置.assets/image-20240425152147903.png)
+
+安装Eigen
+
+```
+mkdir build
+cd build
+cmake ..
+sudo make install
+```
+
+
 
 ### 二、单独python版本
 
@@ -393,7 +408,8 @@ source /etc/profile
 sudo gedit /etc/ld.so.conf.d/opencv.conf 
  
 # 添加lib路經 在 末尾 保存退出
-/usr/lib
+/usr/local/lib
+/usr/lib/x86_64-linux-gnu/
  
 # 更新
 sudo ldconfig
