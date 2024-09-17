@@ -18,19 +18,21 @@
 
 * **OpenOCD**
 
-  * OpenOCD是用于对STM32进行下载仿真的工具，是一个开源软件包，Windows版本下从[这里](https://link.zhihu.com/?target=http%3A//gnutoolchains.com/arm-eabi/openocd/)下载。
+  * OpenOCD是用于对STM32进行下载仿真的工具，是一个开源软件包，Windows版本下从[这里](https://gnutoolchains.com/arm-eabi/openocd/)下载。
   * Ubuntu直接  `sudo apt install openocd`  或者   自己去 google上下载
 
-*  Arm-gcc
+*  [Arm GNU Toolchain Downloads – Arm Developer](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 
   * 安装选择ZIP压缩包形式的
 
-  <img src="EIDE工作流.assets/image-20231218111544848.png" alt="image-20231218111544848" style="zoom: 50%;" />
+  ![image-20240918001837416](EIDE工作流 .assets/image-20240918001837416.png)
 
-  把上面那俩的环境变量添加好。
+  
+
+  把上面那俩的**环境变量**添加好。
 
   arm-gcc那个记得只添加  **/home/lyn/Environment/gcc-arm-none-eabi-10.3-2021.10/bin**  这个bin目录
-
+  
   
 
 ## 构建工程步骤
