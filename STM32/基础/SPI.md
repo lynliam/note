@@ -1,4 +1,5 @@
 ##SPI协议
+
 ***
 * SPI物理层
     * #####SPI通讯使用三条总线
@@ -8,12 +9,12 @@
 
 * 协议层
     * #####SPI通讯时序
-    ![image](E:\markdown\STM32\image\7.png)
+    ![image](SPI.assets/7.png)
     MOSI和MISO都只在NSS为低电平的时候有效，SCK每个时钟周期传输一位信号
     * #####CPOL（时钟极性）/CPHA（时钟相位） 通讯协议
         * CPOL=0时，SCk空闲时为低电平/CPOL=1时，相反。
         * 当 CPHA=0 时  SCK 时钟线的**奇数边沿**被采样/当 CPHA=1 时，数据线在 SCK 的**偶数边**采样
-        ![image](E:\markdown\STM32\image\8.png)
+        ![image](SPI.assets/8.png)
     * 传输方式
         * 双线全双工
         * 双线单向
@@ -42,4 +43,14 @@ typedef struct {
     uint32_t CRCCalculation; /* 指定是否启用 CRC 计算 */
     uint32_t CRCPolynomial; /* 设置 CRC 校验的表达式 */
 } SPI_InitTypeDef;
-```
+ ```
+
+
+
+![img](SPI.assets/e8c6d7c9d9a541afab6b251196e4dbfb.png)
+
+![img](SPI.assets/92cf20b0ce424ac7b99ea78a26b2c6e7.png)
+
+![img](SPI.assets/e6d8f260b70542aba08e77ee2646510d.png)
+
+![img](SPI.assets/dcaf292df9944ea0acbc0806523de667.png)
