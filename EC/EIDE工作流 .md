@@ -1,6 +1,6 @@
 # EIDE 工作流
 
-`CubeMX` - `VS Code` - `EIDE` 工作流 （Modified By Liam  2023-12-18）
+`CubeMX` - `VS Code` - `EIDE` 工作流 （Modified By Liam  2025-03-8）
 
 ## 前置环境准备：
 
@@ -214,3 +214,15 @@ C_DEFS =  \
 ![1662709577082](EIDE工作流.assets/1662709577082.png)
 
 可以给 eide: 构建、烧录分配快捷键，实现一键编译烧录（当然你每次在这里点也可以）
+
+## EIDE其实可以配合KEIL进行使用
+
+只需要在EIDE界面选择： “导入”， 并选择 MDK
+
+![image-20250308214944066](EIDE工作流 .assets/image-20250308214944066.png)
+
+这样就可以在EIDE中进行编辑，在keil中进行调试
+
+## 调试配置生成
+
+![image-20250308215230128](EIDE工作流 .assets/image-20250308215230128.png)
