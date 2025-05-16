@@ -23,14 +23,38 @@
 
 *  [Arm GNU Toolchain Downloads – Arm Developer](https://developer.arm.com/downloads/-/arm-gnu-toolchain-downloads)
 
-  * 安装选择ZIP压缩包形式的
+  * 安装选择ZIP压缩包形式的如图：
 
   ![image-20240918001837416](EIDE工作流.assets/image-20240918001837416.png)
 
+  > 关于 **版本**？
+  >
+  > ​	理论上来说目前是下新的会更好，特别是你要使用 H7 等高性能mcu时，并且新版本GCC通常会会修复某些bug，引入对新C/C++标准的支持。
+  >
+  > ​	![image-20250516164725689](EIDE工作流 .assets/image-20250516164725689.png)
+  >
+  > 
+  >
+  > ​	新版本可能会导致原有代码编译无法通过，原因为新引入的标准可能会禁止原有的不安全操作。
+  >
+  > ​	例如实践发现，使用 14.2.Rel1版本导致：
+  >
+  > ​	未引入标准库头文件而使用所含函数的行为   **将无法被编译**，但是在13.x中可以正常编译
+  >
+  > ​	`error: implicit declaration of function 'printf' [-Wimplicit-function-declaration]`    编译无法通过
+  >
+  > ​	
+  >
+  > AArch32 bare-metal target (arm-none-eabi) 为我们需要下载的交叉编译器
+  >
+  > mingw-w64-i686 : 32位
+  >
+  > mingw-w64-x86_64： 64位系统 （14.2版本中出现）
   
-
+  
+  
   把上面那俩的**环境变量**添加好。
-
+  
   arm-gcc那个记得只添加  **/home/lyn/Environment/gcc-arm-none-eabi-10.3-2021.10/bin**  这个bin目录
   
   
@@ -202,6 +226,20 @@ C_DEFS =  \
 
 <img src="EIDE工作流.assets/image-20231218105647639.png" alt="image-20231218105647639" style="zoom:67%;" />
 
+
+
+#### 更改 "EIDE.ARM.GCC.InstallDirectory"
+
+![image-20250516165607576](EIDE工作流 .assets/image-20250516165607576.png)
+
+填入你**安装的gcc目录**（最新的gcc在前步骤中已经安装了），例如"F:\\Environment\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
+
+![image-20250516163047286](EIDE工作流 .assets/image-20250516163047286.png)
+
+
+
+
+
 **至此，配置完成！`F7` 编译一下试试？**
 
 ![image-20231218110906037](EIDE工作流.assets/image-20231218110906037.png)
@@ -226,3 +264,17 @@ C_DEFS =  \
 ## 调试配置生成
 
 ![image-20250308215230128](EIDE工作流 .assets/image-20250308215230128.png)
+
+
+
+## 问题： 在链接环节，LD文件报错，显示找不到某些符号
+
+解决方法：
+
+1. 打开插件设置
+
+![image-20250516162425945](EIDE工作流 .assets/image-20250516162425945.png)
+
+2. 更改 "EIDE.ARM.GCC.InstallDirectory": 为你**安装的gcc目录**（最新的gcc在前步骤中已经安装了），例如"F:\\Environment\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
+
+![image-20250516163047286](EIDE工作流 .assets/image-20250516163047286.png)
