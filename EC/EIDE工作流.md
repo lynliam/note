@@ -31,7 +31,7 @@
   >
   > ​	理论上来说目前是下新的会更好，特别是你要使用 H7 等高性能mcu时，并且新版本GCC通常会会修复某些bug，引入对新C/C++标准的支持。
   >
-  > ​	![image-20250516164725689](EIDE工作流 .assets/image-20250516164725689.png)
+  > ​	![image-20250516164725689](EIDE工作流.assets/image-20250516164725689.png)
   >
   > 
   >
@@ -230,11 +230,11 @@ C_DEFS =  \
 
 #### 更改 "EIDE.ARM.GCC.InstallDirectory"
 
-![image-20250516165607576](EIDE工作流 .assets/image-20250516165607576.png)
+![image-20250516165607576](EIDE工作流.assets/image-20250516165607576.png)
 
 填入你**安装的gcc目录**（最新的gcc在前步骤中已经安装了），例如"F:\\Environment\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
 
-![image-20250516163047286](EIDE工作流 .assets/image-20250516163047286.png)
+![image-20250516163047286](EIDE工作流.assets/image-20250516163047286.png)
 
 
 
@@ -257,13 +257,13 @@ C_DEFS =  \
 
 只需要在EIDE界面选择： “导入”， 并选择 MDK
 
-![image-20250308214944066](EIDE工作流 .assets/image-20250308214944066.png)
+![image-20250308214944066](EIDE工作流.assets/image-20250308214944066.png)
 
 这样就可以在EIDE中进行编辑，在keil中进行调试
 
 ## 调试配置生成
 
-![image-20250308215230128](EIDE工作流 .assets/image-20250308215230128.png)
+![image-20250308215230128](EIDE工作流.assets/image-20250308215230128.png)
 
 
 
@@ -273,8 +273,8 @@ C_DEFS =  \
 
 1. 打开插件设置
 
-![image-20250516162425945](EIDE工作流 .assets/image-20250516162425945.png)
+![image-20250516162425945](EIDE工作流.assets/image-20250516162425945.png)
 
 2. 更改 "EIDE.ARM.GCC.InstallDirectory": 为你**安装的gcc目录**（最新的gcc在前步骤中已经安装了），例如"F:\\Environment\\arm-gnu-toolchain-13.2.Rel1-mingw-w64-i686-arm-none-eabi"
 
-![image-20250516163047286](EIDE工作流 .assets/image-20250516163047286.png)
+![image-20250516163047286](EIDE工作流.assets/image-20250516163047286.png)
