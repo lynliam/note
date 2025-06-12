@@ -1,0 +1,151 @@
+# 网口配置
+
+[STM32 Ethernet #1. Connection & Configuration](https://controllerstech.com/stm32-ethernet-1-connection/)
+
+**After enabling the Ethernet, you must cross check the pins configured by the cubeMX with the schematic of the board. Most of the times, the pins are configured incorrectly and it becomes one of the most popular error for the ethernet to not work.**
+
+### Ethernet Configuration
+
+There are many types of configurations available with different MCUs. Some MCUs let you configure the memory in the CubeMX, while others don’t. Some of the Boards have the MII Hardware, while other have RMII.
+
+Below is the picture showing different configuration available in different ST Boards.
+
+[![img](ETH网口.assets/ethernet1_1-1749480628297-15.avif)](https://controllerstech.com/wp-content/uploads/2021/07/ethernet1_1.avif)
+
+- The First board (Nucleo F207ZG) and second board (Disco F7508) uses the RMII pinout, while the third board (Disco H745) uses the MII pinout.
+- On the first board we have the option to choose the **PHY** **Address**. This should be set to 0, if you are using the **on board** LAN Port, and it should be 1 in case of the external module.
+- The 2nd and 3rd boards allow us to configure the **memory addresses** while the first one does not. If your board does not allow the memory configuration, you can simply skip those steps.
+- The **H745 discovery** board is letting us configure the addresses for **Tx and Rx DMA descriptors**, and for the **Rx Buffer** as well. But the **F7508 Discovery** board does not let us configure the address for the Rx Buffer.
+- Assuming that each DMA Descriptor takes **32 bits** (MAXIMUM Possible), the RX Descriptor and Tx Descriptor have a maximum size of 128 Bytes (32×4) each.
+- The Memory between them is spaced keeping this 128 bytes in mind.
+- The **Rx Buffer length** is set to 1524 Bytes, but the number of RX buffers to be used can be defined later in the LWIP configuration. By default the cubeMX sets the number to **12 buffers**. This would make the total length of Rx Buffer around 18KB.
+- The memories are allocated in the SRAM region, whose properties can be modified later in the MPU.
+
+------
+
+### LWIP Configuration
+
+The LightWeight IP can be enabled in the middleware section. **If the MCU does not let you enable it, make sure the cache (DCache and ICache) are enabled.**
+
+The most of the Configuration in the LWIP remains same. Except, some MCUs let us choose the address for the Heap.
+
+[![img](ETH网口.assets/ethernet1_2.avif)](https://controllerstech.com/wp-content/uploads/2021/07/ethernet1_2.avif)
+
+- Here we are going to **disable the DHCP**, and configure a **static IP** for our ethernet module. I have set the IP **192.168.0.123** for the board.
+- In the **Key Option** tab, I am using 5KB memory for the Heap. The location for this heap is defined as **0x30004000**.
+- In the **Platform Settings** tab, set the PHY as LAN8742.
+
+------
+
+### MPU Configuration
+
+We have the DMA Descriptors in the SRAM Region. This is why we need to configure the MPU.
+
+If your MCU didn’t let you choose the memory region, then probably you don’t need to do it. But for the cortex M7 devices, this is a must, or else you will get **hardfault**.
+
+Remember that during the configuration, we set up everything in the SRAM (0x30000000). The complete memory structure is shown in the image below.
+
+[![img](ETH网口.assets/ethernet1_3.avif)](https://controllerstech.com/wp-content/uploads/2021/07/ethernet1_3.avif)
+
+Below is the image showing the MPU configuration for the above Region.
+
+[![img](ETH网口.assets/ethernet1_4.avif)](https://controllerstech.com/wp-content/uploads/2021/07/ethernet1_4.avif)
+
+- Here I have selected the 32 KB region so that it will cover our total RAM region, which is around 24KB.
+- The rest of the configuration is to set the region as non-cacheable region.
+- This would prevent the cache coherency issue between the CPU and the DMA.
+- This is explained in the **[cortex M7 playlist](https://youtu.be/5xVKIGCPy2s?si=swwGWUu0C-_IHE5I)**, so do check that out.
+
+------
+
+### Other Configuration
+
+If you are connecting the STM32 board to the Router, there is nothing you need to do at the computer end. But if you are connecting the ethernet cable directly to the computer, you need to configure your computer’s ethernet as per the images shown below.
+
+Below is the **configuration for a Windows** computer.
+
+[![img](ETH网口.assets/mongoose1_15.avif)](https://controllerstech.com/wp-content/uploads/2025/04/mongoose1_15.avif)
+
+Below is the **configuration for Mac**.
+
+[![img](ETH网口.assets/mongoose1_14.avif)](https://controllerstech.com/wp-content/uploads/2025/04/mongoose1_14.avif)
+
+------
+
+------
+
+## **The CODE**
+
+Once the project is generated, open the **LWIP -> Target -> ethernetif.c** file. Here you will some memory locations that needs to be defined in the flash script file.
+
+[![img](ETH网口.assets/ethernet1_5.avif)](https://controllerstech.com/wp-content/uploads/2021/07/ethernet1_5.avif)
+
+We need to define these memory locations in the **flash script file**, as per the configuration done in the cubeMX.
+
+Below is the code is for the **H745 Discovery board** according to the configuration done in the cubeMX.
+
+
+
+```
+    .lwip_sec (NOLOAD) : {
+    . = ABSOLUTE(0x30000000);
+    *(.RxDecripSection) 
+    
+    . = ABSOLUTE(0x30000080);
+    *(.TxDecripSection)
+    
+    . = ABSOLUTE(0x30000100);
+    *(.Rx_PoolSection) 
+  } >RAM_D2
+```
+
+Below is the code is for the **F7508 Discovery board** according to the configuration done in the cubeMX.
+
+
+
+```
+    .lwip_sec (NOLOAD) : 
+  {    
+    . = ABSOLUTE(0x2004C000);
+    *(.RxDecripSection) 
+    
+    . = ABSOLUTE(0x2004C0A0);
+    *(.TxDecripSection)
+  } >RAM
+```
+
+### The main file
+
+Since this tutorial is more focused on connection part, there is not much in the code. We will just test the ping to our IP Address, and the code for the same is shown below.
+
+
+
+```
+extern struct netif gnetif;
+
+int main()
+{
+  int wait = 10000000;
+  while (wait-- >0);  // Wait for sometime before initializing the system
+  
+  MPU_Config();
+  SCB_EnableICache();
+  SCB_EnableDCache();
+  HAL_Init();
+  
+  HAL_Delay (1000);  // wait for some time here
+  
+  SystemClock_Config();
+  MX_GPIO_Init();
+  MX_LWIP_Init();
+  while (1)
+  {
+     ethernetif_input(&gnetif);
+     sys_check_timeouts();
+  }
+}
+```
+
+------
+
+------
