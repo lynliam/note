@@ -5,21 +5,51 @@
 ### A Nuts-and-Bolts Description
 
 * hosts-end systems  :  many devices that is receiver or sender are called hosts and end systems
+
+
+
+End systems are connected by:
+
 * communication links
 * packet switches
-* transmission rate
+
+
+
 * packets
+
+packet switches:
+
 * routers and link-layer switches
+
+
+
 * route and path
 * ISPs (Internet Service Providers)
   * providing a variety of types of network access.
-* protocol--TCP,UDP,IP
+
+The internet's principal protocols: 
+
+* protocol--TCP/IP
+
+
+
+**Internet applications runs on end systems.**
+
+
+
+### Socket interface  
+
+
+
+
 
 ### Protocols: 
 
 All activity in the Internet that involves two or more communicating remote entities is governed by a protocol.
 
 > A protocol defines the format and the order of messages exchanged between two or more communicating entities, as well as the actions takes on the transmission and/or receipt of a message or other event.
+
+
 
 
 
